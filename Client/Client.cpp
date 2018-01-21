@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "Client.h"
+#include "MainGame.h"
 
 #define MAX_LOADSTRING 100
 
@@ -44,6 +45,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 	msg.message = WM_NULL;
 
+	DWORD dwOldTime = GetTickCount();
+
+	CMainGame mainGame;
+	mainGame.Initialize();
+	mainGame.LateInit();
+
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -56,9 +63,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			// 게임 루프
+			if (dwOldTime + 10 < GetTickCount())
+			{
+				dwOldTime = GetTickCount();
 
-
+				// 게임 루프
+				mainGame.Update();
+				mainGame.LateUpdate();
+				mainGame.Render();
+			}
 		}
 	}
     return (int) msg.wParam;
@@ -79,7 +92,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CLIENT));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_CLIENT);
+	wcex.lpszMenuName	= nullptr;
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 

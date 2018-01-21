@@ -13,6 +13,39 @@
     <Filter Include="98.Header">
       <UniqueIdentifier>{0ab07e2d-adc6-4bbc-962c-ed4e67ed7fa5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.GameObject">
+      <UniqueIdentifier>{158e5fcf-4b00-4dfd-91ed-e375d42f3ec9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Managers\00.GameManager">
+      <UniqueIdentifier>{60484f4f-c9ed-4c43-8ee3-2bc6843e7943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\00.Actor">
+      <UniqueIdentifier>{6b65b604-7578-43f0-a5ac-ea77ade05be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Kirby">
+      <UniqueIdentifier>{85c68ade-68ef-4da5-afd3-9dafbd0c5e79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Kirby\00.Weapon">
+      <UniqueIdentifier>{6f44e659-0b30-484e-bd4a-717300f413c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Kirby\00.Weapon\00.Sword">
+      <UniqueIdentifier>{43f5ed49-fb37-4b12-82a2-01d2f80724ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Kirby\00.Weapon\01.Spark">
+      <UniqueIdentifier>{856ac499-ccea-4ab4-92a3-99f5e5fa977b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Managers\02.BmpManager">
+      <UniqueIdentifier>{6bab6048-9adf-4f0f-acc3-224b5842a80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Managers\01.InputManager">
+      <UniqueIdentifier>{9141436e-e884-42b6-9899-d12ef688ce15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Managers\02.BmpManager\00.Bmp">
+      <UniqueIdentifier>{57e2f6a7-05c8-476a-a603-cf7abbc4d27c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy">
+      <UniqueIdentifier>{b1269d71-5c6f-4159-b72f-a23e00a1bd15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -28,12 +61,84 @@
     <ClInclude Include="Define.h">
       <Filter>98.Header</Filter>
     </ClInclude>
+    <ClInclude Include="Extern.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Typedef.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AbsFactory.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>01.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>97.Managers\00.GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>01.GameObject\00.Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Kirby.h">
+      <Filter>02.Kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>97.Managers\01.InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpManager.h">
+      <Filter>97.Managers\02.BmpManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Bmp.h">
+      <Filter>97.Managers\02.BmpManager\00.Bmp</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackMetaKnight.h">
+      <Filter>03.Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>99.Default</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="GameObject.cpp">
+      <Filter>01.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>97.Managers\00.GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>01.GameObject\00.Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Kirby.cpp">
+      <Filter>02.Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>97.Managers\01.InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpManager.cpp">
+      <Filter>97.Managers\02.BmpManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Bmp.cpp">
+      <Filter>97.Managers\02.BmpManager\00.Bmp</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackMetaKnight.cpp">
+      <Filter>03.Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
