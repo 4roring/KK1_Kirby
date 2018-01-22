@@ -15,6 +15,7 @@ public:
 
 private:
 	void DrawBackground(HDC hDC, const TCHAR* szName);
+	void DrawGround(HDC hDC, const TCHAR* szName);
 
 private:
 	HDC m_hDC;

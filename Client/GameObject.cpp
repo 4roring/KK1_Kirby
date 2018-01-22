@@ -3,7 +3,7 @@
 
 
 CGameObject::CGameObject()
-	: m_bActive(false)
+	: m_bActive(true)
 {
 	m_tInfo = {};
 	m_tRect = {};
@@ -23,9 +23,23 @@ void CGameObject::UpdateRect()
 	m_tRect.bottom = LONG(m_tInfo.fY + m_tInfo.fCY / 2.f);
 
 	m_tHitBox.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2.f);
-	m_tHitBox.top = LONG(m_tInfo.fY + 10 - m_iHitBoxCY / 2.f);
+	m_tHitBox.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2.f);
 	m_tHitBox.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2.f);
-	m_tHitBox.bottom = LONG(m_tInfo.fY + 10 + m_iHitBoxCY / 2.f);
+	m_tHitBox.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2.f);
+}
+
+// 비트맵의 Rect를 조작하기 위한 오버로딩
+void CGameObject::UpdateRect(float fX, float fY)
+{
+	m_tRect.left = LONG(m_tInfo.fX + fX - m_tInfo.fCX / 2.f);
+	m_tRect.top = LONG(m_tInfo.fY + fY - m_tInfo.fCY / 2.f);
+	m_tRect.right = LONG(m_tInfo.fX + fX + m_tInfo.fCX / 2.f);
+	m_tRect.bottom = LONG(m_tInfo.fY + fY + m_tInfo.fCY / 2.f);
+
+	m_tHitBox.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2.f);
+	m_tHitBox.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2.f);
+	m_tHitBox.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2.f);
+	m_tHitBox.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2.f);
 }
 
 void CGameObject::FrameMove()

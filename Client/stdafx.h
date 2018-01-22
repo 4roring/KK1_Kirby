@@ -17,21 +17,21 @@
 #include <memory.h>
 #include <tchar.h>
 #include <list>
-#include <map>
 #include <unordered_map>
 #include <algorithm>
-#include <cstring>
+#include <cmath>
 
 #include "vld.h"
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
 #include "Typedef.h"
 #include "Define.h"
-
 #include "Enum.h"
 #include "Extern.h"
 #include "Function.h"
 #include "Struct.h"
+#include "Math.h"
+#include "Collision.h"
 
 #include "AbsFactory.h"
 #include "GameManager.h"

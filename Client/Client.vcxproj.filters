@@ -46,6 +46,18 @@
     <Filter Include="03.Enemy">
       <UniqueIdentifier>{b1269d71-5c6f-4159-b72f-a23e00a1bd15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Particle">
+      <UniqueIdentifier>{54f175a1-61a1-4ec5-a9c4-1bed3ffc4c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\01.Ground">
+      <UniqueIdentifier>{9e96d9b6-ed0d-4093-86d0-65be37df2b6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Managers\03.Math">
+      <UniqueIdentifier>{8d71e365-ecd4-485a-aaf3-7a18826e65c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Managers\04.Collision">
+      <UniqueIdentifier>{ab56879e-bcdc-4633-89e5-262c60c56203}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -106,6 +118,15 @@
     <ClInclude Include="BlackMetaKnight.h">
       <Filter>03.Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>01.GameObject\01.Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>97.Managers\03.Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>97.Managers\04.Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -138,6 +159,15 @@
     </ClCompile>
     <ClCompile Include="BlackMetaKnight.cpp">
       <Filter>03.Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>01.GameObject\01.Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>97.Managers\03.Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>97.Managers\04.Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

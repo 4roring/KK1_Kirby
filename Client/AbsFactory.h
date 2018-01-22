@@ -24,4 +24,13 @@ public:
 
 		return pObj;
 	}
+
+	static CGameObject* CreateGround(RECT& rc)
+	{
+		CGameObject* pObj = new T(rc);
+		pObj->Initialize();
+		pObj->LateInit();
+
+		return pObj;
+	}
 };

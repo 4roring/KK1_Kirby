@@ -20,10 +20,18 @@ public:
 
 private:
 	void SceneChange();
+	void Move();
+	void Attack();
+	void Jump();
 
 private:
 	TCHAR* m_pFrameKey;
 	STATE m_eCurState;
 	STATE m_ePreState;
+
+	bool m_bIsGround;
+	bool m_bIsDash;
+
+	DWORD m_dwInputTime;
 };
 

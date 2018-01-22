@@ -20,5 +20,11 @@ protected:
 	int iHp;
 	
 	float m_fSpeed;
+	float m_fJumpPow;
+
+	float m_fVelocityX;
+	float m_fVelocityY;
+	float m_fAccX;
+	float m_fAccY;
 };
 

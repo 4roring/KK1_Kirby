@@ -24,6 +24,8 @@ CBmp * CBmp::LoadBmp(const TCHAR * pFilePath)
 
 	m_hBitOld = (HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
 
+	GetObject(m_hBitmap, sizeof(m_tBitInfo), &m_tBitInfo);
+
 	return this;
 }
 

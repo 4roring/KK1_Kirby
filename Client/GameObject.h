@@ -8,6 +8,10 @@ public:
 public:
 	const INFO& GetInfo() { return m_tInfo; }
 	const RECT& GetRect() { return m_tRect; }
+	const RECT& GetHitBox() { return m_tHitBox; }
+	const int& GetHitBoxCX() { return m_iHitBoxCX; }
+	const int& GetHitBoxCY() { return m_iHitBoxCY; }
+	bool GetActive() { return m_bActive; }
 
 public:
 	void SetPos(float fX, float fY) { m_tInfo.fX = fX, m_tInfo.fY = fY; }
@@ -23,6 +27,7 @@ public:
 
 protected:
 	void UpdateRect();
+	void UpdateRect(float fX, float fY);
 	void FrameMove();
 	void DrawObject(HDC hDC, const TCHAR* szName);
 
@@ -37,5 +42,7 @@ protected:
 	int m_iHitBoxCX;
 	int m_iHitBoxCY;
 	FRAME m_tFrame;
+
+	float m_fGravity;
 };
 

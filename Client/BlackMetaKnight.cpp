@@ -13,7 +13,7 @@ CBlackMetaKnight::~CBlackMetaKnight()
 
 void CBlackMetaKnight::Initialize()
 {
-	m_tInfo = { 500, 500, 150, 150 };
+	m_tInfo = { 500, 450, 150, 150 };
 	m_iHitBoxCX = 40;
 	m_iHitBoxCY = 40;
 
@@ -45,7 +45,7 @@ OBJ_STATE CBlackMetaKnight::Update()
 void CBlackMetaKnight::LateUpdate()
 {
 	FrameMove();
-	UpdateRect();
+	UpdateRect(-10.f, -5.f);
 }
 
 void CBlackMetaKnight::Render(HDC hDC)

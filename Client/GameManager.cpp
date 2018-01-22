@@ -55,6 +55,9 @@ void CGameManager::LateUpdate()
 		for (auto& pObject : m_ObjectList[i])
 			pObject->LateUpdate();
 	}
+
+
+	CCollision::Ground(m_ObjectList[OBJ_ENEMY], m_ObjectList[OBJ_GROUND]);
 }
 
 void CGameManager::Render(HDC hDC)
