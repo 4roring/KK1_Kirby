@@ -17,10 +17,17 @@ CMainGame::~CMainGame()
 void CMainGame::Initialize()
 {
 	m_hDC = GetDC(g_hWnd);
+	
+	// 배경 로딩
 	BmpManager()->RegistBitmap(TEXT("BackBuffer"), TEXT("../Image/BackBuffer.bmp"));
 	BmpManager()->RegistBitmap(TEXT("Map_Boss_Background"), TEXT("../Image/Map/Boss_Background.bmp"));
 	BmpManager()->RegistBitmap(TEXT("Map_Boss_Ground"), TEXT("../Image/Map/Boss_Ground.bmp"));
 	
+	// 이펙트 로딩
+	BmpManager()->RegistBitmap(TEXT("Normal_Effect"), TEXT("../Image/Effect/Normal_Effect.bmp"));
+	BmpManager()->RegistBitmap(TEXT("Normal_Attack_Left"), TEXT("../Image/Effect/NormalAttack_Left.bmp"));
+	BmpManager()->RegistBitmap(TEXT("Normal_Attack_Right"), TEXT("../Image/Effect/NormalAttack_Right.bmp"));
+
 	GameManager()->AddObject(CAbsFactory<CKirby>::CreateObject(), OBJ_PLAYER);
 	GameManager()->AddObject(CAbsFactory<CBlackMetaKnight>::CreateObject(), OBJ_ENEMY);
 	

@@ -22,18 +22,6 @@
     <Filter Include="01.GameObject\00.Actor">
       <UniqueIdentifier>{6b65b604-7578-43f0-a5ac-ea77ade05be9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Kirby">
-      <UniqueIdentifier>{85c68ade-68ef-4da5-afd3-9dafbd0c5e79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Kirby\00.Weapon">
-      <UniqueIdentifier>{6f44e659-0b30-484e-bd4a-717300f413c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Kirby\00.Weapon\00.Sword">
-      <UniqueIdentifier>{43f5ed49-fb37-4b12-82a2-01d2f80724ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Kirby\00.Weapon\01.Spark">
-      <UniqueIdentifier>{856ac499-ccea-4ab4-92a3-99f5e5fa977b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.Managers\02.BmpManager">
       <UniqueIdentifier>{6bab6048-9adf-4f0f-acc3-224b5842a80c}</UniqueIdentifier>
     </Filter>
@@ -46,9 +34,6 @@
     <Filter Include="03.Enemy">
       <UniqueIdentifier>{b1269d71-5c6f-4159-b72f-a23e00a1bd15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Particle">
-      <UniqueIdentifier>{54f175a1-61a1-4ec5-a9c4-1bed3ffc4c6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.GameObject\01.Ground">
       <UniqueIdentifier>{9e96d9b6-ed0d-4093-86d0-65be37df2b6d}</UniqueIdentifier>
     </Filter>
@@ -57,6 +42,30 @@
     </Filter>
     <Filter Include="97.Managers\04.Collision">
       <UniqueIdentifier>{ab56879e-bcdc-4633-89e5-262c60c56203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect">
+      <UniqueIdentifier>{54f175a1-61a1-4ec5-a9c4-1bed3ffc4c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Normal_Kirby">
+      <UniqueIdentifier>{9a61b3d6-4e40-49aa-b46d-0238f247c068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Normal_Kirby\02.Eff_Dash">
+      <UniqueIdentifier>{3213e52b-4431-496d-8af1-e11b190fd3a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Normal_Kirby\01.Eff_Normal_FLY">
+      <UniqueIdentifier>{c5d1dfc2-8b10-49d2-8a94-f150fb502559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Normal_Kirby\00.Eff_NormalAtt">
+      <UniqueIdentifier>{4132dae0-4213-412f-8ea8-1f1176f8d2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\02.Kirby">
+      <UniqueIdentifier>{85c68ade-68ef-4da5-afd3-9dafbd0c5e79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\02.Kirby\00.Weapon">
+      <UniqueIdentifier>{6f44e659-0b30-484e-bd4a-717300f413c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\02.Kirby\00.Weapon\00.Sword">
+      <UniqueIdentifier>{43f5ed49-fb37-4b12-82a2-01d2f80724ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +113,7 @@
       <Filter>01.GameObject\00.Actor</Filter>
     </ClInclude>
     <ClInclude Include="Kirby.h">
-      <Filter>02.Kirby</Filter>
+      <Filter>01.GameObject\02.Kirby</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>97.Managers\01.InputManager</Filter>
@@ -127,6 +136,15 @@
     <ClInclude Include="Collision.h">
       <Filter>97.Managers\04.Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Eff_NormalAtt.h">
+      <Filter>04.Effect\00.Normal_Kirby\00.Eff_NormalAtt</Filter>
+    </ClInclude>
+    <ClInclude Include="Eff_Normal_FlyAtt.h">
+      <Filter>04.Effect\00.Normal_Kirby\01.Eff_Normal_FLY</Filter>
+    </ClInclude>
+    <ClInclude Include="Eff_Dash.h">
+      <Filter>04.Effect\00.Normal_Kirby\02.Eff_Dash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -146,7 +164,7 @@
       <Filter>01.GameObject\00.Actor</Filter>
     </ClCompile>
     <ClCompile Include="Kirby.cpp">
-      <Filter>02.Kirby</Filter>
+      <Filter>01.GameObject\02.Kirby</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>97.Managers\01.InputManager</Filter>
@@ -168,6 +186,15 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>97.Managers\04.Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Eff_NormalAtt.cpp">
+      <Filter>04.Effect\00.Normal_Kirby\00.Eff_NormalAtt</Filter>
+    </ClCompile>
+    <ClCompile Include="Eff_Normal_FlyAtt.cpp">
+      <Filter>04.Effect\00.Normal_Kirby\01.Eff_Normal_FLY</Filter>
+    </ClCompile>
+    <ClCompile Include="Eff_Dash.cpp">
+      <Filter>04.Effect\00.Normal_Kirby\02.Eff_Dash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

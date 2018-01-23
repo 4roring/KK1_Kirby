@@ -12,10 +12,12 @@ public:
 	const int& GetHitBoxCX() { return m_iHitBoxCX; }
 	const int& GetHitBoxCY() { return m_iHitBoxCY; }
 	bool GetActive() { return m_bActive; }
+	bool GetFlipX() { return m_bFlipX; }
 
 public:
 	void SetPos(float fX, float fY) { m_tInfo.fX = fX, m_tInfo.fY = fY; }
 	void SetActive(bool bActive) { m_bActive = bActive; }
+	void SetFlipX(bool bFlipX) { m_bFlipX = bFlipX; }
 
 public:
 	virtual void Initialize() PURE;
@@ -39,10 +41,13 @@ protected:
 	bool m_bActive;
 	bool m_bFlipX;
 
+	float m_fSpeed;
+
+	float m_fImageX;
+	float m_fImageY;
 	int m_iHitBoxCX;
 	int m_iHitBoxCY;
 	FRAME m_tFrame;
-
-	float m_fGravity;
+	TCHAR* m_pFrameKey;
 };
 

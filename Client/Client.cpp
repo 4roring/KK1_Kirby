@@ -13,6 +13,7 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
 HWND g_hWnd;
+int g_iFrame;
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -46,6 +47,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	msg.message = WM_NULL;
 
 	DWORD dwOldTime = GetTickCount();
+	g_iFrame = 0;
 
 	CMainGame mainGame;
 	mainGame.Initialize();
@@ -71,6 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				mainGame.Update();
 				mainGame.LateUpdate();
 				mainGame.Render();
+
+				++g_iFrame;
 			}
 		}
 	}

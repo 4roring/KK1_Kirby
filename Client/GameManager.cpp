@@ -37,7 +37,7 @@ void CGameManager::Update()
 	{
 		for (auto iter = m_ObjectList[i].begin(); iter != m_ObjectList[i].end();)
 		{
-			if ((*iter)->Update() == DESTORY)
+			if ((*iter)->Update() == DESTROY)
 			{
 				SafeDelete<CGameObject*>(*iter);
 				iter = m_ObjectList[i].erase(iter);
@@ -55,7 +55,6 @@ void CGameManager::LateUpdate()
 		for (auto& pObject : m_ObjectList[i])
 			pObject->LateUpdate();
 	}
-
 
 	CCollision::Ground(m_ObjectList[OBJ_ENEMY], m_ObjectList[OBJ_GROUND]);
 }

@@ -4,7 +4,7 @@ class CKirby :
 	public CActor
 {
 public:
-	enum STATE { IDLE, DOWN, SLIDE, MOVE, JUMP, ATTACK, END };
+	enum STATE { IDLE, DOWN, SLIDE, MOVE, DASH, JUMP, FLY, FLYATTACK, ATTACK, END };
 
 public:
 	CKirby();
@@ -19,19 +19,29 @@ public:
 	virtual void Release() override;
 
 private:
-	void SceneChange();
+	void Input();
 	void Move();
 	void Attack();
 	void Jump();
+	void Slide();
+	void SceneChange();
 
 private:
-	TCHAR* m_pFrameKey;
+	void CreateDashEffect();
+
+private:
+
 	STATE m_eCurState;
 	STATE m_ePreState;
 
+	bool m_bSlide;
+	bool m_bJump;
 	bool m_bIsGround;
-	bool m_bIsDash;
+	bool m_bDash;
+	bool m_bFly;
+	bool m_bAttack;
 
-	DWORD m_dwInputTime;
+	int m_iInputFrame;
+	int m_iAttSquence;
 };
 

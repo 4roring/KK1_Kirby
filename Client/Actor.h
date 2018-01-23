@@ -19,12 +19,16 @@ protected:
 	int iMaxHp;
 	int iHp;
 	
-	float m_fSpeed;
 	float m_fJumpPow;
+
+	float m_fGravity;
+	float m_fDrag;
 
 	float m_fVelocityX;
 	float m_fVelocityY;
 	float m_fAccX;
 	float m_fAccY;
+
+	bool m_bFlipX;
 };
 

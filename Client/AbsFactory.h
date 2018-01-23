@@ -19,9 +19,21 @@ public:
 	{
 		CGameObject* pObj = new T;
 		pObj->Initialize();
-		pObj->LateInit();
 		pObj->SetPos(fX, fY);
+		pObj->LateInit();
+	
 
+		return pObj;
+	}
+
+	static CGameObject* CreateObject(float fX, float fY, bool bFlipX)
+	{
+		CGameObject* pObj = new T;
+		pObj->Initialize();
+		pObj->SetPos(fX, fY);
+		pObj->SetFlipX(bFlipX);
+		pObj->LateInit();
+	
 		return pObj;
 	}
 

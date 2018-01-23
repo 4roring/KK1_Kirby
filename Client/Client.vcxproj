@@ -150,6 +150,9 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="Eff_Dash.h" />
+    <ClInclude Include="Eff_NormalAtt.h" />
+    <ClInclude Include="Eff_Normal_FlyAtt.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
     <ClInclude Include="Function.h" />
@@ -173,6 +176,9 @@
     <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Eff_Dash.cpp" />
+    <ClCompile Include="Eff_NormalAtt.cpp" />
+    <ClCompile Include="Eff_Normal_FlyAtt.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ground.cpp" />

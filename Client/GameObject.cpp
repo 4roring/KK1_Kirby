@@ -3,7 +3,7 @@
 
 
 CGameObject::CGameObject()
-	: m_bActive(true)
+	: m_bActive(true), m_bFlipX(false)
 {
 	m_tInfo = {};
 	m_tRect = {};
