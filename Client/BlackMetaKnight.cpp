@@ -19,8 +19,6 @@ void CBlackMetaKnight::Initialize()
 
 	m_fSpeed = 4.f;
 
-
-
 	m_pFrameKey = TEXT("Black_1_Left");
 
 	m_tFrame.iStart = 0;

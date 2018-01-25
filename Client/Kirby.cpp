@@ -108,8 +108,15 @@ void CKirby::LateUpdate()
 
 void CKirby::Render(HDC hDC)
 {
-	DrawHitBox(hDC);
-	DrawObject(hDC, m_pFrameKey);
+	//DrawHitBox(hDC);
+
+	if (m_bEat)
+		DrawAlphaBlack(hDC, 100);
+
+	if(!m_bNoDamage)
+		DrawObject(hDC, m_pFrameKey);
+	else if(m_bNoDamage && g_iFrame % 2 == 0)
+		DrawObject(hDC, m_pFrameKey);
 }
 
 void CKirby::Release()
@@ -726,4 +733,13 @@ void CKirby::Eat()
 void CKirby::CreateDashEffect()
 {
 	GameManager->AddObject(CAbsFactory<CEff_Dash>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), OBJ_EFFECT);
+}
+
+void CKirby::DrawAlphaBlack(HDC hDC, int iAlpha)
+{
+	HDC hMemDC = BmpManager->GetMapBit()[TEXT("BackBlack")]->GetMemDC();
+
+	BLENDFUNCTION bf = { 0, 0, iAlpha, 0 };
+
+	GdiAlphaBlend(hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, WINCX, WINCY, bf);
 }

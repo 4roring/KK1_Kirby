@@ -39,6 +39,7 @@ private:
 
 private:
 	void CreateDashEffect();
+	void DrawAlphaBlack(HDC hDC, int iAlpha);
 
 private:
 	STATE m_eCurState;

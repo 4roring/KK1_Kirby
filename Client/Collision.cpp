@@ -121,7 +121,7 @@ bool CCollision::Ground(OBJLIST & dstList, OBJLIST & srcList)
 					if (fMoveY - pDst->GetHitBoxCY() * 0.5f >= pDst->GetInfo().fY)
 						return false;
 
-					pDst->SetPos(pDst->GetInfo().fX, fMoveY - pDst->GetHitBoxCY() * 0.5f);
+					pDst->SetPos(pDst->GetInfo().fX, fMoveY - pDst->GetHitBoxCY() * 0.45f);
 					dynamic_cast<CActor*>(pDst)->SetVelocityY(0.f);
 					return true;
 				}

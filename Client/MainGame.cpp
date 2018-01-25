@@ -17,7 +17,9 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 	srand((unsigned)time(nullptr));
 	BmpManager->RegistBitmap(TEXT("BackBuffer"), TEXT("../Image/BackBuffer.bmp"));
-	
+	BmpManager->RegistBitmap(TEXT("BackBlack"), TEXT("../Image/BackBlack.bmp"));
+
+
 	// 스테이지 1 배경, 땅 로딩
 	BmpManager->RegistBitmap(TEXT("Map_Stage1_Background"), TEXT("../Image/Map/Stage1_Background.bmp"));
 	BmpManager->RegistBitmap(TEXT("Map_Stage1_1_Ground"), TEXT("../Image/Map/Stage1-1.bmp"));
@@ -27,6 +29,17 @@ void CMainGame::Initialize()
 	// 보스 스테이지 배경, 땅 로딩
 	BmpManager->RegistBitmap(TEXT("Map_Boss_Background"), TEXT("../Image/Map/Boss_Background.bmp"));
 	BmpManager->RegistBitmap(TEXT("Map_Boss_Ground"), TEXT("../Image/Map/Boss_Ground.bmp"));
+
+	// 중간 보스 스테이지 배경, 땅 로딩
+	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Background_1"), TEXT("../Image/Map/MidBoss_Background_1.bmp"));
+	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Background_2"), TEXT("../Image/Map/MidBoss_Background_2.bmp"));
+	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Background_3"), TEXT("../Image/Map/MidBoss_Background_3.bmp"));
+	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Background_4"), TEXT("../Image/Map/MidBoss_Background_4.bmp"));
+
+	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Ground"), TEXT("../Image/Map/MidBoss_Ground.bmp"));
+
+	// 기타 맵 소스
+	BmpManager->RegistBitmap(TEXT("Map_Door"), TEXT("../Image/Map/Door.bmp"));
 
 	// 이펙트 로딩
 	BmpManager->RegistBitmap(TEXT("Normal_Effect"), TEXT("../Image/Effect/Normal_Effect.bmp"));

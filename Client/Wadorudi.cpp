@@ -111,7 +111,7 @@ void CWadorudi::Render(HDC hDC)
 {
 	if (m_bActive)
 	{
-		DrawHitBox(hDC);
+		//DrawHitBox(hDC);
 		DrawObject(hDC, m_pFrameKey);
 	}
 }

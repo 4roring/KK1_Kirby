@@ -11,31 +11,6 @@ CEnemy::~CEnemy()
 {
 }
 
-void CEnemy::Initialize()
-{
-}
-
-void CEnemy::LateInit()
-{
-}
-
-OBJ_STATE CEnemy::Update()
-{
-	return OBJ_STATE();
-}
-
-void CEnemy::LateUpdate()
-{
-}
-
-void CEnemy::Render(HDC hDC)
-{
-}
-
-void CEnemy::Release()
-{
-}
-
 void CEnemy::ApplyDamage(int iDamage)
 {
 	CActor::ApplyDamage(iDamage);
@@ -53,8 +28,6 @@ void CEnemy::isDamage()
 
 		if (m_iHp <= 0)
 			m_bActive = false;
-
-		std::cout << m_bActive << std::endl;
 	}
 }
 

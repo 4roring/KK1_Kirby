@@ -52,7 +52,7 @@ void CEff_Normal_FlyAtt::LateUpdate()
 
 void CEff_Normal_FlyAtt::Render(HDC hDC)
 {
-	DrawHitBox(hDC);
+	//DrawHitBox(hDC);
 	DrawObject(hDC, m_pFrameKey);
 }
 

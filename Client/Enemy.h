@@ -15,8 +15,6 @@ public:
 	virtual void Render(HDC hDC) PURE;
 	virtual void Release() PURE;
 
-
-
 public:
 	virtual void ApplyDamage(int iDamage) override;
 
@@ -24,5 +22,9 @@ protected:
 	bool CheckScreen() { return CCollision::Screen(GameManager->GetScreen(), this); }
 	void isDamage();
 	void isInhail();
+
+protected:
+	bool m_bIsDead;
+	DWORD m_dwDeadTimer;
 };
 

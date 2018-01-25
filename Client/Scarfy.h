@@ -20,6 +20,8 @@ public:
 
 private:
 	void Transform();
+	void NormalState();
+	void TransformState();
 
 private:
 	bool m_bTransform;
