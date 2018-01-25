@@ -3,6 +3,7 @@
 #include "Kirby.h"
 #include "Ground.h"
 #include "Wadorudi.h"
+#include "Scarfy.h"
 
 CStage1_1::CStage1_1()
 {
@@ -48,7 +49,7 @@ void CStage1_1::Initialize()
 
 	// ¸ó½ºÅÍ
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(985.f, 350.f), OBJ_ENEMY);
-
+	GameManager->AddObject(CAbsFactory<CScarfy>::CreateEnemy(730.f, 230.f), OBJ_ENEMY);
 
 	GameManager->SetScrollX(0.f);
 	GameManager->SetMaxScrollX(-3450.f);
@@ -81,6 +82,6 @@ void CStage1_1::Render(HDC hDC)
 
 void CStage1_1::Release()
 {
-
+	GameManager->ReleaseObj(OBJ_ENEMY);
 }
 

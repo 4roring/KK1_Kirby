@@ -1,20 +1,18 @@
 #pragma once
-#include "Enemy.h"
-class CWadorudi :
-	public CEnemy
+#include "GameObject.h"
+class CEff_ShootingStar :
+	public CGameObject
 {
 public:
-	CWadorudi();
-	virtual ~CWadorudi();
+	CEff_ShootingStar();
+	virtual ~CEff_ShootingStar();
 
-	// CActor을(를) 통해 상속됨
+	// CGameObject을(를) 통해 상속됨
 	virtual void Initialize() override;
 	virtual void LateInit() override;
 	virtual OBJ_STATE Update() override;
 	virtual void LateUpdate() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
-
-public:
-	virtual void ApplyDamage(int iDamage) override;
 };
+

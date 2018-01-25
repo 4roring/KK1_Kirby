@@ -29,9 +29,9 @@ float CMath::DistanceAngle(CGameObject * pDst, CGameObject * pSrc)
 	
 	float fD = sqrtf(fW * fW + fH * fH);
 
-	float fAngle = acosf(fD / fW);
+	float fAngle = acosf(fW / fD);
 
-	if (pSrc->GetInfo().fY < pDst->GetInfo().fY)
+	if (pDst->GetInfo().fY < pSrc->GetInfo().fY)
 		fAngle *= -1.f;
 
 	return fAngle;

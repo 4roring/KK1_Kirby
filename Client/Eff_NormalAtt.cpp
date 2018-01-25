@@ -50,6 +50,8 @@ OBJ_STATE CEff_NormalAtt::Update()
 
 void CEff_NormalAtt::LateUpdate()
 {
+	CCollision::InhailToEnemy(this, GameManager->GetObjList(OBJ_ENEMY));
+
 	FrameMove();
 	UpdateRect();
 }

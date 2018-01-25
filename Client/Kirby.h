@@ -5,9 +5,9 @@ class CKirby :
 {
 public:
 	enum STATE { 
-		IDLE, DOWN, SLIDE, MOVE, DASH, 
-		JUMP, FLY, FLYATTACK, ATTACK, DAMAGE, 
-		END 
+		IDLE, INHAILIDLE, DOWN, SLIDE, MOVE, DASH, 
+		JUMP, FLY, FLYATTACK, ATTACK, INHAIL, DAMAGE, 
+		EAT, SHOOTSTAR, END 
 	};
 
 public:
@@ -35,12 +35,12 @@ private:
 	void ScrollMove();
 	void isDamage();
 	void NoDamageState();
+	void Eat();
 
 private:
 	void CreateDashEffect();
 
 private:
-
 	STATE m_eCurState;
 	STATE m_ePreState;
 
@@ -52,6 +52,7 @@ private:
 	bool m_bAttack;
 
 	bool m_bNoDamage;
+	bool m_bEat;
 
 	DWORD m_dwDamageTime;
 	int m_iInputFrame;

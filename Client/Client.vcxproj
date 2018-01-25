@@ -154,6 +154,8 @@
     <ClInclude Include="Eff_Dash.h" />
     <ClInclude Include="Eff_NormalAtt.h" />
     <ClInclude Include="Eff_Normal_FlyAtt.h" />
+    <ClInclude Include="Eff_ShootingStar.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
     <ClInclude Include="Function.h" />
@@ -167,6 +169,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scarfy.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Stage1_1.h" />
@@ -188,6 +191,8 @@
     <ClCompile Include="Eff_Dash.cpp" />
     <ClCompile Include="Eff_NormalAtt.cpp" />
     <ClCompile Include="Eff_Normal_FlyAtt.cpp" />
+    <ClCompile Include="Eff_ShootingStar.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -197,6 +202,7 @@
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Scarfy.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Stage1_1.cpp" />

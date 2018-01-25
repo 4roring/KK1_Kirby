@@ -26,10 +26,22 @@ void CCollision::ActorToActor(OBJLIST & dstList, OBJLIST & srcList)
 
 			RECT rc = {};
 
-			if (IntersectRect(&rc, &(pDst->GetRect()), &(pSrc->GetRect())))
+			if (IntersectRect(&rc, &(pDst->GetHitBox()), &(pSrc->GetHitBox())))
 			{
-				dynamic_cast<CActor*>(pDst)->ApplyDamage(10);
-				dynamic_cast<CActor*>(pSrc)->ApplyDamage(10);
+				if (pSrc->GetInhail())
+				{
+					if (rc.right - rc.left < 20)
+					{
+						pDst->SetInhail();
+						pDst->SetInhailType(pSrc->GetInhailType());
+						dynamic_cast<CActor*>(pSrc)->ApplyDamage(100);
+					}
+				}
+				else
+				{
+					dynamic_cast<CActor*>(pDst)->ApplyDamage(10);
+					dynamic_cast<CActor*>(pSrc)->ApplyDamage(pDst->GetAtt());
+				}
 			}
 		}
 	}
@@ -161,6 +173,7 @@ bool CCollision::InhailToEnemy(CGameObject * pObj, OBJLIST & EnemyList)
 		RECT rc = {};
 		if (IntersectRect(&rc, &(pObj->GetRect()), &(pEnemy->GetHitBox())))
 		{
+			pObj->SetInhail();
 			pEnemy->SetInhail();
 			return true;
 		}

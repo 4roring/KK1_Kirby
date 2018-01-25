@@ -1,13 +1,13 @@
 #pragma once
 #include "Enemy.h"
-class CWadorudi :
+class CScarfy :
 	public CEnemy
 {
 public:
-	CWadorudi();
-	virtual ~CWadorudi();
+	CScarfy();
+	virtual ~CScarfy();
 
-	// CActor을(를) 통해 상속됨
+	// CEnemy을(를) 통해 상속됨
 	virtual void Initialize() override;
 	virtual void LateInit() override;
 	virtual OBJ_STATE Update() override;
@@ -17,4 +17,11 @@ public:
 
 public:
 	virtual void ApplyDamage(int iDamage) override;
+
+private:
+	void Transform();
+
+private:
+	bool m_bTransform;
 };
+

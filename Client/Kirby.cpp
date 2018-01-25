@@ -3,6 +3,7 @@
 #include "Eff_Dash.h"
 #include "Eff_Normal_FlyAtt.h"
 #include "Eff_NormalAtt.h"
+#include "Eff_ShootingStar.h"
 
 CKirby::CKirby()
 {
@@ -55,6 +56,8 @@ void CKirby::Initialize()
 	m_tFrame.iScene = 0;
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 100;
+
+	m_iAtt = 10;
 }
 
 void CKirby::LateInit()
@@ -64,6 +67,7 @@ void CKirby::LateInit()
 OBJ_STATE CKirby::Update()
 {
 	if (m_eCurState == DAMAGE) return PLAY;
+	if (m_bEat) return PLAY;
 
 	if (!m_bAttack)
 	{
@@ -91,13 +95,13 @@ void CKirby::LateUpdate()
 	m_bIsGround = CCollision::Ground(GameManager->GetObjList(OBJ_PLAYER), GameManager->GetObjList(OBJ_GROUND));
 
 	if (m_tInfo.fY + m_iHitBoxCY * 0.5f < 0)
-		m_tInfo.fY =  0;
+		m_tInfo.fY = 0;
 
 	if (m_tInfo.fX + m_iHitBoxCX *0.5f < 0)
 		m_tInfo.fX = 0;
 
 	NoDamageState();
-
+	Eat();
 	SceneChange();
 	ScrollMove();
 }
@@ -120,6 +124,13 @@ void CKirby::ApplyDamage(int iDamage)
 		m_eCurState = DAMAGE;
 		m_bNoDamage = true;
 	}
+
+	if (m_bSlide)
+	{
+		m_eCurState = DAMAGE;
+		m_bNoDamage = true;
+		m_bSlide = false;
+	}
 }
 
 void CKirby::Input()
@@ -127,7 +138,20 @@ void CKirby::Input()
 	if (m_bSlide) return;
 
 	if (m_fVelocityX == 0 && m_fVelocityY == 0 && !m_bSlide && !m_bJump && !m_bAttack)
-		m_eCurState = IDLE;
+	{
+		if(m_bInhail)
+			m_eCurState = INHAILIDLE;
+		else
+			m_eCurState = IDLE;
+	}
+
+	if (m_eCurState == INHAILIDLE && m_bInhail && !m_bAttack)
+	{
+		if (m_tFrame.iStart == 1)
+			m_tFrame.dwSpeed = 100;
+		else
+			m_tFrame.dwSpeed = 2000;
+	}
 
 	// 7프레임 안에 연타시 대시 입력
 	if (InputManager->KeyDown(VK_LEFT) && m_iInputFrame > g_iFrame && !m_bFly)
@@ -158,7 +182,12 @@ void CKirby::Input()
 	{
 		m_iHitBoxCY = 20;
 
-		if (!m_bSlide && !m_bFly)
+		if (m_bInhail)
+		{
+			m_bEat = true;
+			m_bInhail = false;
+		}
+		else if (!m_bSlide && !m_bFly && !m_bInhail)
 		{
 			m_eCurState = DOWN;
 			m_bDash = false;
@@ -174,6 +203,8 @@ void CKirby::Input()
 		{
 			m_bSlide = true;
 			CreateDashEffect();
+
+			m_iAtt = 20;
 		}
 	}
 	else if (InputManager->KeyDown('Z'))
@@ -184,7 +215,7 @@ void CKirby::Input()
 			m_bJump = true;
 			m_fVelocityY = 1.f;
 		}
-		else if (m_bJump)
+		else if (m_bJump && !m_bInhail)
 			m_bFly = true;
 	}
 	else
@@ -196,12 +227,12 @@ void CKirby::Move()
 {
 	if (m_bSlide) return;
 
-	if (m_bDash)
+	if (m_bDash && !m_bAttack)
 	{
 		m_fAccX = 1.f;
 		m_fSpeed = 5.1f;
 
-		if (!m_bJump && !m_bFly)
+		if (!m_bJump && !m_bFly && !m_bAttack)
 			m_eCurState = DASH;
 
 		if (m_tFrame.iStart == m_tFrame.iEnd)
@@ -256,7 +287,7 @@ void CKirby::Move()
 	}
 
 	if (m_fVelocityX != 0.f && m_eCurState != DOWN && !m_bDash
-		&& !m_bJump && !m_bFly && m_eCurState != FLYATTACK)
+		&& !m_bJump && !m_bFly && m_eCurState != FLYATTACK && !m_bAttack)
 		m_eCurState = MOVE;
 }
 
@@ -270,6 +301,8 @@ void CKirby::Attack()
 			m_bFly = false;
 			m_eCurState = FLYATTACK;
 		}
+		else if (m_bInhail)
+			m_eCurState = SHOOTSTAR;
 		else
 		{
 			m_eCurState = ATTACK;
@@ -280,9 +313,11 @@ void CKirby::Attack()
 
 	if (m_bAttack && m_eCurState == FLYATTACK)
 	{
+		m_eCurState = FLYATTACK;
 		if (m_tFrame.iStart == 2)
 		{
 			++m_tFrame.iStart;
+			std::cout << "공기 몇개요?" << std::endl;
 			float fX = m_bFlipX ? 50.f : -50.f;
 			GameManager->AddObject(CAbsFactory<CEff_Normal_FlyAtt>::CreateObject(m_tInfo.fX + fX, m_tInfo.fY, m_bFlipX), PLAYER_ATT);
 		}
@@ -291,18 +326,37 @@ void CKirby::Attack()
 			m_bAttack = false;
 			m_eCurState = IDLE;
 		}
+	}
+	else if (m_bAttack && m_eCurState == SHOOTSTAR)
+	{
+		m_eCurState = SHOOTSTAR;
+		if (m_tFrame.iStart == 0)
+		{
+			GameManager->AddObject(CAbsFactory<CEff_ShootingStar>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), PLAYER_ATT);
+			++m_tFrame.iStart;
+		}
+			
 
+		if (m_tFrame.iStart == m_tFrame.iEnd)
+		{
+			m_bAttack = false;
+			m_bInhail = false;
+			m_eCurState = IDLE;
+		}
 	}
 	else if (InputManager->Key('X') && m_bAttack)
 	{
 		// 흡수
-		m_eCurState = ATTACK;
+		if (m_bInhail)
+			m_eCurState = INHAIL;
+		else
+			m_eCurState = ATTACK;
 		m_bDash = false;
 
 		if (m_pTarget == nullptr && m_iAttSquence == 0)
 		{
 			GameManager->AddObject(CAbsFactory<CEff_NormalAtt>::CreateObject(this), OBJ_EFFECT);
-			m_pTarget = GameManager->GetObjList(PLAYER_ATT).back();
+			m_pTarget = GameManager->GetObjList(OBJ_EFFECT).back();
 		}
 
 		if (m_iAttSquence < 10)
@@ -324,12 +378,11 @@ void CKirby::Attack()
 			}
 		}
 
-		if (m_tFrame.iStart == m_tFrame.iEnd)
-		{
-			m_bAttack = false;
-			m_iAttSquence = 0;
-		}
+		if (m_bInhail)
+			m_iAttSquence = 10;
 
+		if (m_tFrame.iStart == m_tFrame.iEnd)
+			m_bAttack = false;
 	}
 	else if (InputManager->KeyUp('X') && m_bAttack)
 	{
@@ -385,7 +438,7 @@ void CKirby::Jump()
 		m_eCurState = JUMP;
 		m_tFrame.dwSpeed = 2000;
 	}
-	else if (m_fVelocityY < 0 && m_bJump)
+	else if (m_fVelocityY < 0 && m_bJump && !m_bInhail)
 	{
 		// 떨어질 때에는 특정 프레임 애니메이션만 재생
 
@@ -411,7 +464,7 @@ void CKirby::Jump()
 	if (m_bIsGround)
 	{
 		// 착지 애니메이션
-		if (m_eCurState == JUMP && m_bJump)
+		if (m_eCurState == JUMP && m_bJump && !m_bAttack)
 		{
 			m_tFrame.iStart = m_tFrame.iEnd - 2;
 			m_tFrame.dwSpeed = 50;
@@ -439,10 +492,10 @@ void CKirby::Jump()
 	}
 }
 
+// 태클
 // 이동과 점프의 조합 로직
-// 속도는 더 빠르고 HitBox 발생.
-// 소형 몬스터에게 데미지를 입힌다. 대형, 보스는 X
-// TODO: HitBox 추가
+// 소형 적에게 데미지를 입힌다. 대형, 보스는 X
+// 공격력이 20이된다. 자신은 데미지를 입지 않게 된다.
 void CKirby::Slide()
 {
 	if (m_bSlide)
@@ -476,6 +529,8 @@ void CKirby::Slide()
 			m_bSlide = false;
 		}
 	}
+	else
+		m_iAtt = 10;
 }
 
 void CKirby::SceneChange()
@@ -490,6 +545,13 @@ void CKirby::SceneChange()
 			m_tFrame.iScene = 0;
 			m_tFrame.dwTime = GetTickCount();
 			m_tFrame.dwSpeed = 100;
+			break;
+		case INHAILIDLE:
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 1;
+			m_tFrame.iScene = 14;
+			m_tFrame.dwTime = GetTickCount();
+			m_tFrame.dwSpeed = 600;
 			break;
 		case DOWN:
 			m_tFrame.iStart = 0;
@@ -506,25 +568,59 @@ void CKirby::SceneChange()
 			m_tFrame.dwSpeed = 100;
 			break;
 		case MOVE:
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 9;
-			m_tFrame.iScene = 3;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 70;
+			if (m_bInhail)
+			{
+				m_tFrame.iStart = 0;
+				m_tFrame.iEnd = 12;
+				m_tFrame.iScene = 15;
+				m_tFrame.dwTime = GetTickCount();
+				m_tFrame.dwSpeed = 70;
+			}
+			else
+			{
+				m_tFrame.iStart = 0;
+				m_tFrame.iEnd = 9;
+				m_tFrame.iScene = 3;
+				m_tFrame.dwTime = GetTickCount();
+				m_tFrame.dwSpeed = 70;
+			}
+
 			break;
 		case DASH:
-			m_tFrame.iStart = 1;
-			m_tFrame.iEnd = 7;
-			m_tFrame.iScene = 5;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 40;
+			if (m_bInhail)
+			{
+				m_tFrame.iStart = 0;
+				m_tFrame.iEnd = 12;
+				m_tFrame.iScene = 15;
+				m_tFrame.dwTime = GetTickCount();
+				m_tFrame.dwSpeed = 40;
+			}
+			else
+			{
+				m_tFrame.iStart = 1;
+				m_tFrame.iEnd = 7;
+				m_tFrame.iScene = 5;
+				m_tFrame.dwTime = GetTickCount();
+				m_tFrame.dwSpeed = 40;
+			}
 			break;
 		case JUMP:
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 11;
-			m_tFrame.iScene = 6;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 100;
+			if (m_bInhail)
+			{
+				m_tFrame.iStart = 0;
+				m_tFrame.iEnd = 4;
+				m_tFrame.iScene = 22;
+				m_tFrame.dwTime = GetTickCount();
+				m_tFrame.dwSpeed = 100;
+			}
+			else
+			{
+				m_tFrame.iStart = 0;
+				m_tFrame.iEnd = 11;
+				m_tFrame.iScene = 6;
+				m_tFrame.dwTime = GetTickCount();
+				m_tFrame.dwSpeed = 100;
+			}
 			break;
 		case FLY:
 			m_tFrame.iStart = 0;
@@ -547,13 +643,33 @@ void CKirby::SceneChange()
 			m_tFrame.dwTime = GetTickCount();
 			m_tFrame.dwSpeed = 100;
 			break;
-
+		case INHAIL:
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 4;
+			m_tFrame.iScene = 13;
+			m_tFrame.dwTime = GetTickCount();
+			m_tFrame.dwSpeed = 80;
+			break;
 		case DAMAGE:
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 7;
 			m_tFrame.iScene = 18;
 			m_tFrame.dwTime = GetTickCount();
 			m_tFrame.dwSpeed = 50;
+			break;
+		case EAT:
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 5;
+			m_tFrame.iScene = 16;
+			m_tFrame.dwTime = GetTickCount();
+			m_tFrame.dwSpeed = 60;
+			break;
+		case SHOOTSTAR:
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 4;
+			m_tFrame.iScene = 17;
+			m_tFrame.dwTime = GetTickCount();
+			m_tFrame.dwSpeed = 40;
 			break;
 		}
 		m_ePreState = m_eCurState;
@@ -569,8 +685,6 @@ void CKirby::ScrollMove()
 
 	if (WINCX * 0.5f > m_tInfo.fX + fScrollX && m_fVelocityX < 0)
 		GameManager->SetScrollX(m_fVelocityX);
-
-
 }
 
 void CKirby::isDamage()
@@ -586,10 +700,27 @@ void CKirby::isDamage()
 void CKirby::NoDamageState()
 {
 	if (m_eCurState == DAMAGE)
-		m_dwDamageTime = GetTickCount() + 2000;	
+		m_dwDamageTime = GetTickCount() + 2000;
 
 	if (m_dwDamageTime < GetTickCount())
 		m_bNoDamage = false;
+}
+
+void CKirby::Eat()
+{
+	if(m_bEat)
+	{
+		m_eCurState = EAT;
+
+		if (m_tFrame.iStart == m_tFrame.iEnd)
+		{
+			if (m_eInhailType == NORMAL)
+				m_eInhailType = EMPTY;
+
+			m_bEat = false;
+			m_eCurState = IDLE;
+		}
+	}
 }
 
 void CKirby::CreateDashEffect()

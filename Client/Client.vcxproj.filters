@@ -79,9 +79,6 @@
     <Filter Include="02.Kirby\00.Weapon\00.Sword">
       <UniqueIdentifier>{43f5ed49-fb37-4b12-82a2-01d2f80724ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.Enemy\Wadorudi">
-      <UniqueIdentifier>{e070ccb2-fd88-48d5-b9e3-fdeaf4a6d38e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04.Effect">
       <UniqueIdentifier>{54f175a1-61a1-4ec5-a9c4-1bed3ffc4c6f}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,15 @@
     </Filter>
     <Filter Include="01.GameObject\02.HitBox">
       <UniqueIdentifier>{a2bf68f1-905d-4583-b044-6b275cba23c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Normal_Kirby\03.Eff_ShootingStar">
+      <UniqueIdentifier>{241606b6-bf27-4cd0-8b08-4975cd66bc4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\00.Wadorudi">
+      <UniqueIdentifier>{e070ccb2-fd88-48d5-b9e3-fdeaf4a6d38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\01.Scarfy">
+      <UniqueIdentifier>{160bb30c-1e8e-4da2-8986-05bc7cc3beff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +206,16 @@
       <Filter>01.GameObject\02.HitBox</Filter>
     </ClInclude>
     <ClInclude Include="Wadorudi.h">
-      <Filter>03.Enemy\Wadorudi</Filter>
+      <Filter>03.Enemy\00.Wadorudi</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>03.Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Eff_ShootingStar.h">
+      <Filter>04.Effect\00.Normal_Kirby\03.Eff_ShootingStar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scarfy.h">
+      <Filter>03.Enemy\01.Scarfy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,7 +290,16 @@
       <Filter>01.GameObject\02.HitBox</Filter>
     </ClCompile>
     <ClCompile Include="Wadorudi.cpp">
-      <Filter>03.Enemy\Wadorudi</Filter>
+      <Filter>03.Enemy\00.Wadorudi</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>03.Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Eff_ShootingStar.cpp">
+      <Filter>04.Effect\00.Normal_Kirby\03.Eff_ShootingStar</Filter>
+    </ClCompile>
+    <ClCompile Include="Scarfy.cpp">
+      <Filter>03.Enemy\01.Scarfy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

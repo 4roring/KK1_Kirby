@@ -14,7 +14,8 @@ public:
 	const int& GetAtt() { return m_iAtt; }
 	bool GetActive() { return m_bActive; }
 	bool GetFlipX() { return m_bFlipX; }
-
+	bool GetInhail() { return m_bInhail; }
+	ENEMYTYPE GetInhailType() { return m_eInhailType; }
 
 public:
 	void SetPos(float fX, float fY) { m_tInfo.fX = fX, m_tInfo.fY = fY; }
@@ -22,7 +23,9 @@ public:
 	void SetActive(bool bActive) { m_bActive = bActive; }
 	void SetFlipX(bool bFlipX) { m_bFlipX = bFlipX; }
 	void SetTarget(CGameObject* pObj) { m_pTarget = pObj; }
+	void SetAtt(int iAtt) { m_iAtt = iAtt; }
 	void SetInhail() { m_bInhail = true; }
+	void SetInhailType(ENEMYTYPE eInhailType) { m_eInhailType = eInhailType; }
 
 public:
 	virtual void Initialize() PURE;
@@ -59,5 +62,7 @@ protected:
 	FRAME m_tFrame;
 	TCHAR* m_pFrameKey;
 	CGameObject* m_pTarget;
+
+	ENEMYTYPE m_eInhailType;
 };
 

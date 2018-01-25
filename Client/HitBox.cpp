@@ -34,6 +34,7 @@ void CHitBox::LateUpdate()
 
 void CHitBox::Render(HDC hDC)
 {
+	DrawHitBox(hDC);
 }
 
 void CHitBox::Release()

@@ -25,15 +25,8 @@ void CWadorudi::Initialize()
 	m_fImageX = 0.f;
 	m_fImageY = -12.f;
 
-	m_fSpeed = 3.8f;
-	m_fJumpPow = 8.6f;
-
 	m_fVelocityX = 0.f;
 	m_fVelocityY = 0.f;
-	m_fGravity = 0.0f;
-	m_fDrag = 0.f;
-	m_fAccX = 0.65f;
-	m_fAccY = 1.2f;
 
 	m_bFlipX = false;
 	m_bIsDamage = false;
@@ -46,6 +39,9 @@ void CWadorudi::Initialize()
 	m_tFrame.iScene = 0;
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 130;
+
+	m_bInhail = false;
+	m_eInhailType = NORMAL;
 }
 
 void CWadorudi::LateInit()
@@ -85,6 +81,25 @@ void CWadorudi::LateUpdate()
 {
 	if (m_bActive)
 	{
+		if (m_bInhail)
+		{
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 0;
+			m_tFrame.iScene = 2;
+		}
+		else if (m_bIsDamage && m_tFrame.iScene == 0)
+		{
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 0;
+			m_tFrame.iScene = 1;
+		}
+		else if(!m_bIsDamage && m_tFrame.iScene == 1)
+		{
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 7;
+			m_tFrame.iScene = 0;
+		}
+
 		FrameMove();
 		UpdateRect(m_fImageX, m_fImageY);
 
@@ -109,53 +124,9 @@ void CWadorudi::ApplyDamage(int iDamage)
 {
 	if (!m_bIsDamage)
 	{
-		std::cout << m_iHp << std::endl;
-		
-		CActor::ApplyDamage(iDamage);
+		CEnemy::ApplyDamage(iDamage);
 		m_bIsDamage = true;
 	}
 }
 
-void CWadorudi::isDamage()
-{
-	float fAccX = m_bFlipX ? -0.1f : 0.1f;
-
-	m_fVelocityX += fAccX;
-
-	m_tFrame.iStart = 0;
-	m_tFrame.iEnd = 0;
-	m_tFrame.iScene = 1;
-
-	if (abs(m_fVelocityX) > 3.f)
-	{
-		m_bIsDamage = false;
-
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 7;
-		m_tFrame.iScene = 0;
-
-		if (m_iHp <= 0)
-			m_bActive = false;
-
-		std::cout << m_bActive << std::endl;
-	}
-}
-
-void CWadorudi::isInhail()
-{
-	if (m_pTarget == nullptr)
-		m_pTarget = GameManager->GetPlayer();
-
-	float fAngle = CMath::DistanceAngle(this, m_pTarget);
-	float fDistance = CMath::Distance(this, m_pTarget);
-
-	m_tInfo.fX += cosf(fAngle) * 2.f;
-	m_tInfo.fY += sinf(fAngle) * 2.f;
-
-	if (fDistance < 2.f)
-	{
-		m_bActive = false;
-		m_iHp = 0;
-	}
-}
 

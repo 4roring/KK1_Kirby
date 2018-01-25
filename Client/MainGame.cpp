@@ -32,17 +32,24 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("Normal_Effect"), TEXT("../Image/Effect/Normal_Effect.bmp"));
 	BmpManager->RegistBitmap(TEXT("Normal_Attack_Left"), TEXT("../Image/Effect/NormalAttack_Left.bmp"));
 	BmpManager->RegistBitmap(TEXT("Normal_Attack_Right"), TEXT("../Image/Effect/NormalAttack_Right.bmp"));
-	
+	BmpManager->RegistBitmap(TEXT("ShootingStar_Effect"), TEXT("../Image/Effect/ShootingStar_Effect.bmp"));
+
 	// 플레이어 로딩
 	BmpManager->RegistBitmap(TEXT("Normal_Left"), TEXT("../Image/Normal_Kirby/Normal_Left.bmp"));
 	BmpManager->RegistBitmap(TEXT("Normal_Right"), TEXT("../Image/Normal_Kirby/Normal_Right.bmp"));
 
 	// 적 캐릭터 로딩
-	BmpManager->RegistBitmap(TEXT("Wadorudi_Left"),
+	BmpManager->RegistBitmap(TEXT("Wadorudi_Left"), // 와도루디
 		TEXT("../Image/Enemy/Wadorudi/Left.bmp"));
 	BmpManager->RegistBitmap(TEXT("Wadorudi_Right"),
 		TEXT("../Image/Enemy/Wadorudi/Right.bmp"));
-	BmpManager->RegistBitmap(TEXT("Black_1_Left"),
+
+	BmpManager->RegistBitmap(TEXT("Scarfy_Left"), // 스컬피
+		TEXT("../Image/Enemy/Scarfy/Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("Scarfy_Right"),
+		TEXT("../Image/Enemy/Scarfy/Right.bmp"));
+
+	BmpManager->RegistBitmap(TEXT("Black_1_Left"), // 블랙 메타나이트
 		TEXT("../Image/Enemy/BlackMetaKnight/Left_Move_Attack.bmp"));
 	BmpManager->RegistBitmap(TEXT("Black_1_Right"),
 		TEXT("../Image/Enemy/BlackMetaKnight/Right_Move_Attack.bmp"));
