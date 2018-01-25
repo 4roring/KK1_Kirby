@@ -13,6 +13,7 @@ CGround::~CGround()
 
 void CGround::Initialize()
 {
+	m_bActive = true;
 }
 
 void CGround::LateInit()
@@ -30,7 +31,17 @@ void CGround::LateUpdate()
 
 void CGround::Render(HDC hDC)
 {
-	//Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	//int iScrollX = (int)GameManager->GetScrollX();
+	//int iScrollY = (int)GameManager->GetScrollY();
+
+	//if(!m_bFlipX)
+	//	Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top + iScrollY,
+	//		m_tRect.right + iScrollX, m_tRect.bottom + iScrollY);
+	//else
+	//{
+	//	MoveToEx(hDC, m_tP1.x + iScrollX, m_tP1.y + iScrollY, nullptr);
+	//	LineTo(hDC, m_tP2.x + iScrollX, m_tP2.y + iScrollY);
+	//}
 }
 
 void CGround::Release()

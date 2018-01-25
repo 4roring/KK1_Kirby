@@ -22,7 +22,7 @@ void CEff_Dash::Initialize()
 void CEff_Dash::LateInit()
 {
 	m_tFrame.iStart = 0;
-	m_tFrame.iEnd = 34;
+	m_tFrame.iEnd = 11;
 	m_tFrame.iScene = m_bFlipX ? 3 : 2;
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 30;

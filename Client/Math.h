@@ -10,5 +10,6 @@ public:
 
 public:
 	static float Distance(CGameObject* pDst, CGameObject* pSrc);
+	static float DistanceAngle(CGameObject* pDst, CGameObject* pSrc);
 };
 

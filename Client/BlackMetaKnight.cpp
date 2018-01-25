@@ -19,10 +19,7 @@ void CBlackMetaKnight::Initialize()
 
 	m_fSpeed = 4.f;
 
-	BmpManager()->RegistBitmap(TEXT("Black_1_Left"), 
-		TEXT("../Image/Enemy/BlackMetaKnight/Left_Move_Attack.bmp"));
-	BmpManager()->RegistBitmap(TEXT("Black_1_Right"), 
-		TEXT("../Image/Enemy/BlackMetaKnight/Right_Move_Attack.bmp"));
+
 
 	m_pFrameKey = TEXT("Black_1_Left");
 

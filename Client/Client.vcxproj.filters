@@ -43,6 +43,45 @@
     <Filter Include="97.Managers\04.Collision">
       <UniqueIdentifier>{ab56879e-bcdc-4633-89e5-262c60c56203}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Scene">
+      <UniqueIdentifier>{c40b66b1-217a-4cae-829b-395b30cd09df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Managers\05.SceneManager">
+      <UniqueIdentifier>{e4500db9-1df8-49e4-87b0-1605767c5f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\00.Logo">
+      <UniqueIdentifier>{6b0f52e9-8ebe-4b16-8cef-1d0150284416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\01.Title">
+      <UniqueIdentifier>{6d8fe8b6-76bd-485d-a57a-192dcdf89407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\02.Stage1-1">
+      <UniqueIdentifier>{ae9995b3-2def-4b19-955d-72c9e9b91351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\99.Boss">
+      <UniqueIdentifier>{9793db2f-be2b-474d-b2a8-4fce7182b619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\98.MidBoss">
+      <UniqueIdentifier>{a1077753-6b13-45af-9548-34e38bd943fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\04.Stage1-3">
+      <UniqueIdentifier>{ccd77105-503e-4ff8-9ed5-86794b3e9663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\03.Stage1-2">
+      <UniqueIdentifier>{8e7e06fe-d5d9-4138-8b95-b9e3700ab465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Kirby">
+      <UniqueIdentifier>{85c68ade-68ef-4da5-afd3-9dafbd0c5e79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Kirby\00.Weapon">
+      <UniqueIdentifier>{6f44e659-0b30-484e-bd4a-717300f413c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Kirby\00.Weapon\00.Sword">
+      <UniqueIdentifier>{43f5ed49-fb37-4b12-82a2-01d2f80724ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\Wadorudi">
+      <UniqueIdentifier>{e070ccb2-fd88-48d5-b9e3-fdeaf4a6d38e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="04.Effect">
       <UniqueIdentifier>{54f175a1-61a1-4ec5-a9c4-1bed3ffc4c6f}</UniqueIdentifier>
     </Filter>
@@ -58,14 +97,8 @@
     <Filter Include="04.Effect\00.Normal_Kirby\00.Eff_NormalAtt">
       <UniqueIdentifier>{4132dae0-4213-412f-8ea8-1f1176f8d2c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.GameObject\02.Kirby">
-      <UniqueIdentifier>{85c68ade-68ef-4da5-afd3-9dafbd0c5e79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.GameObject\02.Kirby\00.Weapon">
-      <UniqueIdentifier>{6f44e659-0b30-484e-bd4a-717300f413c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.GameObject\02.Kirby\00.Weapon\00.Sword">
-      <UniqueIdentifier>{43f5ed49-fb37-4b12-82a2-01d2f80724ce}</UniqueIdentifier>
+    <Filter Include="01.GameObject\02.HitBox">
+      <UniqueIdentifier>{a2bf68f1-905d-4583-b044-6b275cba23c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -113,7 +146,7 @@
       <Filter>01.GameObject\00.Actor</Filter>
     </ClInclude>
     <ClInclude Include="Kirby.h">
-      <Filter>01.GameObject\02.Kirby</Filter>
+      <Filter>02.Kirby</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>97.Managers\01.InputManager</Filter>
@@ -145,6 +178,30 @@
     <ClInclude Include="Eff_Dash.h">
       <Filter>04.Effect\00.Normal_Kirby\02.Eff_Dash</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>05.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>97.Managers\05.SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>05.Scene\99.Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Logo.h">
+      <Filter>05.Scene\00.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>05.Scene\01.Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_1.h">
+      <Filter>05.Scene\02.Stage1-1</Filter>
+    </ClInclude>
+    <ClInclude Include="HitBox.h">
+      <Filter>01.GameObject\02.HitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Wadorudi.h">
+      <Filter>03.Enemy\Wadorudi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -164,7 +221,7 @@
       <Filter>01.GameObject\00.Actor</Filter>
     </ClCompile>
     <ClCompile Include="Kirby.cpp">
-      <Filter>01.GameObject\02.Kirby</Filter>
+      <Filter>02.Kirby</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>97.Managers\01.InputManager</Filter>
@@ -195,6 +252,30 @@
     </ClCompile>
     <ClCompile Include="Eff_Dash.cpp">
       <Filter>04.Effect\00.Normal_Kirby\02.Eff_Dash</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>97.Managers\05.SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>05.Scene\99.Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>05.Scene\00.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>05.Scene\01.Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_1.cpp">
+      <Filter>05.Scene\02.Stage1-1</Filter>
+    </ClCompile>
+    <ClCompile Include="HitBox.cpp">
+      <Filter>01.GameObject\02.HitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Wadorudi.cpp">
+      <Filter>03.Enemy\Wadorudi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

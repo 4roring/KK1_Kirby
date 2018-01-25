@@ -3,7 +3,7 @@
 
 
 CGameObject::CGameObject()
-	: m_bActive(true), m_bFlipX(false)
+	: m_bActive(true), m_bFlipX(false), m_pTarget(nullptr), m_bInhail(false)
 {
 	m_tInfo = {};
 	m_tRect = {};
@@ -39,7 +39,7 @@ void CGameObject::UpdateRect(float fX, float fY)
 	m_tHitBox.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2.f);
 	m_tHitBox.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2.f);
 	m_tHitBox.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2.f);
-	m_tHitBox.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2.f);
+	m_tHitBox.bottom = LONG(m_tInfo.fY + 20.f);
 }
 
 void CGameObject::FrameMove()
@@ -56,10 +56,10 @@ void CGameObject::FrameMove()
 
 void CGameObject::DrawObject(HDC hDC, const TCHAR* szName)
 {
-	int iScrollX = (int)GameManager()->GetScrollX();
-	int iScrollY = (int)GameManager()->GetScrollY();
+	int iScrollX = (int)GameManager->GetScrollX();
+	int iScrollY = (int)GameManager->GetScrollY();
 
-	HDC hMemDC = BmpManager()->GetMapBit()[szName]->GetMemDC();
+	HDC hMemDC = BmpManager->GetMapBit()[szName]->GetMemDC();
 
 	int iSizeX = (int)m_tInfo.fCX;
 	int iSizeY = (int)m_tInfo.fCY;
@@ -68,5 +68,14 @@ void CGameObject::DrawObject(HDC hDC, const TCHAR* szName)
 		iSizeX, iSizeY, hMemDC,
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY,
 		iSizeX, iSizeY, RGB(255, 0, 255));
+}
+
+void CGameObject::DrawHitBox(HDC hDC)
+{
+	int iScrollX = (int)GameManager->GetScrollX();
+	int iScrollY = (int)GameManager->GetScrollY();
+
+	Rectangle(hDC, m_tHitBox.left + iScrollX, m_tHitBox.top + iScrollY,
+		m_tHitBox.right + iScrollX, m_tHitBox.bottom + iScrollY);
 }
 

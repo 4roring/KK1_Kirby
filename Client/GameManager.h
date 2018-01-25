@@ -1,7 +1,6 @@
 #pragma once
 
 class CGameObject;
-
 class CGameManager :
 	public CSingleton<CGameManager>
 {
@@ -17,15 +16,17 @@ public:
 	float GetScrollY() { return m_fScrollY; }
 	float GetMaxScrollX() { return m_fMaxScrollX; }
 	float GetMaxScrollY() { return m_fMaxScrollY; }
+	RECT& GetScreen() { return m_tScreenRect; }
 
 public:
-	void SetScrollX(float fX) { m_fScrollX = fX; }
-	void SetScrollY(float fY) { m_fScrollY = fY; }
+	void SetScrollX(float fX) { m_fScrollX -= fX; }
+	void SetScrollY(float fY) { m_fScrollY -= fY; }
 	void SetMaxScrollX(float fX) { m_fMaxScrollX = fX; }
 	void SetMaxScrollY(float fY) { m_fMaxScrollY = fY; }
 
 public:
 	void AddObject(CGameObject* pObject, OBJID eID);
+	void ReleaseObj(OBJID eID);
 
 public:
 	void LateInit();
@@ -37,6 +38,8 @@ public:
 
 private:
 	OBJLIST m_ObjectList[OBJ_END];
+
+	RECT m_tScreenRect;
 
 	float m_fScrollX;
 	float m_fScrollY;

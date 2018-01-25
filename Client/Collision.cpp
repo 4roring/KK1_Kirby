@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Collision.h"
-#include "GameObject.h"
+#include "Actor.h"
+#include "Ground.h"
 
 CCollision::CCollision()
 {
@@ -11,7 +12,7 @@ CCollision::~CCollision()
 {
 }
 
-void CCollision::HitRect(OBJLIST & dstList, OBJLIST & srcList)
+void CCollision::ActorToActor(OBJLIST & dstList, OBJLIST & srcList)
 {
 	for (auto pDst : dstList)
 	{
@@ -27,64 +28,142 @@ void CCollision::HitRect(OBJLIST & dstList, OBJLIST & srcList)
 
 			if (IntersectRect(&rc, &(pDst->GetRect()), &(pSrc->GetRect())))
 			{
-				// TODO: 데미지 처리 등
+				dynamic_cast<CActor*>(pDst)->ApplyDamage(10);
+				dynamic_cast<CActor*>(pSrc)->ApplyDamage(10);
 			}
 		}
 	}
 }
 
-void CCollision::Circle(OBJLIST & dstList, OBJLIST & srcList)
-{
-}
-
 bool CCollision::Ground(OBJLIST & dstList, OBJLIST & srcList)
 {
-	for (auto pDst : dstList)
+	for (auto& pDst : dstList)
 	{
-		// 이미 죽은 객체라면 충돌 검출은 건너 뛰어라!
 		if (!pDst->GetActive())
 			return false;
 
-		for (auto pSrc : srcList)
+		for (auto& pSrc : srcList)
 		{
-			// 이미 죽은 객체라면 충돌 검출은 건너 뛰어라!
 			if (!pSrc->GetActive())
 				return false;
 
 			float fMoveX = 0.f;
 			float fMoveY = 0.f;
 
-			RECT rc = {};
-
-			if (IntersectRect(&rc, &(pDst->GetHitBox()), &(pSrc->GetRect())))
+			// FlipX로 지형의 상태를 Line과 Rect로 구분한다.
+			// false = Rect, true = Line
+			if (!pSrc->GetFlipX())
 			{
-				fMoveX = rc.right - rc.left;
-				fMoveY = rc.top - rc.bottom;
+				// Rect 벽 충돌
+				RECT rc = {};
 
-				if (fMoveX > fMoveY)
+				if (IntersectRect(&rc, &(pDst->GetHitBox()), &(pSrc->GetRect())))
 				{
-					if (pDst->GetInfo().fY < pSrc->GetInfo().fY)
-						fMoveY *= -1.f;
+					fMoveX = float(rc.right - rc.left);
+					fMoveY = float(rc.bottom - rc.top);
 
-					pDst->SetPos(pDst->GetInfo().fX, pDst->GetInfo().fY + fMoveY);
+					if (fMoveX < fMoveY)
+					{
+						if (pDst->GetInfo().fX < pSrc->GetRect().left)
+							fMoveX *= -1.f;
+
+						pDst->SetPos(pDst->GetInfo().fX + fMoveX, pDst->GetInfo().fY);
+						dynamic_cast<CActor*>(pDst)->SetVelocityX(0.f);
+					}
+					else
+					{
+						if (pDst->GetInfo().fY + pDst->GetHitBoxCY() * 0.5f > pSrc->GetRect().bottom)
+							pDst->SetPos(pDst->GetInfo().fX, pDst->GetInfo().fY + fMoveY * 0.49f);
+						else
+						{
+							// 라인충돌.
+							float x1 = float(pSrc->GetRect().left);
+							float x2 = float(pSrc->GetRect().right);
+							float y = float(pSrc->GetRect().top);
+
+							float fGradient = (y - y) / (x2 - x1);
+							fMoveY = fGradient * (pDst->GetInfo().fX - x1) + y;
+							pDst->SetPos(pDst->GetInfo().fX, fMoveY - pDst->GetHitBoxCY() * 0.475f);
+						}
+							
+						dynamic_cast<CActor*>(pDst)->SetVelocityY(0.f);
+
+						return true;
+					}
 				}
-				else // x축으로 밀어낼 것
-				{
-					if (pDst->GetInfo().fX < pSrc->GetInfo().fX)
-						fMoveX *= -1.f;
-
-					pDst->SetPos(pDst->GetInfo().fX + fMoveX, pDst->GetInfo().fY);
-				}
-
-				return true;
 			}
 			else
-				return false;
+			{
+				// 라인 Ground 충돌
+				float x1 = (float)dynamic_cast<CGround*>(pSrc)->GetPoint_1().x;
+				float x2 = (float)dynamic_cast<CGround*>(pSrc)->GetPoint_2().x;
+
+				if (x1 < pDst->GetInfo().fX && pDst->GetInfo().fX < x2)
+				{
+					float y1 = (float)dynamic_cast<CGround*>(pSrc)->GetPoint_1().y;
+					float y2 = (float)dynamic_cast<CGround*>(pSrc)->GetPoint_2().y;
+				
+					float fGradient = (y2 - y1) / (x2 - x1);
+					fMoveY = fGradient * (pDst->GetInfo().fX - x1) + y1;
+					
+					if (fMoveY - pDst->GetHitBoxCY() * 0.5f >= pDst->GetInfo().fY)
+						return false;
+
+					pDst->SetPos(pDst->GetInfo().fX, fMoveY - pDst->GetHitBoxCY() * 0.5f);
+					dynamic_cast<CActor*>(pDst)->SetVelocityY(0.f);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool CCollision::Screen(RECT & tScreen, CGameObject* pObj)
+{
+	RECT rc = {};
+
+	if (IntersectRect(&rc, &tScreen, &pObj->GetHitBox()))
+		return true;
+	
+	return false;
+}
+
+void CCollision::HitBox(OBJLIST & dstList, OBJLIST & srcList)
+{
+	for (auto pDst : dstList)
+	{
+		if (!pDst->GetActive())
+			continue;
+
+		for (auto pSrc : srcList)
+		{
+			if (!pSrc->GetActive())
+				continue;
+
+			RECT rc = {};
+			if (IntersectRect(&rc, &(pDst->GetHitBox()), &(pSrc->GetHitBox())))
+			{
+				dynamic_cast<CActor*>(pDst)->ApplyDamage(pSrc->GetAtt());
+				pSrc->SetActive(false);
+			}
 		}
 	}
 }
 
-bool CCollision::CheckCircle(CGameObject * pDst, CGameObject * pSrc)
+bool CCollision::InhailToEnemy(CGameObject * pObj, OBJLIST & EnemyList)
 {
+	for (auto pEnemy : EnemyList)
+	{
+		if (!pEnemy->GetActive())
+			continue;
+
+		RECT rc = {};
+		if (IntersectRect(&rc, &(pObj->GetRect()), &(pEnemy->GetHitBox())))
+		{
+			pEnemy->SetInhail();
+			return true;
+		}
+	}
 	return false;
 }

@@ -20,6 +20,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <cmath>
+#include <ctime>
 
 #include "vld.h"
 
@@ -40,3 +41,4 @@
 #include "GameManager.h"
 #include "InputManager.h"
 #include "BmpManager.h"
+#include "SceneManager.h"

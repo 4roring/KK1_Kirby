@@ -8,11 +8,10 @@ public:
 	~CCollision();
 
 public: // 상시 충돌
-	static void HitRect(OBJLIST& dstList, OBJLIST& srcList);
-	static void Circle(OBJLIST& dstList, OBJLIST& srcList);
+	static void ActorToActor(OBJLIST& dstList, OBJLIST& srcList);
 	static bool Ground(OBJLIST& dstList, OBJLIST& srcList);
-
-public:
-	static bool CheckCircle(CGameObject* pDst, CGameObject *pSrc);
+	static bool Screen(RECT& tScreen, CGameObject* pObj);
+	static void HitBox(OBJLIST& dstList, OBJLIST& srcList);
+	static bool InhailToEnemy(CGameObject* pObj, OBJLIST& EnemyList);
 };
 

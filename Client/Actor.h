@@ -15,10 +15,29 @@ public:
 	virtual void Render(HDC hDC) PURE;
 	virtual void Release() PURE;
 
-protected:
-	int iMaxHp;
-	int iHp;
+public:
+	float GetVelocityX() { return m_fVelocityX; }
+	float GetVelocityY() { return m_fVelocityY; }
+	float GetStartX() { return m_fStartX; }
+	float GetStartY() { return m_fStartY; }
+
+public:
+	void SetVelocityX(float fVelocityX) { m_fVelocityX = fVelocityX; }
+	void SetVelocityY(float fVelocityY) { m_fVelocityY = fVelocityY; }
+	void SetStartPos(float fX, float fY) { m_fStartX = fX, m_fStartY = fY; }
+	void SetPosToStart() { m_tInfo.fX = m_fStartX, m_tInfo.fY = m_fStartY; }
+
 	
+public: // 전투 관련
+	virtual void ApplyDamage(int iDamage) { m_iHp -= iDamage; }
+
+protected:
+	int m_iMaxHp;
+	int m_iHp;
+	
+	float m_fStartX;
+	float m_fStartY;
+
 	float m_fJumpPow;
 
 	float m_fGravity;
@@ -29,6 +48,6 @@ protected:
 	float m_fAccX;
 	float m_fAccY;
 
-	bool m_bFlipX;
+	bool m_bIsDamage;
 };
 
