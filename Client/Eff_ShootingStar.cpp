@@ -20,8 +20,6 @@ void CEff_ShootingStar::Initialize()
 	m_iHitBoxCY = 70;
 
 	m_iAtt = 60;
-
-	m_pFrameKey = TEXT("ShootingStar_Effect");
 }
 
 void CEff_ShootingStar::LateInit()
@@ -32,6 +30,7 @@ void CEff_ShootingStar::LateInit()
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 30;
 	m_fSpeed = m_bFlipX ? 15.f : -15.f;
+	m_pFrameKey = m_bFlipX ? TEXT("ShootingStar_Right"):TEXT("ShootingStar_Left");
 }
 
 OBJ_STATE CEff_ShootingStar::Update()

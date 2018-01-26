@@ -20,7 +20,9 @@ void CKirby::Initialize()
 	m_iMaxHp = 60;
 	m_iHp = m_iMaxHp;
 
-	m_tInfo = { 50, 400, 96, 105 };
+	//m_tInfo = { 50, 400, 96, 105 };
+	m_tInfo.fCX = 96;
+	m_tInfo.fCY = 105;
 	m_iHitBoxCX = 40;
 	m_iHitBoxCY = 40;
 
@@ -90,9 +92,9 @@ void CKirby::LateUpdate()
 
 	FrameMove();
 
-	UpdateRect(m_fImageX, m_fImageY);
+	KirbyUpdateRect();
 
-	m_bIsGround = CCollision::Ground(GameManager->GetObjList(OBJ_PLAYER), GameManager->GetObjList(OBJ_GROUND));
+	m_bIsGround = CCollision::PlayerToGround(this, GameManager->GetObjList(OBJ_GROUND));
 
 	if (m_tInfo.fY + m_iHitBoxCY * 0.5f < 0)
 		m_tInfo.fY = 0;
@@ -108,7 +110,8 @@ void CKirby::LateUpdate()
 
 void CKirby::Render(HDC hDC)
 {
-	//DrawHitBox(hDC);
+	if(GameManager->GetDebugMode())
+		DrawHitBox(hDC);
 
 	if (m_bEat)
 		DrawAlphaBlack(hDC, 100);
@@ -133,16 +136,15 @@ void CKirby::ApplyDamage(int iDamage)
 	}
 
 	if (m_bSlide)
-	{
-		m_eCurState = DAMAGE;
 		m_bNoDamage = true;
-		m_bSlide = false;
-	}
 }
 
 void CKirby::Input()
 {
 	if (m_bSlide) return;
+
+	if (InputManager->KeyDown(VK_UP))
+		CCollision::InterectionDoor(this, GameManager->GetObjList(OBJ_INTERECTION));
 
 	if (m_fVelocityX == 0 && m_fVelocityY == 0 && !m_bSlide && !m_bJump && !m_bAttack)
 	{
@@ -185,9 +187,9 @@ void CKirby::Input()
 		m_bDash = false;
 	}
 
-	if (InputManager->Key(VK_DOWN))
+	if (InputManager->Key(VK_DOWN) && !m_bNoDamage)
 	{
-		m_iHitBoxCY = 20;
+		m_iHitBoxCY = 15;
 
 		if (m_bInhail)
 		{
@@ -324,7 +326,6 @@ void CKirby::Attack()
 		if (m_tFrame.iStart == 2)
 		{
 			++m_tFrame.iStart;
-			std::cout << "공기 몇개요?" << std::endl;
 			float fX = m_bFlipX ? 50.f : -50.f;
 			GameManager->AddObject(CAbsFactory<CEff_Normal_FlyAtt>::CreateObject(m_tInfo.fX + fX, m_tInfo.fY, m_bFlipX), PLAYER_ATT);
 		}
@@ -343,7 +344,6 @@ void CKirby::Attack()
 			++m_tFrame.iStart;
 		}
 			
-
 		if (m_tFrame.iStart == m_tFrame.iEnd)
 		{
 			m_bAttack = false;
@@ -688,20 +688,38 @@ void CKirby::ScrollMove()
 	float fScrollX = GameManager->GetScrollX();
 
 	if (WINCX * 0.5f < m_tInfo.fX + fScrollX && m_fVelocityX > 0)
-		GameManager->SetScrollX(m_fVelocityX);
+		GameManager->SetScrollX(fScrollX - m_fVelocityX);
 
 	if (WINCX * 0.5f > m_tInfo.fX + fScrollX && m_fVelocityX < 0)
-		GameManager->SetScrollX(m_fVelocityX);
+		GameManager->SetScrollX(fScrollX - m_fVelocityX);
 }
 
 void CKirby::isDamage()
 {
 	m_fVelocityX = m_bFlipX ? -2.f : 2.f;
 
+	if (m_bSlide)
+	{
+		m_fVelocityX = m_bFlipX ? -20.f : 20.f;
+		m_fVelocityY = 5.f;
+		m_bSlide = false;
+	}
+	else
+	{
+		m_fVelocityX = m_bFlipX ? -3.f : 3.f;
+		m_fVelocityY -= 0.1f;
+	}
+		
+	
 	m_tInfo.fX += m_fVelocityX;
+	m_tInfo.fY -= m_fVelocityY;
 
 	if (m_tFrame.iStart == m_tFrame.iEnd)
+	{
 		m_eCurState = IDLE;
+		m_bSlide = false;
+	}
+	
 }
 
 void CKirby::NoDamageState()
@@ -730,6 +748,19 @@ void CKirby::Eat()
 	}
 }
 
+void CKirby::KirbyUpdateRect()
+{
+	m_tRect.left = LONG(m_tInfo.fX + m_fImageX - m_tInfo.fCX / 2.f);
+	m_tRect.top = LONG(m_tInfo.fY + m_fImageY - m_tInfo.fCY / 2.f);
+	m_tRect.right = LONG(m_tInfo.fX + m_fImageX + m_tInfo.fCX / 2.f);
+	m_tRect.bottom = LONG(m_tInfo.fY + m_fImageY + m_tInfo.fCY / 2.f);
+
+	m_tHitBox.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2.f);
+	m_tHitBox.top = LONG(m_tInfo.fY - m_iHitBoxCY + 20.f);
+	m_tHitBox.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2.f);
+	m_tHitBox.bottom = LONG(m_tInfo.fY + 20.f);
+}
+
 void CKirby::CreateDashEffect()
 {
 	GameManager->AddObject(CAbsFactory<CEff_Dash>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), OBJ_EFFECT);
@@ -739,7 +770,7 @@ void CKirby::DrawAlphaBlack(HDC hDC, int iAlpha)
 {
 	HDC hMemDC = BmpManager->GetMapBit()[TEXT("BackBlack")]->GetMemDC();
 
-	BLENDFUNCTION bf = { 0, 0, iAlpha, 0 };
+	BLENDFUNCTION bf = { 0, 0, (BYTE)iAlpha, 0 };
 
 	GdiAlphaBlend(hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, WINCX, WINCY, bf);
 }

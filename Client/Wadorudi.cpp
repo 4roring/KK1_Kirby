@@ -19,8 +19,8 @@ void CWadorudi::Initialize()
 	SetPosToStart();
 	m_tInfo.fCX = 69;
 	m_tInfo.fCY = 69;
-	m_iHitBoxCX = 40;
-	m_iHitBoxCY = 40;
+	m_iHitBoxCX = 50;
+	m_iHitBoxCY = 50;
 
 	m_fImageX = 0.f;
 	m_fImageY = -12.f;
@@ -53,7 +53,7 @@ OBJ_STATE CWadorudi::Update()
 	if (CheckScreen())
 	{
 		m_bActive = true;
-		if (m_bActive && m_iHp <= 0)
+		if (m_bActive && m_iHp <= 0 && !m_bIsDamage)
 			m_bActive = false;
 	}
 	else
@@ -81,6 +81,8 @@ void CWadorudi::LateUpdate()
 {
 	if (m_bActive)
 	{
+		m_pFrameKey = m_bFlipX ? TEXT("Wadorudi_Right") : TEXT("Wadorudi_Left");
+
 		if (m_bInhail)
 		{
 			m_tFrame.iStart = 0;
@@ -111,22 +113,14 @@ void CWadorudi::Render(HDC hDC)
 {
 	if (m_bActive)
 	{
-		//DrawHitBox(hDC);
+		if (GameManager->GetDebugMode())
+			DrawHitBox(hDC);
 		DrawObject(hDC, m_pFrameKey);
 	}
 }
 
 void CWadorudi::Release()
 {
-}
-
-void CWadorudi::ApplyDamage(int iDamage)
-{
-	if (!m_bIsDamage)
-	{
-		CEnemy::ApplyDamage(iDamage);
-		m_bIsDamage = true;
-	}
 }
 
 

@@ -14,5 +14,11 @@ public:
 	virtual void LateUpdate() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
+
+public:
+	void SetSceneID(SCENEID eID) { m_eSceneID = eID; }
+
+private:
+	SCENEID m_eSceneID;
 };
 

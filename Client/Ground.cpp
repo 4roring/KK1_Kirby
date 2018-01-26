@@ -31,17 +31,22 @@ void CGround::LateUpdate()
 
 void CGround::Render(HDC hDC)
 {
-	//int iScrollX = (int)GameManager->GetScrollX();
-	//int iScrollY = (int)GameManager->GetScrollY();
+	if (GameManager->GetDebugMode())
+	{
+		int iScrollX = (int)GameManager->GetScrollX();
+		int iScrollY = (int)GameManager->GetScrollY();
 
-	//if(!m_bFlipX)
-	//	Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top + iScrollY,
-	//		m_tRect.right + iScrollX, m_tRect.bottom + iScrollY);
-	//else
-	//{
-	//	MoveToEx(hDC, m_tP1.x + iScrollX, m_tP1.y + iScrollY, nullptr);
-	//	LineTo(hDC, m_tP2.x + iScrollX, m_tP2.y + iScrollY);
-	//}
+		if(!m_bFlipX)
+			Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top + iScrollY,
+				m_tRect.right + iScrollX, m_tRect.bottom + iScrollY);
+		else
+		{
+			MoveToEx(hDC, m_tP1.x + iScrollX, m_tP1.y + iScrollY, nullptr);
+			LineTo(hDC, m_tP2.x + iScrollX, m_tP2.y + iScrollY);
+		}
+	}
+
+
 }
 
 void CGround::Release()

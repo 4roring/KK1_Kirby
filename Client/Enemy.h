@@ -26,5 +26,6 @@ protected:
 protected:
 	bool m_bIsDead;
 	DWORD m_dwDeadTimer;
+	DWORD m_ewKnockBackTimer;
 };
 

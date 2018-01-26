@@ -39,7 +39,7 @@ void CGameObject::UpdateRect(float fX, float fY)
 	m_tHitBox.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2.f);
 	m_tHitBox.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2.f);
 	m_tHitBox.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2.f);
-	m_tHitBox.bottom = LONG(m_tInfo.fY + 20.f);
+	m_tHitBox.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2.f);
 }
 
 void CGameObject::FrameMove()

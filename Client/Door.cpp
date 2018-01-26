@@ -30,6 +30,13 @@ void CDoor::LateInit()
 
 OBJ_STATE CDoor::Update()
 {
+	if (!m_bActive)
+	{
+		SceneManager->SceneChange(m_eSceneID);
+		return DESTROY;
+	}
+		
+
 	return PLAY;
 }
 

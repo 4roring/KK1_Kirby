@@ -4,6 +4,7 @@
 
 CEnemy::CEnemy()
 {
+	m_ewKnockBackTimer = GetTickCount();
 }
 
 
@@ -13,22 +14,22 @@ CEnemy::~CEnemy()
 
 void CEnemy::ApplyDamage(int iDamage)
 {
-	CActor::ApplyDamage(iDamage);
+	if (!m_bIsDamage)
+	{
+		CActor::ApplyDamage(iDamage);
+		m_ewKnockBackTimer = GetTickCount() + 500;
+		m_bIsDamage = true;
+	}
 }
 
 void CEnemy::isDamage()
 {
-	float fAccX = m_bFlipX ? -0.7f : 0.7f;
+	float m_fVelocityX = m_bFlipX ? -4.f : 4.f;
 
-	m_fVelocityX += fAccX;
+	m_tInfo.fX += m_fVelocityX;
 
-	if (abs(m_fVelocityX) > 8.f)
-	{
+	if (m_ewKnockBackTimer < GetTickCount())
 		m_bIsDamage = false;
-
-		if (m_iHp <= 0)
-			m_bActive = false;
-	}
 }
 
 void CEnemy::isInhail()
@@ -38,9 +39,14 @@ void CEnemy::isInhail()
 
 	float fAngle = CMath::DistanceAngle(this, m_pTarget);
 
-
-	m_fVelocityX += 0.2f;
+	m_fVelocityX += 0.3f;
 
 	m_tInfo.fX += cosf(fAngle) * m_fVelocityX;
 	m_tInfo.fY -= sinf(fAngle) * m_fVelocityX;
+
+	if (m_bIsDamage)
+	{
+		m_bIsDamage = false;
+		m_bActive = false;
+	}
 }

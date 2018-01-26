@@ -15,7 +15,7 @@ void CEff_NormalAtt::Initialize()
 {
 	m_tInfo.fCX = 210.f;
 	m_tInfo.fCY = 210.f;
-	m_iHitBoxCX = 170;
+	m_iHitBoxCX = 200;
 	m_iHitBoxCY = 120;	
 }
 
@@ -58,7 +58,8 @@ void CEff_NormalAtt::LateUpdate()
 
 void CEff_NormalAtt::Render(HDC hDC)
 {
-	//DrawHitBox(hDC);
+	if (GameManager->GetDebugMode())
+		DrawHitBox(hDC);
 	DrawObject(hDC, m_pFrameKey);
 }
 

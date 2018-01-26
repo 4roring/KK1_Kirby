@@ -150,6 +150,7 @@
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="DDD.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Eff_Dash.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HitBox.h" />
+    <ClInclude Include="InhailStar.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Kirby.h" />
     <ClInclude Include="Logo.h" />
@@ -190,6 +192,7 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="DDD.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Eff_Dash.cpp" />
     <ClCompile Include="Eff_NormalAtt.cpp" />
@@ -200,6 +203,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="HitBox.cpp" />
+    <ClCompile Include="InhailStar.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Kirby.cpp" />
     <ClCompile Include="Logo.cpp" />

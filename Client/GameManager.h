@@ -17,12 +17,14 @@ public:
 	float GetMaxScrollX() { return m_fMaxScrollX; }
 	float GetMaxScrollY() { return m_fMaxScrollY; }
 	RECT& GetScreen() { return m_tScreenRect; }
+	bool GetDebugMode() { return m_bDebugBox; }
 
 public:
-	void SetScrollX(float fX) { m_fScrollX -= fX; }
-	void SetScrollY(float fY) { m_fScrollY -= fY; }
+	void SetScrollX(float fX) { m_fScrollX = fX; }
+	void SetScrollY(float fY) { m_fScrollY = fY; }
 	void SetMaxScrollX(float fX) { m_fMaxScrollX = fX; }
 	void SetMaxScrollY(float fY) { m_fMaxScrollY = fY; }
+	void SetPause(bool bPause) { m_bPause = bPause; }
 
 public:
 	void AddObject(CGameObject* pObject, OBJID eID);
@@ -46,5 +48,8 @@ private:
 
 	float m_fMaxScrollX;
 	float m_fMaxScrollY;
+
+	bool m_bPause;
+	bool m_bDebugBox;
 };
 

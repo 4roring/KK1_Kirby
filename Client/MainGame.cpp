@@ -35,7 +35,6 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Background_2"), TEXT("../Image/Map/MidBoss_Background_2.bmp"));
 	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Background_3"), TEXT("../Image/Map/MidBoss_Background_3.bmp"));
 	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Background_4"), TEXT("../Image/Map/MidBoss_Background_4.bmp"));
-
 	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Ground"), TEXT("../Image/Map/MidBoss_Ground.bmp"));
 
 	// 기타 맵 소스
@@ -45,7 +44,9 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("Normal_Effect"), TEXT("../Image/Effect/Normal_Effect.bmp"));
 	BmpManager->RegistBitmap(TEXT("Normal_Attack_Left"), TEXT("../Image/Effect/NormalAttack_Left.bmp"));
 	BmpManager->RegistBitmap(TEXT("Normal_Attack_Right"), TEXT("../Image/Effect/NormalAttack_Right.bmp"));
-	BmpManager->RegistBitmap(TEXT("ShootingStar_Effect"), TEXT("../Image/Effect/ShootingStar_Effect.bmp"));
+	BmpManager->RegistBitmap(TEXT("ShootingStar_Left"), TEXT("../Image/Effect/ShootingStar_Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("ShootingStar_Right"), TEXT("../Image/Effect/ShootingStar_Right.bmp"));
+	BmpManager->RegistBitmap(TEXT("InhailStar"), TEXT("../Image/Effect/InhailStar.bmp"));
 
 	// 플레이어 로딩
 	BmpManager->RegistBitmap(TEXT("Normal_Left"), TEXT("../Image/Normal_Kirby/Normal_Left.bmp"));
@@ -61,6 +62,11 @@ void CMainGame::Initialize()
 		TEXT("../Image/Enemy/Scarfy/Left.bmp"));
 	BmpManager->RegistBitmap(TEXT("Scarfy_Right"),
 		TEXT("../Image/Enemy/Scarfy/Right.bmp"));
+
+	BmpManager->RegistBitmap(TEXT("DDD_Left"), // DDD
+		TEXT("../Image/Enemy/DDD/Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("DDD_Right"),
+		TEXT("../Image/Enemy/DDD/RIght.bmp"));
 
 	BmpManager->RegistBitmap(TEXT("Black_1_Left"), // 블랙 메타나이트
 		TEXT("../Image/Enemy/BlackMetaKnight/Left_Move_Attack.bmp"));
@@ -98,34 +104,13 @@ void CMainGame::Render()
 
 void CMainGame::Release()
 {
+	SceneManager->DestroyInstance();
 	GameManager->DestroyInstance();
 	InputManager->DestroyInstance();
 	BmpManager->DestroyInstance();
-	SceneManager->DestroyInstance();
+
 
 	ReleaseDC(g_hWnd, m_hDC);
-}
-
-void CMainGame::DrawBackground(HDC hDC, const TCHAR* szName)
-{
-	HDC hMemDC = BmpManager->GetMapBit()[szName]->GetMemDC();
-
-	BitBlt(hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, SRCCOPY);
-}
-
-void CMainGame::DrawGround(HDC hDC, const TCHAR * szName)
-{
-	int iScrollX = (int)GameManager->GetScrollX();
-	int iScrollY = (int)GameManager->GetScrollY();
-
-	HDC hMemDC = BmpManager->GetMapBit()[szName]->GetMemDC();
-
-	int iSizeX = BmpManager->GetMapBit()[szName]->GetBmpCX();
-	int iSizeY = BmpManager->GetMapBit()[szName]->GetBmpCY();
-
-	GdiTransparentBlt(hDC, iScrollX, iScrollY,
-		iSizeX, iSizeY, hMemDC,
-		0, 0, iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
 

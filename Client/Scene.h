@@ -15,6 +15,7 @@ public:
 
 protected:
 	void DrawBackground(HDC hDC, const TCHAR* szName);
+	void DrawBackground(HDC hDC, const TCHAR* szName, float fScrollX, float fScrollY);
 	void DrawGround(HDC hDC, const TCHAR* szName);
 };
 

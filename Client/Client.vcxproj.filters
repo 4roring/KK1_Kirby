@@ -106,8 +106,17 @@
     <Filter Include="03.Enemy\01.Scarfy">
       <UniqueIdentifier>{160bb30c-1e8e-4da2-8986-05bc7cc3beff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05.Scene\97.MapObject">
+    <Filter Include="01.GameObject\03.MapObject">
       <UniqueIdentifier>{e3844d6d-275f-46d0-b3c8-fcd6e592edf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\99.BlackMetaKnight">
+      <UniqueIdentifier>{c4657e0b-0c4c-450d-b453-6e9ed873ae34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\98.DDD">
+      <UniqueIdentifier>{95e63016-fab7-48ff-8f48-31313b82b93e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\00.InhailStar">
+      <UniqueIdentifier>{116050ff-57e8-45a9-9feb-4dae768ad065}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +175,6 @@
     <ClInclude Include="Bmp.h">
       <Filter>97.Managers\02.BmpManager\00.Bmp</Filter>
     </ClInclude>
-    <ClInclude Include="BlackMetaKnight.h">
-      <Filter>03.Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>01.GameObject\01.Ground</Filter>
     </ClInclude>
@@ -221,10 +227,19 @@
       <Filter>03.Enemy\01.Scarfy</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
-      <Filter>05.Scene\97.MapObject</Filter>
+      <Filter>01.GameObject\03.MapObject</Filter>
     </ClInclude>
     <ClInclude Include="MidBoss.h">
       <Filter>05.Scene\98.MidBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackMetaKnight.h">
+      <Filter>03.Enemy\99.BlackMetaKnight</Filter>
+    </ClInclude>
+    <ClInclude Include="DDD.h">
+      <Filter>03.Enemy\98.DDD</Filter>
+    </ClInclude>
+    <ClInclude Include="InhailStar.h">
+      <Filter>03.Enemy\00.InhailStar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -255,9 +270,6 @@
     </ClCompile>
     <ClCompile Include="Bmp.cpp">
       <Filter>97.Managers\02.BmpManager\00.Bmp</Filter>
-    </ClCompile>
-    <ClCompile Include="BlackMetaKnight.cpp">
-      <Filter>03.Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>01.GameObject\01.Ground</Filter>
@@ -311,10 +323,19 @@
       <Filter>03.Enemy\01.Scarfy</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
-      <Filter>05.Scene\97.MapObject</Filter>
+      <Filter>01.GameObject\03.MapObject</Filter>
     </ClCompile>
     <ClCompile Include="MidBoss.cpp">
       <Filter>05.Scene\98.MidBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackMetaKnight.cpp">
+      <Filter>03.Enemy\99.BlackMetaKnight</Filter>
+    </ClCompile>
+    <ClCompile Include="DDD.cpp">
+      <Filter>03.Enemy\98.DDD</Filter>
+    </ClCompile>
+    <ClCompile Include="InhailStar.cpp">
+      <Filter>03.Enemy\00.InhailStar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

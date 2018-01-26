@@ -38,6 +38,9 @@ private:
 	void Eat();
 
 private:
+	void KirbyUpdateRect();
+
+private:
 	void CreateDashEffect();
 	void DrawAlphaBlack(HDC hDC, int iAlpha);
 

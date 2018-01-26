@@ -9,6 +9,7 @@ CScarfy::CScarfy()
 
 CScarfy::~CScarfy()
 {
+	std::cout << "½ºÄÃÇÇ ¼Ò¸ê?!" << std::endl;
 }
 
 void CScarfy::Initialize()
@@ -24,9 +25,6 @@ void CScarfy::Initialize()
 
 	m_fImageX = 2.f;
 	m_fImageY = -5.f;
-
-	m_fSpeed = 3.8f;
-	m_fJumpPow = 8.6f;
 
 	m_fVelocityX = 0.f;
 	m_fVelocityY = 0.f;
@@ -58,7 +56,7 @@ OBJ_STATE CScarfy::Update()
 	if (CheckScreen())
 	{
 		m_bActive = true;
-		if (m_bActive && m_iHp <= 0)
+		if (m_bActive && m_iHp <= 0 && !m_bIsDamage)
 			m_bActive = false;
 	}
 	else
@@ -68,6 +66,8 @@ OBJ_STATE CScarfy::Update()
 
 	if (m_bActive)
 	{
+		if (m_bIsDamage) isDamage();
+
 		if (!m_bTransform)
 		{
 			NormalState();
@@ -80,7 +80,6 @@ OBJ_STATE CScarfy::Update()
 	
 		return PLAY;
 	}
-
 	return WAIT;
 }
 
@@ -91,6 +90,36 @@ void CScarfy::LateUpdate()
 		m_bFlipX = m_tInfo.fX < m_pTarget->GetInfo().fX ? true : false;
 		m_pFrameKey = m_bFlipX ? TEXT("Scarfy_Right") : TEXT("Scarfy_Left");
 
+		if (m_bIsDamage && m_tFrame.iScene == 0)
+		{
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 0;
+			m_tFrame.iScene = 1;
+			m_tFrame.dwSpeed = 150;
+		}
+		else if (!m_bIsDamage && m_tFrame.iScene == 1)
+		{
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 2;
+			m_tFrame.iScene = 0;
+			m_tFrame.dwSpeed = 250;
+		}
+		
+		if (m_bIsDamage && m_tFrame.iScene == 3)
+		{
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 0;
+			m_tFrame.iScene = 4;
+			m_tFrame.dwSpeed = 150;
+		}
+		else if (!m_bIsDamage && m_tFrame.iScene == 4)
+		{
+			m_tFrame.iStart = 0;
+			m_tFrame.iEnd = 2;
+			m_tFrame.iScene = 3;
+			m_tFrame.dwSpeed = 150;
+		}
+
 		FrameMove();
 		UpdateRect(m_fImageX, m_fImageY);
 	}
@@ -100,22 +129,14 @@ void CScarfy::Render(HDC hDC)
 {
 	if (m_bActive)
 	{
-		//DrawHitBox(hDC);
+		if (GameManager->GetDebugMode())
+			DrawHitBox(hDC);
 		DrawObject(hDC, m_pFrameKey);
 	}
 }
 
 void CScarfy::Release()
 {
-}
-
-void CScarfy::ApplyDamage(int iDamage)
-{
-	if (!m_bIsDamage)
-	{
-		CEnemy::ApplyDamage(iDamage);
-		m_bIsDamage = true;
-	}
 }
 
 void CScarfy::Transform()
@@ -146,7 +167,7 @@ void CScarfy::Transform()
 
 void CScarfy::NormalState()
 {
-	if (!m_bInhail)
+	if (!m_bInhail && !m_bIsDamage)
 	{
 		if (m_tFrame.iStart == 0)
 			m_tInfo.fY -= 4.f;

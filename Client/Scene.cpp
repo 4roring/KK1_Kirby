@@ -18,6 +18,16 @@ void CScene::DrawBackground(HDC hDC, const TCHAR* szName)
 	BitBlt(hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, SRCCOPY);
 }
 
+void CScene::DrawBackground(HDC hDC, const TCHAR * szName, float fScrollX, float fScrollY)
+{
+	HDC hMemDC = BmpManager->GetMapBit()[szName]->GetMemDC();
+
+	int iSizeX = BmpManager->GetMapBit()[szName]->GetBmpCX();
+	int iSizeY = BmpManager->GetMapBit()[szName]->GetBmpCY();
+
+	BitBlt(hDC, (int)fScrollX, (int)fScrollY, iSizeX, iSizeY, hMemDC, 0, 0, SRCCOPY);
+}
+
 void CScene::DrawGround(HDC hDC, const TCHAR * szName)
 {
 	int iScrollX = (int)GameManager->GetScrollX();

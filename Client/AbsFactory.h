@@ -2,6 +2,7 @@
 
 class CGameObject;
 class CActor;
+class CDoor;
 template <typename T>
 class CAbsFactory
 {
@@ -22,7 +23,6 @@ public:
 		pObj->SetPos(fX, fY);
 		pObj->LateInit();
 	
-
 		return pObj;
 	}
 
@@ -85,5 +85,26 @@ public:
 		pObj->SetStartPos(fX, fY);
 
 		return dynamic_cast<CGameObject*>(pObj);
+	}
+
+	static CGameObject* CreateInhailStar(float fX, float fY, ENEMYTYPE eType)
+	{
+		CGameObject* pObj = new T;
+		pObj->Initialize();
+		pObj->SetPos(fX, fY);
+		pObj->SetInhailType(eType);
+
+		return pObj;
+	}
+
+	static CGameObject* CreateDoor(float fX, float fY, SCENEID eID)
+	{
+		CGameObject* pObj = new T;
+		pObj->Initialize();
+		pObj->SetPos(fX, fY);
+		pObj->LateInit();
+		dynamic_cast<CDoor*>(pObj)->SetSceneID(eID);
+
+		return pObj;
 	}
 };

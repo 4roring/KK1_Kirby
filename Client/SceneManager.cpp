@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "Boss.h"
 #include "Stage1_1.h"
+#include "MidBoss.h"
+#include "Boss.h"
+
 
 CSceneManager::CSceneManager()
 	: m_pScene(nullptr), m_ePreScene(SCENE_END), m_eCurScene(SCENE_END)
@@ -32,6 +34,7 @@ void CSceneManager::SceneChange(SCENEID eID)
 			m_pScene = new CStage1_1;
 			break;
 		case SCENE_MIDBOSS:
+			m_pScene = new CMidBoss;
 			break;
 		case SCENE_BOSS:
 			m_pScene = new CBoss;
