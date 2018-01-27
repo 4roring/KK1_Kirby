@@ -91,15 +91,17 @@ void CWadorudi::LateUpdate()
 		}
 		else if (m_bIsDamage && m_tFrame.iScene == 0)
 		{
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 0;
+			m_tFrame.iStart = 1;
+			m_tFrame.iEnd = 1;
 			m_tFrame.iScene = 1;
+			m_tFrame.dwSpeed = 200;
 		}
 		else if(!m_bIsDamage && m_tFrame.iScene == 1)
 		{
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 7;
 			m_tFrame.iScene = 0;
+			m_tFrame.dwSpeed = 130;
 		}
 
 		FrameMove();

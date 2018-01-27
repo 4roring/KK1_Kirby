@@ -47,13 +47,14 @@ public:
 		return pObj;
 	}
 
-	static CGameObject* CreateHitBox(float fX, float fY , int iCX, int iCY, int iAtt)
+	static CGameObject* CreateHitBox(float fX, float fY , int iCX, int iCY, int iAtt, bool Active)
 	{
 		CGameObject* pObj = new T;
 		pObj->Initialize();
 		pObj->SetPos(fX, fY);
 		pObj->SetHitBox(iCX, iCY);
 		pObj->SetAtt(iAtt);
+		pObj->SetFlipX(Active);
 		pObj->LateInit();
 
 		return pObj;

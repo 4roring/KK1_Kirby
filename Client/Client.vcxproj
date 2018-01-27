@@ -153,7 +153,9 @@
     <ClInclude Include="DDD.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="Eff_ClearStar.h" />
     <ClInclude Include="Eff_Dash.h" />
+    <ClInclude Include="Eff_MiniStar.h" />
     <ClInclude Include="Eff_NormalAtt.h" />
     <ClInclude Include="Eff_Normal_FlyAtt.h" />
     <ClInclude Include="Eff_ShootingStar.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="Stage1_1.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="SwordKnight.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Typedef.h" />
@@ -194,7 +197,9 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DDD.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Eff_ClearStar.cpp" />
     <ClCompile Include="Eff_Dash.cpp" />
+    <ClCompile Include="Eff_MiniStar.cpp" />
     <ClCompile Include="Eff_NormalAtt.cpp" />
     <ClCompile Include="Eff_Normal_FlyAtt.cpp" />
     <ClCompile Include="Eff_ShootingStar.cpp" />
@@ -220,6 +225,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SwordKnight.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Wadorudi.cpp" />
   </ItemGroup>

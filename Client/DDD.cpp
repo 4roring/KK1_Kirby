@@ -17,7 +17,7 @@ CDDD::~CDDD()
 void CDDD::Initialize()
 {
 	// 상태 초기화
-	m_iMaxHp = 300;
+	m_iMaxHp = 500;
 	m_iHp = m_iMaxHp;
 	SetPosToStart();
 	m_tInfo.fCX = 330;
@@ -216,6 +216,9 @@ OBJ_STATE CDDD::Update()
 		{
 			m_eCurState = IDLE;
 			m_dwStateTime = GetTickCount() + m_iIdleTime - 2000;
+
+			if (m_iHp <= 0)
+				m_eCurState = DEAD;
 		}
 		break;
 	case DEAD:
@@ -238,9 +241,6 @@ void CDDD::LateUpdate()
 	FrameMove();
 	SceneChange();
 	UpdateRect(m_fImageX, m_fImageY);
-
-	if (m_iHp <= 0)
-		m_eCurState = DEAD;
 
 	if(m_eCurState != DEAD)
 		m_fVelocityY -= 0.5f;
@@ -330,7 +330,6 @@ void CDDD::SceneChange()
 		}
 		m_ePreState = m_eCurState;
 	}
-
 }
 
 void CDDD::CreateInhailStar()

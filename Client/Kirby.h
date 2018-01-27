@@ -6,9 +6,10 @@ class CKirby :
 public:
 	enum STATE { 
 		IDLE, INHAILIDLE, DOWN, SLIDE, MOVE, DASH, 
-		JUMP, FLY, FLYATTACK, ATTACK, INHAIL, DAMAGE, 
-		EAT, SHOOTSTAR, END 
+		JUMP, JUMPATTACK, FLY, FLYATTACK, ATTACK, INHAIL, DAMAGE, 
+		EAT, SHOOTSTAR, TRANSFORM, END 
 	};
+	enum FORM { NORMAL_FORM, SWORD_FORM, FORM_END};
 
 public:
 	CKirby();
@@ -31,7 +32,6 @@ private:
 	void Attack();
 	void Jump();
 	void Slide();
-	void SceneChange();
 	void ScrollMove();
 	void isDamage();
 	void NoDamageState();
@@ -39,14 +39,22 @@ private:
 
 private:
 	void KirbyUpdateRect();
+	void SceneChange();
+	void NormalScene();
+	void SwordScene();
 
 private:
 	void CreateDashEffect();
 	void DrawAlphaBlack(HDC hDC, int iAlpha);
 
+private: // 폼 관련 공격 함수
+	void SwordAttack();
+
 private:
 	STATE m_eCurState;
 	STATE m_ePreState;
+
+	FORM m_eForm;
 
 	bool m_bSlide;
 	bool m_bJump;
@@ -61,5 +69,8 @@ private:
 	DWORD m_dwDamageTime;
 	int m_iInputFrame;
 	int m_iAttSquence;
+	
+	TCHAR* m_pLeftKey;
+	TCHAR* m_pRightKey;
 };
 

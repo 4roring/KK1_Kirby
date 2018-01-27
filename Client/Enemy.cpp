@@ -17,7 +17,7 @@ void CEnemy::ApplyDamage(int iDamage)
 	if (!m_bIsDamage)
 	{
 		CActor::ApplyDamage(iDamage);
-		m_ewKnockBackTimer = GetTickCount() + 500;
+		m_ewKnockBackTimer = GetTickCount() + 300;
 		m_bIsDamage = true;
 	}
 }
@@ -39,7 +39,7 @@ void CEnemy::isInhail()
 
 	float fAngle = CMath::DistanceAngle(this, m_pTarget);
 
-	m_fVelocityX += 0.3f;
+	m_fVelocityX += 0.5f;
 
 	m_tInfo.fX += cosf(fAngle) * m_fVelocityX;
 	m_tInfo.fY -= sinf(fAngle) * m_fVelocityX;

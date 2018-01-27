@@ -2,6 +2,7 @@
 #include "Boss.h"
 #include "Kirby.h"
 #include "BlackMetaKnight.h"
+#include "SwordKnight.h"
 #include "Ground.h"
 
 CBoss::CBoss()
@@ -15,10 +16,20 @@ CBoss::~CBoss()
 
 void CBoss::Initialize()
 {
-	GameManager->AddObject(CAbsFactory<CKirby>::CreateObject(), OBJ_PLAYER);
-	GameManager->AddObject(CAbsFactory<CBlackMetaKnight>::CreateObject(), OBJ_ENEMY);
+	GameManager->AddObject(CAbsFactory<CKirby>::CreateObject(100.f, 400.f), OBJ_PLAYER);
+	
+	//GameManager->AddObject(CAbsFactory<CBlackMetaKnight>::CreateObject(), OBJ_ENEMY);
 
-	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ 0, 484, WINCX, WINCY }), OBJ_GROUND);
+	GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(500.f, 400.f), OBJ_ENEMY);
+
+	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ WINCX, 0, WINCX + 50, WINCY }), OBJ_GROUND);
+	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ -50, 484, WINCX, WINCY }), OBJ_GROUND);
+
+	GameManager->SetScrollX(0.f);
+	GameManager->SetMaxScrollX(0.f);
+
+	GameManager->SetScrollY(0.f);
+	GameManager->SetMaxScrollY(0.f);
 }
 
 void CBoss::LateInit()

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Eff_ShootingStar.h"
+#include "Eff_ClearStar.h"
 
 
 CEff_ShootingStar::CEff_ShootingStar()
@@ -19,7 +20,7 @@ void CEff_ShootingStar::Initialize()
 	m_iHitBoxCX = 70;
 	m_iHitBoxCY = 70;
 
-	m_iAtt = 60;
+	m_iAtt = 100;
 }
 
 void CEff_ShootingStar::LateInit()
@@ -36,7 +37,11 @@ void CEff_ShootingStar::LateInit()
 OBJ_STATE CEff_ShootingStar::Update()
 {
 	if (!m_bActive)
+	{
+		GameManager->AddObject(CAbsFactory<CEff_ClearStar>::CreateObject(m_tInfo.fX, m_tInfo.fY), OBJ_EFFECT);
 		return DESTROY;
+	}
+	
 
 	if (m_tInfo.fX < 0 || m_tInfo.fX > 10000.f)
 		m_bActive = false;
@@ -54,7 +59,8 @@ void CEff_ShootingStar::LateUpdate()
 
 void CEff_ShootingStar::Render(HDC hDC)
 {
-	//DrawHitBox(hDC);
+	if (GameManager->GetDebugMode())
+		DrawHitBox(hDC);
 	DrawObject(hDC, m_pFrameKey);
 }
 

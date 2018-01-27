@@ -9,7 +9,7 @@ CScarfy::CScarfy()
 
 CScarfy::~CScarfy()
 {
-	std::cout << "½ºÄÃÇÇ ¼Ò¸ê?!" << std::endl;
+
 }
 
 void CScarfy::Initialize()
@@ -92,10 +92,10 @@ void CScarfy::LateUpdate()
 
 		if (m_bIsDamage && m_tFrame.iScene == 0)
 		{
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 0;
+			m_tFrame.iStart = 1;
+			m_tFrame.iEnd = 1;
 			m_tFrame.iScene = 1;
-			m_tFrame.dwSpeed = 150;
+			m_tFrame.dwSpeed = 200;
 		}
 		else if (!m_bIsDamage && m_tFrame.iScene == 1)
 		{
@@ -160,6 +160,8 @@ void CScarfy::Transform()
 			m_tFrame.iScene = 3;
 			m_tFrame.dwSpeed = 150;
 		}
+		
+		m_iHp = 10;
 
 		m_dwDeadTimer = GetTickCount() + 3000;
 	}
@@ -179,6 +181,7 @@ void CScarfy::NormalState()
 void CScarfy::TransformState()
 {
 	m_bInhail = false;
+	m_eInhailType = TYPE_BOSS;
 
 	float fAngle = CMath::DistanceAngle(this, m_pTarget);
 

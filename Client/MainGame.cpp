@@ -47,10 +47,20 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("ShootingStar_Left"), TEXT("../Image/Effect/ShootingStar_Left.bmp"));
 	BmpManager->RegistBitmap(TEXT("ShootingStar_Right"), TEXT("../Image/Effect/ShootingStar_Right.bmp"));
 	BmpManager->RegistBitmap(TEXT("InhailStar"), TEXT("../Image/Effect/InhailStar.bmp"));
+	BmpManager->RegistBitmap(TEXT("Star"), TEXT("../Image/Effect/Star.bmp"));
+	BmpManager->RegistBitmap(TEXT("MiniStar"), TEXT("../Image/Effect/MiniStar.bmp"));
+	BmpManager->RegistBitmap(TEXT("ClearStar"), TEXT("../Image/Effect/ClearStar.bmp"));
+	BmpManager->RegistBitmap(TEXT("Transform_Effect"), TEXT("../Image/Effect/Transform_Effect.bmp"));
 
 	// 플레이어 로딩
-	BmpManager->RegistBitmap(TEXT("Normal_Left"), TEXT("../Image/Normal_Kirby/Normal_Left.bmp"));
-	BmpManager->RegistBitmap(TEXT("Normal_Right"), TEXT("../Image/Normal_Kirby/Normal_Right.bmp"));
+	BmpManager->RegistBitmap(TEXT("Normal_Left"), TEXT("../Image/Kirby/Normal_Kirby/Normal_Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("Normal_Right"), TEXT("../Image/Kirby/Normal_Kirby/Normal_Right.bmp"));
+	BmpManager->RegistBitmap(TEXT("Sword_Left"), TEXT("../Image/Kirby/Sword_Kirby/Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("Sword_Right"), TEXT("../Image/Kirby/Sword_Kirby/Right.bmp"));
+	BmpManager->RegistBitmap(TEXT("Sword_LeftAttack"), TEXT("../Image/Kirby/Sword_Kirby/Left_Attack.bmp"));
+	BmpManager->RegistBitmap(TEXT("Sword_RightAttack"), TEXT("../Image/Kirby/Sword_Kirby/Right_Attack.bmp"));
+
+
 
 	// 적 캐릭터 로딩
 	BmpManager->RegistBitmap(TEXT("Wadorudi_Left"), // 와도루디
@@ -63,6 +73,11 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("Scarfy_Right"),
 		TEXT("../Image/Enemy/Scarfy/Right.bmp"));
 
+	BmpManager->RegistBitmap(TEXT("SwordKnight_Left"), // 소드 나이트
+		TEXT("../Image/Enemy/SwordKnight/Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("SwordKnight_Right"),
+		TEXT("../Image/Enemy/SwordKnight/Right.bmp"));
+
 	BmpManager->RegistBitmap(TEXT("DDD_Left"), // DDD
 		TEXT("../Image/Enemy/DDD/Left.bmp"));
 	BmpManager->RegistBitmap(TEXT("DDD_Right"),
@@ -73,7 +88,7 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("Black_1_Right"),
 		TEXT("../Image/Enemy/BlackMetaKnight/Right_Move_Attack.bmp"));
 
-	SceneManager->SceneChange(SCENE_STAGE1);
+	SceneManager->SceneChange(SCENE_BOSS);
 }
 
 void CMainGame::LateInit()

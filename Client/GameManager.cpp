@@ -71,11 +71,11 @@ void CGameManager::Update()
 	if (InputManager->KeyDown('D'))
 		m_bDebugBox = !m_bDebugBox;
 
-	if (m_fScrollX > 0)
-		m_fScrollX = 0;
+	if (m_fScrollX > 0.f)
+		m_fScrollX = 0.f;
 
-	if (m_fScrollY > 0)
-		m_fScrollY = 0;
+	if (m_fScrollY > 0.f)
+		m_fScrollY = 0.f;
 
 	if (m_fScrollX < m_fMaxScrollX)
 		m_fScrollX = m_fMaxScrollX;
