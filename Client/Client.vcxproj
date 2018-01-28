@@ -159,6 +159,7 @@
     <ClInclude Include="Eff_NormalAtt.h" />
     <ClInclude Include="Eff_Normal_FlyAtt.h" />
     <ClInclude Include="Eff_ShootingStar.h" />
+    <ClInclude Include="Eff_Transform.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Eff_NormalAtt.cpp" />
     <ClCompile Include="Eff_Normal_FlyAtt.cpp" />
     <ClCompile Include="Eff_ShootingStar.cpp" />
+    <ClCompile Include="Eff_Transform.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />

@@ -42,7 +42,6 @@ OBJ_STATE CEff_ShootingStar::Update()
 		return DESTROY;
 	}
 	
-
 	if (m_tInfo.fX < 0 || m_tInfo.fX > 10000.f)
 		m_bActive = false;
 

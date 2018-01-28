@@ -36,6 +36,7 @@ private:
 	void isDamage();
 	void NoDamageState();
 	void Eat();
+	
 
 private:
 	void KirbyUpdateRect();
@@ -45,10 +46,10 @@ private:
 
 private:
 	void CreateDashEffect();
-	void DrawAlphaBlack(HDC hDC, int iAlpha);
 
-private: // 폼 관련 공격 함수
+private: // 폼 관련 함수
 	void SwordAttack();
+	void DisTransform();
 
 private:
 	STATE m_eCurState;

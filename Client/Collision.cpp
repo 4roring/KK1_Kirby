@@ -21,7 +21,7 @@ void CCollision::ActorToActor(OBJLIST & dstList, OBJLIST & srcList)
 
 		for (auto pSrc : srcList)
 		{
-			if (!pSrc->GetActive())
+			if (!pSrc->GetActive() || pSrc->GetAtt() == 5)
 				continue;
 
 			RECT rc = {};
@@ -243,7 +243,9 @@ void CCollision::HitBox(OBJLIST & dstList, OBJLIST & srcList)
 			if (IntersectRect(&rc, &(pDst->GetHitBox()), &(pSrc->GetHitBox())))
 			{
 				dynamic_cast<CActor*>(pDst)->ApplyDamage(pSrc->GetAtt());
-				pSrc->SetActive(false);
+
+				if(!pSrc->GetHitBoxType())
+					pSrc->SetActive(false);
 			}
 		}
 	}

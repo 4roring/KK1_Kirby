@@ -47,14 +47,15 @@ public:
 		return pObj;
 	}
 
-	static CGameObject* CreateHitBox(float fX, float fY , int iCX, int iCY, int iAtt, bool Active)
+	// HitBoxType에 따라 한방에 사라질지 생성자가 직접 삭제할지 결정.
+	static CGameObject* CreateHitBox(float fX, float fY , int iCX, int iCY, int iAtt, bool bHitBoxType)
 	{
 		CGameObject* pObj = new T;
 		pObj->Initialize();
 		pObj->SetPos(fX, fY);
 		pObj->SetHitBox(iCX, iCY);
 		pObj->SetAtt(iAtt);
-		pObj->SetFlipX(Active);
+		pObj->SetHitBoxType(bHitBoxType);
 		pObj->LateInit();
 
 		return pObj;
@@ -94,6 +95,7 @@ public:
 		pObj->Initialize();
 		pObj->SetPos(fX, fY);
 		pObj->SetInhailType(eType);
+		pObj->LateInit();
 
 		return pObj;
 	}

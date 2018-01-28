@@ -5,6 +5,9 @@
 #include "Eff_NormalAtt.h"
 #include "Eff_ShootingStar.h"
 #include "Eff_MiniStar.h"
+#include "Eff_Transform.h"
+#include "InhailStar.h"
+#include "HitBox.h"
 
 CKirby::CKirby()
 {
@@ -122,7 +125,7 @@ void CKirby::Render(HDC hDC)
 
 	if (m_eCurState == TRANSFORM)
 	{
-		DrawAlphaBlack(hDC, 100);
+		SceneManager->DrawAlphaColor(hDC, 100, false);
 		if (m_iInputFrame < g_iFrame)
 			m_eCurState = IDLE;
 	}
@@ -142,6 +145,8 @@ void CKirby::ApplyDamage(int iDamage)
 	if (!m_bNoDamage)
 	{
 		CActor::ApplyDamage(iDamage);
+		if (m_eForm != NORMAL_FORM)
+			DisTransform();
 		m_eCurState = DAMAGE;
 		m_bNoDamage = true;
 	}
@@ -156,6 +161,12 @@ void CKirby::Input()
 
 	if (InputManager->KeyDown(VK_UP))
 		CCollision::InterectionDoor(this, GameManager->GetObjList(OBJ_INTERECTION));
+
+	if (InputManager->KeyDown('A'))
+	{
+		if (m_eForm != NORMAL_FORM)
+			DisTransform();
+	}
 
 	if (m_fVelocityX == 0 && m_fVelocityY == 0 && !m_bSlide && !m_bJump && !m_bAttack)
 	{
@@ -265,7 +276,7 @@ void CKirby::Move()
 		if (!m_bJump && !m_bFly && !m_bAttack)
 			m_eCurState = DASH;
 
-		if (m_tFrame.iStart == m_tFrame.iEnd)
+		if (m_tFrame.iStart == m_tFrame.iEnd && m_eForm == NORMAL_FORM)
 			m_tFrame.iStart = 1;
 	}
 	else if (m_bJump)
@@ -305,8 +316,6 @@ void CKirby::Move()
 		m_fVelocityX = m_fSpeed;
 	else if (m_fVelocityX < -m_fSpeed && m_fVelocityX < 0)
 		m_fVelocityX = -m_fSpeed;
-
-	//m_fVelocityX -= m_fVelocityX * 0.09f;
 
 	m_fVelocityX -= m_fVelocityX * 0.1f;
 
@@ -362,6 +371,7 @@ void CKirby::Attack()
 		if (m_tFrame.iStart == 0)
 		{
 			GameManager->AddObject(CAbsFactory<CEff_ShootingStar>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), PLAYER_ATT);
+			std::cout << "별 발사!" << std::endl;
 			++m_tFrame.iStart;
 		}
 
@@ -812,7 +822,6 @@ void CKirby::SwordScene()
 		m_tFrame.dwSpeed = 10;
 		break;
 	case TRANSFORM:
-		std::cout << "Transform!!!" << std::endl;
 		m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 0;
 		m_tFrame.iScene = 11;
@@ -864,7 +873,6 @@ void CKirby::isDamage()
 		m_eCurState = IDLE;
 		m_bSlide = false;
 	}
-
 }
 
 void CKirby::NoDamageState()
@@ -894,6 +902,7 @@ void CKirby::Eat()
 				m_eForm = SWORD_FORM;
 				m_eCurState = TRANSFORM;
 				m_iInputFrame = g_iFrame + 40;
+				GameManager->AddObject(CAbsFactory<CEff_Transform>::CreateObject(m_tInfo.fX, m_tInfo.fY + 20.f), OBJ_EFFECT);
 				break;
 			}
 			m_eInhailType = EMPTY;
@@ -920,19 +929,19 @@ void CKirby::CreateDashEffect()
 	GameManager->AddObject(CAbsFactory<CEff_Dash>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), OBJ_EFFECT);
 }
 
-void CKirby::DrawAlphaBlack(HDC hDC, int iAlpha)
-{
-	HDC hMemDC = BmpManager->GetMapBit()[TEXT("BackBlack")]->GetMemDC();
-
-	BLENDFUNCTION bf = { 0, 0, (BYTE)iAlpha, 0 };
-
-	GdiAlphaBlend(hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, WINCX, WINCY, bf);
-}
 
 void CKirby::SwordAttack()
 {
 	if (m_bJump) // 점프 어택
 	{
+		if (m_pTarget == nullptr)
+		{
+			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX, m_tInfo.fY - 15.f, 120, 120, 30, true), PLAYER_ATT);
+			m_pTarget = GameManager->GetObjList(PLAYER_ATT).back();
+		}
+		else
+			m_pTarget->SetPos(m_tInfo.fX, m_tInfo.fY - 15.f);
+
 		m_eCurState = JUMPATTACK;
 		if (m_tFrame.iStart == m_tFrame.iEnd-1)
 		{
@@ -944,6 +953,11 @@ void CKirby::SwordAttack()
 				m_eCurState = IDLE;
 				m_tInfo.fCX = 213;
 				m_tInfo.fCY = 180;
+				if (m_pTarget)
+				{
+					m_pTarget->SetActive(false);
+					m_pTarget = nullptr;
+				}
 			}
 		}
 	}
@@ -954,10 +968,22 @@ void CKirby::SwordAttack()
 		m_eCurState = IDLE;
 		m_tInfo.fCX = 213;
 		m_tInfo.fCY = 180;
+		if (m_pTarget)
+		{
+			m_pTarget->SetActive(false);
+			m_pTarget = nullptr;
+		}
 	}
 	else // 일반 어택
 	{
 		m_eCurState = ATTACK;
+
+		if (m_pTarget == nullptr)
+		{
+			float fX = m_bFlipX ? 30.f : -30.f;
+			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX + fX, m_tInfo.fY - 15.f, 200, 130, 50, true), PLAYER_ATT);
+			m_pTarget = GameManager->GetObjList(PLAYER_ATT).back();
+		}
 
 		if (m_tFrame.iStart == m_tFrame.iEnd)
 		{
@@ -965,6 +991,28 @@ void CKirby::SwordAttack()
 			m_eCurState = IDLE;
 			m_tInfo.fCX = 213;
 			m_tInfo.fCY = 180;
+			if (m_pTarget)
+			{
+				m_pTarget->SetActive(false);
+				m_pTarget = nullptr;
+			}
 		}
 	}
+}
+
+void CKirby::DisTransform()
+{
+	ENEMYTYPE eType = NORMAL;
+
+	switch (m_eForm)
+	{
+	case SWORD_FORM:
+		eType = SWORD;
+		break;
+	}
+	m_eForm = NORMAL_FORM;
+	m_ePreState = END;
+	m_eCurState = IDLE;
+
+	GameManager->AddObject(CAbsFactory<CInhailStar>::CreateInhailStar(m_tInfo.fX, m_tInfo.fY, eType), OBJ_ENEMY);
 }

@@ -3,7 +3,7 @@
 
 
 CGameObject::CGameObject()
-	: m_bActive(true), m_bFlipX(false), m_pTarget(nullptr), m_bInhail(false)
+	: m_bActive(true), m_bFlipX(false), m_pTarget(nullptr), m_bInhail(false), m_bHitBoxType(false)
 {
 	m_tInfo = {};
 	m_tRect = {};

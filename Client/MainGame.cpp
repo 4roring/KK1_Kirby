@@ -18,7 +18,9 @@ void CMainGame::Initialize()
 	srand((unsigned)time(nullptr));
 	BmpManager->RegistBitmap(TEXT("BackBuffer"), TEXT("../Image/BackBuffer.bmp"));
 	BmpManager->RegistBitmap(TEXT("BackBlack"), TEXT("../Image/BackBlack.bmp"));
-
+	BmpManager->RegistBitmap(TEXT("BackWhite"), TEXT("../Image/BackWhite.bmp"));
+	BmpManager->RegistBitmap(TEXT("Title_1"), TEXT("../Image/Title_1.bmp"));
+	BmpManager->RegistBitmap(TEXT("Title_2"), TEXT("../Image/Title_2.bmp"));
 
 	// 스테이지 1 배경, 땅 로딩
 	BmpManager->RegistBitmap(TEXT("Map_Stage1_Background"), TEXT("../Image/Map/Stage1_Background.bmp"));
@@ -88,7 +90,7 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("Black_1_Right"),
 		TEXT("../Image/Enemy/BlackMetaKnight/Right_Move_Attack.bmp"));
 
-	SceneManager->SceneChange(SCENE_BOSS);
+	SceneManager->SceneChange(SCENE_TITLE);
 }
 
 void CMainGame::LateInit()

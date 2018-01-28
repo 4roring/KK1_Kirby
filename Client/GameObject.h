@@ -15,6 +15,7 @@ public:
 	bool GetActive() { return m_bActive; }
 	bool GetFlipX() { return m_bFlipX; }
 	bool GetInhail() { return m_bInhail; }
+	bool GetHitBoxType() { return m_bHitBoxType; }
 	ENEMYTYPE GetInhailType() { return m_eInhailType; }
 
 public:
@@ -27,6 +28,7 @@ public:
 	void SetHp(int iHp) { iHp = 0; }
 	void SetInhail() { m_bInhail = true; }
 	void SetInhailType(ENEMYTYPE eInhailType) { m_eInhailType = eInhailType; }
+	void SetHitBoxType(bool bHitBoxType) { m_bHitBoxType = bHitBoxType; }
 
 public:
 	virtual void Initialize() PURE;
@@ -52,6 +54,7 @@ protected:
 	bool m_bActive;
 	bool m_bFlipX;
 	bool m_bInhail;
+	bool m_bHitBoxType;
 
 	int m_iAtt;
 	float m_fSpeed;

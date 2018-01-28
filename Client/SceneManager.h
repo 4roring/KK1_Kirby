@@ -16,9 +16,16 @@ public:
 	void Render(HDC hDC);
 	void Release();
 
+	void DrawAlphaColor(HDC hDC, BYTE Alpha, bool bColor);
+	bool SceneStart();
+	bool SceneEnd();
+
 private:
 	CScene* m_pScene;
 	SCENEID m_ePreScene;
 	SCENEID m_eCurScene;
+
+	int m_Alpha;
+	bool m_bFade;
 };
 

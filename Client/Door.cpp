@@ -32,8 +32,12 @@ OBJ_STATE CDoor::Update()
 {
 	if (!m_bActive)
 	{
-		SceneManager->SceneChange(m_eSceneID);
-		return DESTROY;
+		if (SceneManager->SceneEnd())
+		{
+			SceneManager->SceneChange(m_eSceneID);
+			return DESTROY;
+		}
+		
 	}
 		
 

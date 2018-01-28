@@ -79,12 +79,6 @@
     <Filter Include="01.GameObject\02.HitBox">
       <UniqueIdentifier>{a2bf68f1-905d-4583-b044-6b275cba23c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.Enemy\00.Wadorudi">
-      <UniqueIdentifier>{e070ccb2-fd88-48d5-b9e3-fdeaf4a6d38e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Enemy\01.Scarfy">
-      <UniqueIdentifier>{160bb30c-1e8e-4da2-8986-05bc7cc3beff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.GameObject\03.MapObject">
       <UniqueIdentifier>{e3844d6d-275f-46d0-b3c8-fcd6e592edf2}</UniqueIdentifier>
     </Filter>
@@ -96,9 +90,6 @@
     </Filter>
     <Filter Include="03.Enemy\00.InhailStar">
       <UniqueIdentifier>{116050ff-57e8-45a9-9feb-4dae768ad065}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Enemy\02.SwordKnight">
-      <UniqueIdentifier>{d68009b1-53d0-4967-8d73-2208b2cdac19}</UniqueIdentifier>
     </Filter>
     <Filter Include="04.Effect\00.KirbyEffect">
       <UniqueIdentifier>{9a61b3d6-4e40-49aa-b46d-0238f247c068}</UniqueIdentifier>
@@ -123,6 +114,15 @@
     </Filter>
     <Filter Include="04.Effect\00.KirbyEffect\06.Eff_Transform">
       <UniqueIdentifier>{15a0611c-7d87-4a15-a595-b7c368970b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\01.Wadorudi">
+      <UniqueIdentifier>{e070ccb2-fd88-48d5-b9e3-fdeaf4a6d38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\02.Scarfy">
+      <UniqueIdentifier>{160bb30c-1e8e-4da2-8986-05bc7cc3beff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\03.SwordKnight">
+      <UniqueIdentifier>{d68009b1-53d0-4967-8d73-2208b2cdac19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -221,7 +221,7 @@
       <Filter>01.GameObject\02.HitBox</Filter>
     </ClInclude>
     <ClInclude Include="Wadorudi.h">
-      <Filter>03.Enemy\00.Wadorudi</Filter>
+      <Filter>03.Enemy\01.Wadorudi</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>03.Enemy</Filter>
@@ -230,7 +230,7 @@
       <Filter>04.Effect\00.KirbyEffect\03.Eff_ShootingStar</Filter>
     </ClInclude>
     <ClInclude Include="Scarfy.h">
-      <Filter>03.Enemy\01.Scarfy</Filter>
+      <Filter>03.Enemy\02.Scarfy</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>01.GameObject\03.MapObject</Filter>
@@ -248,13 +248,16 @@
       <Filter>03.Enemy\00.InhailStar</Filter>
     </ClInclude>
     <ClInclude Include="SwordKnight.h">
-      <Filter>03.Enemy\02.SwordKnight</Filter>
+      <Filter>03.Enemy\03.SwordKnight</Filter>
     </ClInclude>
     <ClInclude Include="Eff_MiniStar.h">
       <Filter>04.Effect\00.KirbyEffect\04.Eff_MiniStar</Filter>
     </ClInclude>
     <ClInclude Include="Eff_ClearStar.h">
       <Filter>04.Effect\00.KirbyEffect\05.Eff_ClearStar</Filter>
+    </ClInclude>
+    <ClInclude Include="Eff_Transform.h">
+      <Filter>04.Effect\00.KirbyEffect\06.Eff_Transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,7 +329,7 @@
       <Filter>01.GameObject\02.HitBox</Filter>
     </ClCompile>
     <ClCompile Include="Wadorudi.cpp">
-      <Filter>03.Enemy\00.Wadorudi</Filter>
+      <Filter>03.Enemy\01.Wadorudi</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>03.Enemy</Filter>
@@ -335,7 +338,7 @@
       <Filter>04.Effect\00.KirbyEffect\03.Eff_ShootingStar</Filter>
     </ClCompile>
     <ClCompile Include="Scarfy.cpp">
-      <Filter>03.Enemy\01.Scarfy</Filter>
+      <Filter>03.Enemy\02.Scarfy</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>01.GameObject\03.MapObject</Filter>
@@ -353,13 +356,16 @@
       <Filter>03.Enemy\00.InhailStar</Filter>
     </ClCompile>
     <ClCompile Include="SwordKnight.cpp">
-      <Filter>03.Enemy\02.SwordKnight</Filter>
+      <Filter>03.Enemy\03.SwordKnight</Filter>
     </ClCompile>
     <ClCompile Include="Eff_MiniStar.cpp">
       <Filter>04.Effect\00.KirbyEffect\04.Eff_MiniStar</Filter>
     </ClCompile>
     <ClCompile Include="Eff_ClearStar.cpp">
       <Filter>04.Effect\00.KirbyEffect\05.Eff_ClearStar</Filter>
+    </ClCompile>
+    <ClCompile Include="Eff_Transform.cpp">
+      <Filter>04.Effect\00.KirbyEffect\06.Eff_Transform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

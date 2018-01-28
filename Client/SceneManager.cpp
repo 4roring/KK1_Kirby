@@ -4,10 +4,11 @@
 #include "Stage1_1.h"
 #include "MidBoss.h"
 #include "Boss.h"
+#include "Title.h"
 
 
 CSceneManager::CSceneManager()
-	: m_pScene(nullptr), m_ePreScene(SCENE_END), m_eCurScene(SCENE_END)
+	: m_pScene(nullptr), m_ePreScene(SCENE_END), m_eCurScene(SCENE_END), m_Alpha(0), m_bFade(false)
 {
 }
 
@@ -29,6 +30,7 @@ void CSceneManager::SceneChange(SCENEID eID)
 		case SCENE_LOGO:
 			break;
 		case SCENE_TITLE:
+			m_pScene = new CTitle;
 			break;
 		case SCENE_STAGE1:
 			m_pScene = new CStage1_1;
@@ -53,7 +55,10 @@ void CSceneManager::LateInit()
 
 void CSceneManager::Update()
 {
-	m_pScene->Update();
+	if (!m_bFade)
+		m_pScene->Update();
+	else
+		SceneStart();
 }
 
 void CSceneManager::LateUpdate()
@@ -64,9 +69,53 @@ void CSceneManager::LateUpdate()
 void CSceneManager::Render(HDC hDC)
 {
 	m_pScene->Render(hDC);
+	DrawAlphaColor(hDC, m_Alpha, true);
 }
 
 void CSceneManager::Release()
 {
 	SafeDelete<CScene*>(m_pScene);
+}
+
+// Color이 true면 흰색, false면 검정색
+void CSceneManager::DrawAlphaColor(HDC hDC, BYTE Alpha, bool bColor)
+{
+	HDC hMemDC;
+	if(bColor)
+		hMemDC = BmpManager->GetMapBit()[TEXT("BackWhite")]->GetMemDC();
+	else
+		hMemDC = BmpManager->GetMapBit()[TEXT("BackBlack")]->GetMemDC();
+
+	BLENDFUNCTION bf = { 0, 0, Alpha, 0 };
+
+	GdiAlphaBlend(hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, WINCX, WINCY, bf);
+}
+
+bool CSceneManager::SceneStart()
+{
+	if (m_Alpha >= 10)
+		m_Alpha -= 6.f;
+	else
+	{
+		m_Alpha = 0;
+		m_bFade = false;
+		return true;
+	}
+	
+	return false;
+}
+
+bool CSceneManager::SceneEnd()
+{
+	if (m_Alpha < 245)
+		m_Alpha += 6.f;
+	else
+	{
+		m_Alpha = 255;
+		m_bFade = true;
+		return true;
+	}
+		
+
+	return false;
 }
