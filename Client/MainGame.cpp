@@ -42,7 +42,7 @@ void CMainGame::Initialize()
 	// 기타 맵 소스
 	BmpManager->RegistBitmap(TEXT("Map_Door"), TEXT("../Image/Map/Door.bmp"));
 
-	// 이펙트 로딩
+	// 플레이어 이펙트 로딩
 	BmpManager->RegistBitmap(TEXT("Normal_Effect"), TEXT("../Image/Effect/Normal_Effect.bmp"));
 	BmpManager->RegistBitmap(TEXT("Normal_Attack_Left"), TEXT("../Image/Effect/NormalAttack_Left.bmp"));
 	BmpManager->RegistBitmap(TEXT("Normal_Attack_Right"), TEXT("../Image/Effect/NormalAttack_Right.bmp"));
@@ -61,8 +61,6 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("Sword_Right"), TEXT("../Image/Kirby/Sword_Kirby/Right.bmp"));
 	BmpManager->RegistBitmap(TEXT("Sword_LeftAttack"), TEXT("../Image/Kirby/Sword_Kirby/Left_Attack.bmp"));
 	BmpManager->RegistBitmap(TEXT("Sword_RightAttack"), TEXT("../Image/Kirby/Sword_Kirby/Right_Attack.bmp"));
-
-
 
 	// 적 캐릭터 로딩
 	BmpManager->RegistBitmap(TEXT("Wadorudi_Left"), // 와도루디
@@ -94,7 +92,12 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("MetaKnight_Right"), 
 		TEXT("../Image/Enemy/MetaKnight/Right.bmp"));
 
-	SceneManager->SceneChange(SCENE_BOSS);
+	// 메타나이트 이펙트 로딩
+	BmpManager->RegistBitmap(TEXT("MetaKnight_SlashSkill_Left"), TEXT("../Image/Effect/MetaKnight_SlashSkill_Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("MetaKnight_SlashSkill_Right"), TEXT("../Image/Effect/MetaKnight_SlashSkill_Right.bmp"));
+	BmpManager->RegistBitmap(TEXT("MetaKnight_Tornado"), TEXT("../Image/Effect/MetaKnight_Tornado.bmp"));
+
+	SceneManager->SceneChange(SCENE_TITLE);
 }
 
 void CMainGame::LateInit()

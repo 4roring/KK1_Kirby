@@ -33,7 +33,10 @@ void CCollision::ActorToActor(OBJLIST & dstList, OBJLIST & srcList)
 					if (rc.right - rc.left)
 					{
 						pDst->SetInhail();
-						pDst->SetInhailType(pSrc->GetInhailType());
+
+						if (pDst->GetInhailType() != EMPTY || pDst->GetInhailType() != NORMAL)
+							pDst->SetInhailType(pSrc->GetInhailType());
+
 						dynamic_cast<CActor*>(pSrc)->ApplyDamage(100);
 					}
 				}

@@ -132,7 +132,6 @@ void CKirby::Render(HDC hDC)
 			GameManager->SetPause(false);
 			m_eCurState = IDLE;
 		}
-			
 	}
 	
 	if (!m_bNoDamage)

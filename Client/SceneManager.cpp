@@ -94,7 +94,7 @@ void CSceneManager::DrawAlphaColor(HDC hDC, BYTE Alpha, bool bColor)
 bool CSceneManager::SceneStart()
 {
 	if (m_Alpha >= 10)
-		m_Alpha -= 6.f;
+		m_Alpha -= 6;
 	else
 	{
 		m_Alpha = 0;
@@ -108,7 +108,7 @@ bool CSceneManager::SceneStart()
 bool CSceneManager::SceneEnd()
 {
 	if (m_Alpha < 245)
-		m_Alpha += 6.f;
+		m_Alpha += 6;
 	else
 	{
 		m_Alpha = 255;

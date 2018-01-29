@@ -5,6 +5,7 @@
 #include "Wadorudi.h"
 #include "Scarfy.h"
 #include "Door.h"
+#include "SwordKnight.h"
 
 CStage1_1::CStage1_1()
 {
@@ -57,6 +58,7 @@ void CStage1_1::Initialize()
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(2010.f, 60.f), OBJ_ENEMY);
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(2070.f, 315.f), OBJ_ENEMY);
 	GameManager->AddObject(CAbsFactory<CScarfy>::CreateEnemy(2800.f, 180.f), OBJ_ENEMY);
+	GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(3150.f, 140.f), OBJ_ENEMY);
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(3150.f, 140.f), OBJ_ENEMY);
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(3300.f, 400.f), OBJ_ENEMY);
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DDD.h"
 #include "InhailStar.h"
-
+#include "Door.h"
 
 CDDD::CDDD()
 	: m_dwIdleTime(3000)
@@ -39,6 +39,7 @@ void CDDD::Initialize()
 
 	m_pFrameKey = TEXT("DDD_Left");
 	m_dwStateTime = GetTickCount() + 2000;
+	m_dwDamageTime = GetTickCount();
 	m_pTarget = GameManager->GetPlayer();
 
 	m_eInhailType = TYPE_BOSS;
@@ -134,6 +135,7 @@ OBJ_STATE CDDD::Update()
 			}
 			else if (m_dwStateTime < GetTickCount()) // 패턴 종료
 			{
+				GameManager->CameraShakingStart(5.f, 500);
 				CreateInhailStar();
 				m_eCurState = IDLE;
 				m_dwStateTime = GetTickCount() + m_dwIdleTime;
@@ -217,8 +219,13 @@ OBJ_STATE CDDD::Update()
 			m_eCurState = IDLE;
 			m_dwStateTime = GetTickCount() + m_dwIdleTime - 2000;
 
+			m_bIsDamage = false;
+
 			if (m_iHp <= 0)
+			{
+				GameManager->AddObject(CAbsFactory<CDoor>::CreateDoor(588.f, 172.f, SCENE_BOSS), OBJ_INTERECTION);
 				m_eCurState = DEAD;
+			}
 		}
 		break;
 	case DEAD:
@@ -263,11 +270,12 @@ void CDDD::ApplyDamage(int iDamage)
 	{
 		// 태클과 공기의 데미지는 무시
 	}
-	else
+	else if(!m_bIsDamage)
 	{
 		CActor::ApplyDamage(iDamage);
 		m_eCurState = DAMAGE;
 		m_dwStateTime = GetTickCount() + 500;
+		m_bIsDamage = true;
 	}
 }
 

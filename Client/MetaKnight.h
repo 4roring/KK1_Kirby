@@ -27,7 +27,7 @@ public:
 
 private:
 	void SceneChange();
-	void CreateInhailStar();
+	void CreateInhailStar(int iCount);
 
 private:
 	STATE m_eCurState;
@@ -40,5 +40,8 @@ private:
 
 	DWORD m_dwStateTime;
 	DWORD m_dwIdleTime;
+	DWORD m_dwDamageTime;
+
+	CGameObject* m_pTornado;
 };
 

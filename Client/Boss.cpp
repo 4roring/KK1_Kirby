@@ -16,13 +16,16 @@ CBoss::~CBoss()
 
 void CBoss::Initialize()
 {
-	GameManager->AddObject(CAbsFactory<CKirby>::CreateObject(150.f, 500.f), OBJ_PLAYER);
-	
+	if (GameManager->GetObjList(OBJ_PLAYER).empty())
+		GameManager->AddObject(CAbsFactory<CKirby>::CreateObject(100.f, 500.f), OBJ_PLAYER);
+	else
+		GameManager->GetPlayer()->SetPos(100.f, 500.f);
+
 	GameManager->AddObject(CAbsFactory<CMetaKnight>::CreateObject(600.f, 500.f), OBJ_ENEMY);
 
 	GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(500.f, 400.f), OBJ_ENEMY);
 
-	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ WINCX, 0, WINCX + 50, WINCY }), OBJ_GROUND);
+	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ 750, 0, WINCX + 50, WINCY }), OBJ_GROUND);
 	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ -50, 450, WINCX, WINCY }), OBJ_GROUND);
 
 	GameManager->SetScrollX(77.f);
@@ -56,4 +59,6 @@ void CBoss::Render(HDC hDC)
 
 void CBoss::Release()
 {
+	GameManager->ReleaseObj(OBJ_GROUND);
+	GameManager->ReleaseObj(OBJ_ENEMY);
 }

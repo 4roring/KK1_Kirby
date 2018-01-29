@@ -27,6 +27,11 @@ public:
 	void SetPause(bool bPause) { m_bPause = bPause; }
 
 public:
+	void CameraShakingStart(float fShakePow);
+	void CameraShakingStart(float fShakePow, DWORD dwShakeEndTime);
+	void CameraShakingEnd() { m_bCameraShaking = false;  m_fShakingPow = 0.f; m_fScrollY = 0.f; }
+
+public:
 	void AddObject(CGameObject* pObject, OBJID eID);
 	void ReleaseObj(OBJID eID);
 
@@ -49,6 +54,10 @@ private:
 	float m_fMaxScrollX;
 	float m_fMaxScrollY;
 
+	float m_fShakingPow;
+	DWORD m_dwShakingTime;
+
+	bool m_bCameraShaking;
 	bool m_bPause;
 	bool m_bDebugBox;
 };

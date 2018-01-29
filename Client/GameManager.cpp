@@ -5,14 +5,35 @@
 
 
 CGameManager::CGameManager()
-	: m_bPause(false), m_bDebugBox(false), m_fScrollX(0), m_fScrollY(0),
-	m_fMaxScrollX(0), m_fMaxScrollY(0)
+	: m_bPause(false), m_bDebugBox(false), m_fScrollX(0.f), m_fScrollY(0.f),
+	m_fMaxScrollX(0.f), m_fMaxScrollY(0.f), m_fShakingPow(0.f), m_bCameraShaking(false)
 {
+	m_dwShakingTime = GetTickCount();
 }
 
 CGameManager::~CGameManager()
 {
 	Release();
+}
+
+void CGameManager::CameraShakingStart(float fShakePow)
+{
+	if (!m_bCameraShaking)
+	{
+		m_bCameraShaking = true;
+		m_fShakingPow = fShakePow;
+		m_dwShakingTime = GetTickCount() + 10000;
+	}
+}
+
+void CGameManager::CameraShakingStart(float fShakePow, DWORD dwShakeEndTime)
+{
+	if (!m_bCameraShaking)
+	{
+		m_bCameraShaking = true;
+		m_fShakingPow = fShakePow;
+		m_dwShakingTime = GetTickCount() + dwShakeEndTime;
+	}
 }
 
 void CGameManager::AddObject(CGameObject * pObject, OBJID eID)
@@ -37,7 +58,6 @@ void CGameManager::LateInit()
 
 void CGameManager::Update()
 {
-
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		if (m_bPause) // 변신중에는 몬스터는 못움직임.
@@ -63,6 +83,14 @@ void CGameManager::Update()
 			else
 				++iter;
 		}
+	}
+
+	if (m_bCameraShaking)
+	{
+		m_fShakingPow *= -1.f;
+		m_fScrollY = m_fShakingPow;
+		if (m_dwShakingTime < GetTickCount())
+			CameraShakingEnd();
 	}
 
 	if (InputManager->KeyDown('D'))

@@ -124,6 +124,15 @@
     <Filter Include="03.Enemy\99.MetaKnight">
       <UniqueIdentifier>{c4657e0b-0c4c-450d-b453-6e9ed873ae34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Effect\01.MetaKnightEffect">
+      <UniqueIdentifier>{7d181558-280c-4c24-a491-f217f2991cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\01.MetaKnightEffect\00.SlashSkill">
+      <UniqueIdentifier>{c9b9a518-6624-4509-8cbb-c9789afea965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\01.MetaKnightEffect\01.Tornado">
+      <UniqueIdentifier>{cfc74503-6c4d-475c-854a-8cae08ac48ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -256,7 +265,15 @@
     <ClInclude Include="Eff_Transform.h">
       <Filter>04.Effect\00.KirbyEffect\06.Eff_Transform</Filter>
     </ClInclude>
-    <ClInclude Include="MetaKnight.h" />
+    <ClInclude Include="MetaKnight.h">
+      <Filter>03.Enemy\99.MetaKnight</Filter>
+    </ClInclude>
+    <ClInclude Include="Eff_Tornado.h">
+      <Filter>04.Effect\01.MetaKnightEffect\01.Tornado</Filter>
+    </ClInclude>
+    <ClInclude Include="Eff_SlashSkill.h">
+      <Filter>04.Effect\01.MetaKnightEffect\00.SlashSkill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -362,7 +379,15 @@
     <ClCompile Include="Eff_Transform.cpp">
       <Filter>04.Effect\00.KirbyEffect\06.Eff_Transform</Filter>
     </ClCompile>
-    <ClCompile Include="MetaKnight.cpp" />
+    <ClCompile Include="MetaKnight.cpp">
+      <Filter>03.Enemy\99.MetaKnight</Filter>
+    </ClCompile>
+    <ClCompile Include="Eff_Tornado.cpp">
+      <Filter>04.Effect\01.MetaKnightEffect\01.Tornado</Filter>
+    </ClCompile>
+    <ClCompile Include="Eff_SlashSkill.cpp">
+      <Filter>04.Effect\01.MetaKnightEffect\00.SlashSkill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

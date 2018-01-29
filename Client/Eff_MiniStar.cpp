@@ -26,7 +26,7 @@ void CEff_MiniStar::LateInit()
 	m_tFrame.iScene = 0;
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 30;
-	m_fSpeed = rand() % 360;
+	m_fSpeed = float(rand() % 360);
 }
 
 OBJ_STATE CEff_MiniStar::Update()

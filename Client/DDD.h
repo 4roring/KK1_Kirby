@@ -39,7 +39,7 @@ private:
 	int m_iPatternCnt;
 
 	DWORD m_dwStateTime;
-
 	DWORD m_dwIdleTime;
+	DWORD m_dwDamageTime;
 };
 
