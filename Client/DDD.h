@@ -40,6 +40,6 @@ private:
 
 	DWORD m_dwStateTime;
 
-	DWORD m_iIdleTime;
+	DWORD m_dwIdleTime;
 };
 

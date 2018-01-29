@@ -37,37 +37,34 @@ void CGameManager::LateInit()
 
 void CGameManager::Update()
 {
-	if (m_bPause) // 변신중에는 플레이어만 움직임.
-	{
-		for (auto& pPlayer : m_ObjectList[OBJ_PLAYER])
-			pPlayer->Update();
-	}
-	else
-	{
-		for (int i = 0; i < OBJ_END; ++i)
-		{
-			for (auto iter = m_ObjectList[i].begin(); iter != m_ObjectList[i].end();)
-			{
-				OBJ_STATE eEvent = (*iter)->Update();
 
-				if (eEvent == DESTROY)
-				{
-					SafeDelete<CGameObject*>(*iter);
-					iter = m_ObjectList[i].erase(iter);
-				}
-				else if (eEvent == WAIT)
-				{
-					if (iter == m_ObjectList[i].end())
-						continue;
-					else
-						++iter;
-				}
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		if (m_bPause) // 변신중에는 몬스터는 못움직임.
+			if (i == OBJ_ENEMY)
+				continue;
+
+		for (auto iter = m_ObjectList[i].begin(); iter != m_ObjectList[i].end();)
+		{
+			OBJ_STATE eEvent = (*iter)->Update();
+
+			if (eEvent == DESTROY)
+			{
+				SafeDelete<CGameObject*>(*iter);
+				iter = m_ObjectList[i].erase(iter);
+			}
+			else if (eEvent == WAIT)
+			{
+				if (iter == m_ObjectList[i].end())
+					continue;
 				else
 					++iter;
 			}
+			else
+				++iter;
 		}
 	}
-	
+
 	if (InputManager->KeyDown('D'))
 		m_bDebugBox = !m_bDebugBox;
 
@@ -83,27 +80,23 @@ void CGameManager::Update()
 
 void CGameManager::LateUpdate()
 {
-	if (m_bPause) // 변신중에는 플레이어만 움직임.
-	{
-		for (auto& pPlayer : m_ObjectList[OBJ_PLAYER])
-			pPlayer->Update();
-	}
-	else
-	{
-		m_tScreenRect = { LONG(-400 - m_fScrollX), LONG(0 - m_fScrollY),
-			LONG(WINCX - m_fScrollX), LONG(WINCY - m_fScrollY) };
+	m_tScreenRect = { LONG(-400 - m_fScrollX), LONG(0 - m_fScrollY),
+		LONG(WINCX - m_fScrollX), LONG(WINCY - m_fScrollY) };
 
-		for (int i = 0; i < OBJ_END; ++i)
-		{
-			for (auto& pObject : m_ObjectList[i])
-				pObject->LateUpdate();
-		}
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		if (m_bPause) // 변신중에는 몬스터는 못움직임.
+			if (i == OBJ_ENEMY)
+				continue;
 
-		CCollision::Ground(m_ObjectList[OBJ_ENEMY], m_ObjectList[OBJ_GROUND]);
-		CCollision::ActorToActor(m_ObjectList[OBJ_PLAYER], m_ObjectList[OBJ_ENEMY]);
-		CCollision::HitBox(m_ObjectList[OBJ_PLAYER], m_ObjectList[ENEMY_ATT]);
-		CCollision::HitBox(m_ObjectList[OBJ_ENEMY], m_ObjectList[PLAYER_ATT]);
+		for (auto& pObject : m_ObjectList[i])
+			pObject->LateUpdate();
 	}
+
+	CCollision::Ground(m_ObjectList[OBJ_ENEMY], m_ObjectList[OBJ_GROUND]);
+	CCollision::ActorToActor(m_ObjectList[OBJ_PLAYER], m_ObjectList[OBJ_ENEMY]);
+	CCollision::HitBox(m_ObjectList[OBJ_PLAYER], m_ObjectList[ENEMY_ATT]);
+	CCollision::HitBox(m_ObjectList[OBJ_ENEMY], m_ObjectList[PLAYER_ATT]);
 }
 
 void CGameManager::Render(HDC hDC)

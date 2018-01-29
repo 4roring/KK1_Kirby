@@ -85,12 +85,16 @@ void CMainGame::Initialize()
 	BmpManager->RegistBitmap(TEXT("DDD_Right"),
 		TEXT("../Image/Enemy/DDD/RIght.bmp"));
 
-	BmpManager->RegistBitmap(TEXT("Black_1_Left"), // 블랙 메타나이트
-		TEXT("../Image/Enemy/BlackMetaKnight/Left_Move_Attack.bmp"));
-	BmpManager->RegistBitmap(TEXT("Black_1_Right"),
-		TEXT("../Image/Enemy/BlackMetaKnight/Right_Move_Attack.bmp"));
+	BmpManager->RegistBitmap(TEXT("MetaKnight_Apper"), // 메타나이트
+		TEXT("../Image/Enemy/MetaKnight/Appear.bmp"));
+	BmpManager->RegistBitmap(TEXT("MetaKnight_Dead"), 
+		TEXT("../Image/Enemy/MetaKnight/Dead.bmp"));
+	BmpManager->RegistBitmap(TEXT("MetaKnight_Left"), 
+		TEXT("../Image/Enemy/MetaKnight/Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("MetaKnight_Right"), 
+		TEXT("../Image/Enemy/MetaKnight/Right.bmp"));
 
-	SceneManager->SceneChange(SCENE_TITLE);
+	SceneManager->SceneChange(SCENE_BOSS);
 }
 
 void CMainGame::LateInit()

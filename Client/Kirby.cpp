@@ -125,9 +125,14 @@ void CKirby::Render(HDC hDC)
 
 	if (m_eCurState == TRANSFORM)
 	{
+		GameManager->SetPause(true);
 		SceneManager->DrawAlphaColor(hDC, 100, false);
 		if (m_iInputFrame < g_iFrame)
+		{
+			GameManager->SetPause(false);
 			m_eCurState = IDLE;
+		}
+			
 	}
 	
 	if (!m_bNoDamage)

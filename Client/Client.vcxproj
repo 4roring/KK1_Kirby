@@ -144,7 +144,6 @@
   <ItemGroup>
     <ClInclude Include="AbsFactory.h" />
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="BlackMetaKnight.h" />
     <ClInclude Include="Bmp.h" />
     <ClInclude Include="BmpManager.h" />
     <ClInclude Include="Boss.h" />
@@ -174,6 +173,7 @@
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="MetaKnight.h" />
     <ClInclude Include="MidBoss.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scarfy.h" />
@@ -190,7 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="BlackMetaKnight.cpp" />
     <ClCompile Include="Bmp.cpp" />
     <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="Boss.cpp" />
@@ -216,6 +215,7 @@
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="MetaKnight.cpp" />
     <ClCompile Include="MidBoss.cpp" />
     <ClCompile Include="Scarfy.cpp" />
     <ClCompile Include="Scene.cpp" />

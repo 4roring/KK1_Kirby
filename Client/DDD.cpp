@@ -4,7 +4,7 @@
 
 
 CDDD::CDDD()
-	: m_iIdleTime(3000)
+	: m_dwIdleTime(3000)
 {
 }
 
@@ -61,7 +61,7 @@ OBJ_STATE CDDD::Update()
 		{
 			// 다른 행동으로 전환.
 			m_eCurState = MOVE;
-			m_dwStateTime = GetTickCount() + m_iIdleTime;
+			m_dwStateTime = GetTickCount() + m_dwIdleTime;
 			if (++m_iCondition > 10)
 				m_iCondition = 1;
 		}
@@ -136,7 +136,7 @@ OBJ_STATE CDDD::Update()
 			{
 				CreateInhailStar();
 				m_eCurState = IDLE;
-				m_dwStateTime = GetTickCount() + m_iIdleTime;
+				m_dwStateTime = GetTickCount() + m_dwIdleTime;
 			}
 		}
 		
@@ -208,14 +208,14 @@ OBJ_STATE CDDD::Update()
 		{
 			CreateInhailStar();
 			m_eCurState = IDLE;
-			m_dwStateTime = GetTickCount() + m_iIdleTime;
+			m_dwStateTime = GetTickCount() + m_dwIdleTime;
 		}
 		break;
 	case DAMAGE:
 		if (m_dwStateTime < GetTickCount()) // 패턴 종료
 		{
 			m_eCurState = IDLE;
-			m_dwStateTime = GetTickCount() + m_iIdleTime - 2000;
+			m_dwStateTime = GetTickCount() + m_dwIdleTime - 2000;
 
 			if (m_iHp <= 0)
 				m_eCurState = DEAD;
