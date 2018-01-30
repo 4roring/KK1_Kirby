@@ -209,6 +209,9 @@ OBJ_STATE CMetaKnight::Update()
 		if (m_tFrame.iStart < 5)
 			m_fVelocityY -= 0.61f;
 
+		if(m_tFrame.iStart == 0)
+			SoundManager->PlaySound(TEXT("MetaKnight_Slash.wav"), CSoundManager::ENEMY);
+
 		if (m_tFrame.iStart == 4 && m_iPatternCnt < 1)
 		{
 			m_tFrame.iStart = 0;
@@ -232,6 +235,7 @@ OBJ_STATE CMetaKnight::Update()
 			m_tFrame.iStart = 2;
 			m_dwStateTime = GetTickCount() + 300;
 			CreateInhailStar(2);
+			SoundManager->PlaySound(TEXT("GroundAttack.wav"), CSoundManager::ENEMY);
 		}
 		else if (m_tFrame.iStart == 1)
 		{
@@ -254,15 +258,20 @@ OBJ_STATE CMetaKnight::Update()
 		}
 		break;
 	case CMetaKnight::ATTACK_DOWN:
+		if (m_tFrame.iStart == 0)
+			SoundManager->PlaySound(TEXT("MetaKnight_Slash.wav"), CSoundManager::ENEMY);
+
 		if (m_tFrame.iStart == m_tFrame.iEnd)
 		{
 			float fX = m_bFlipX ? 100.f : -100.f;
 			GameManager->AddObject(CAbsFactory<CEff_SlashSkill>::CreateObject(m_tInfo.fX + fX, m_tInfo.fY, m_bFlipX), ENEMY_ATT);
 			m_eCurState = ATTACK_UP;
 		}
-
 		break;
 	case CMetaKnight::ATTACK_UP:
+		if (m_tFrame.iStart == 0)
+			SoundManager->PlaySound(TEXT("MetaKnight_Slash.wav"), CSoundManager::ENEMY);
+
 		if (m_tFrame.iStart == m_tFrame.iEnd)
 		{
 			float fX = m_bFlipX ? 100.f : -100.f;
@@ -272,6 +281,9 @@ OBJ_STATE CMetaKnight::Update()
 		}
 		break;
 	case CMetaKnight::SKILL1: // Slash Skill
+		if (m_tFrame.iStart == 1)
+			SoundManager->PlaySound(TEXT("MetaKnight_Slash.wav"), CSoundManager::ENEMY);
+
 		if (m_tFrame.iStart == m_tFrame.iEnd - 1)
 		{
 			float fX = m_bFlipX ? 100.f : -100.f;

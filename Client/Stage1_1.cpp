@@ -53,14 +53,16 @@ void CStage1_1::Initialize()
 
 	// ¸ó½ºÅÍ
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(985.f, 350.f), OBJ_ENEMY);
-	GameManager->AddObject(CAbsFactory<CScarfy>::CreateEnemy(730.f, 230.f), OBJ_ENEMY);
-	GameManager->AddObject(CAbsFactory<CScarfy>::CreateEnemy(1540.f, 85.f), OBJ_ENEMY);
+	GameManager->AddObject(CAbsFactory<CScarfy>::CreateEnemy(1540.f, 105.f), OBJ_ENEMY);
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(2010.f, 60.f), OBJ_ENEMY);
-	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(2070.f, 315.f), OBJ_ENEMY);
+	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(2050.f, 315.f), OBJ_ENEMY);
+	GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(2090.f, 330.f), OBJ_ENEMY);
 	GameManager->AddObject(CAbsFactory<CScarfy>::CreateEnemy(2800.f, 180.f), OBJ_ENEMY);
-	GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(3150.f, 140.f), OBJ_ENEMY);
+	GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(3050.f, 140.f), OBJ_ENEMY);
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(3150.f, 140.f), OBJ_ENEMY);
 	GameManager->AddObject(CAbsFactory<CWadorudi>::CreateEnemy(3300.f, 400.f), OBJ_ENEMY);
+
+	SoundManager->PlayBGM(TEXT("Stage1.mp3"));
 
 	GameManager->SetScrollX(0.f);
 	GameManager->SetMaxScrollX(-3450.f);
@@ -93,6 +95,7 @@ void CStage1_1::Render(HDC hDC)
 
 void CStage1_1::Release()
 {
+	SoundManager->StopSound(CSoundManager::BGM);
 	GameManager->ReleaseObj(OBJ_GROUND);
 	GameManager->ReleaseObj(OBJ_ENEMY);
 }

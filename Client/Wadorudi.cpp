@@ -57,9 +57,7 @@ OBJ_STATE CWadorudi::Update()
 			m_bActive = false;
 	}
 	else
-	{
 		Initialize();
-	}
 
 	if (m_bActive)
 	{

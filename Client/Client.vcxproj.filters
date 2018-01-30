@@ -64,12 +64,6 @@
     <Filter Include="05.Scene\98.MidBoss">
       <UniqueIdentifier>{a1077753-6b13-45af-9548-34e38bd943fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05.Scene\04.Stage1-3">
-      <UniqueIdentifier>{ccd77105-503e-4ff8-9ed5-86794b3e9663}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05.Scene\03.Stage1-2">
-      <UniqueIdentifier>{8e7e06fe-d5d9-4138-8b95-b9e3700ab465}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Kirby">
       <UniqueIdentifier>{85c68ade-68ef-4da5-afd3-9dafbd0c5e79}</UniqueIdentifier>
     </Filter>
@@ -132,6 +126,18 @@
     </Filter>
     <Filter Include="04.Effect\01.MetaKnightEffect\01.Tornado">
       <UniqueIdentifier>{cfc74503-6c4d-475c-854a-8cae08ac48ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Managers\06.SoundManager">
+      <UniqueIdentifier>{31678c17-8240-44db-bcae-d28eace8ae85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI">
+      <UniqueIdentifier>{27e96559-f7d6-45cf-af20-a97e13af4dc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\01.BossHp">
+      <UniqueIdentifier>{3eec64bb-2482-4220-8507-5cec120c9ac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\00.PlayerHp">
+      <UniqueIdentifier>{ab4150c1-a0e5-4a3b-90a1-66ffdf01997a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +280,12 @@
     <ClInclude Include="Eff_SlashSkill.h">
       <Filter>04.Effect\01.MetaKnightEffect\00.SlashSkill</Filter>
     </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>97.Managers\06.SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_PlayerHp.h">
+      <Filter>06.UI\00.PlayerHp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -387,6 +399,12 @@
     </ClCompile>
     <ClCompile Include="Eff_SlashSkill.cpp">
       <Filter>04.Effect\01.MetaKnightEffect\00.SlashSkill</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>97.Managers\06.SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_PlayerHp.cpp">
+      <Filter>06.UI\00.PlayerHp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

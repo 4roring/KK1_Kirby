@@ -34,7 +34,7 @@ void CCollision::ActorToActor(OBJLIST & dstList, OBJLIST & srcList)
 					{
 						pDst->SetInhail();
 
-						if (pDst->GetInhailType() != EMPTY || pDst->GetInhailType() != NORMAL)
+						if (pDst->GetInhailType() == EMPTY || pDst->GetInhailType() == NORMAL)
 							pDst->SetInhailType(pSrc->GetInhailType());
 
 						dynamic_cast<CActor*>(pSrc)->ApplyDamage(100);
@@ -230,25 +230,38 @@ bool CCollision::Screen(RECT & tScreen, CGameObject* pObj)
 	return false;
 }
 
-void CCollision::HitBox(OBJLIST & dstList, OBJLIST & srcList)
+void CCollision::HitBox(OBJLIST & dstList, OBJLIST & HitBoxList)
 {
 	for (auto pDst : dstList)
 	{
-		if (!pDst->GetActive() || pDst->GetAtt() == 60)
+		if (!pDst->GetActive() || pDst->GetAtt() == 60 || dynamic_cast<CActor*>(pDst)->GetIsDamage())
 			continue;
 
-		for (auto pSrc : srcList)
+		for (auto pHitBox : HitBoxList)
 		{
-			if (!pSrc->GetActive())
+			if (!pHitBox->GetActive())
 				continue;
 
 			RECT rc = {};
-			if (IntersectRect(&rc, &(pDst->GetHitBox()), &(pSrc->GetHitBox())))
+			if (IntersectRect(&rc, &(pDst->GetHitBox()), &(pHitBox->GetHitBox())))
 			{
-				dynamic_cast<CActor*>(pDst)->ApplyDamage(pSrc->GetAtt());
+				bool bFlipX = pDst->GetInfo().fX < pHitBox->GetInfo().fX ? true : false;
+				pDst->SetFlipX(bFlipX);
 
-				if(!pSrc->GetHitBoxType())
-					pSrc->SetActive(false);
+				switch (pHitBox->GetHitSoundType())
+				{
+				case HIT:
+					SoundManager->PlaySound(TEXT("Hit.wav"), CSoundManager::EFFECT);
+					break;
+				case SLASH:
+					SoundManager->PlaySound(TEXT("Hit_Slash.wav"), CSoundManager::EFFECT);
+					break;
+				}
+
+				dynamic_cast<CActor*>(pDst)->ApplyDamage(pHitBox->GetAtt());
+
+				if(!pHitBox->GetHitBoxType())
+					pHitBox->SetActive(false);
 			}
 		}
 	}
@@ -281,6 +294,10 @@ void CCollision::InterectionDoor(CGameObject * pObj, OBJLIST & InterectionList)
 
 		RECT rc = {};
 		if (IntersectRect(&rc, &(pObj->GetRect()), &(pInter->GetRect())))
+		{
+			SoundManager->PlaySound(TEXT("SceneChange.wav"), CSoundManager::EFFECT);
 			pInter->SetActive(false);
+		}
+			
 	}
 }

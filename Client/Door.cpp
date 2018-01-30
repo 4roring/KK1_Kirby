@@ -40,7 +40,6 @@ OBJ_STATE CDoor::Update()
 		
 	}
 		
-
 	return PLAY;
 }
 

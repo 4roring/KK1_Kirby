@@ -40,6 +40,8 @@ void CMidBoss::Initialize()
 	// DDD
 	GameManager->AddObject(CAbsFactory<CDDD>::CreateObject(900.f, 245.f), OBJ_ENEMY);
 
+	SoundManager->PlayBGM(TEXT("DDDTheme.mp3"));
+
 	GameManager->SetScrollX(0.f);
 	GameManager->SetMaxScrollX(-456.f);
 
@@ -80,6 +82,7 @@ void CMidBoss::Render(HDC hDC)
 
 void CMidBoss::Release()
 {
+	SoundManager->StopSound(CSoundManager::BGM);
 	GameManager->ReleaseObj(OBJ_GROUND);
 	GameManager->ReleaseObj(OBJ_ENEMY);
 }

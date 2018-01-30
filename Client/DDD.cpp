@@ -347,4 +347,5 @@ void CDDD::CreateInhailStar()
 	float fY = m_tInfo.fY + 10.f;
 
 	GameManager->AddObject(CAbsFactory<CInhailStar>::CreateInhailStar(fX, fY, NORMAL), OBJ_ENEMY);
+	SoundManager->PlaySound(TEXT("GroundAttack.wav"), CSoundManager::ENEMY);
 }

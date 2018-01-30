@@ -17,17 +17,24 @@
 #include <memory.h>
 #include <tchar.h>
 #include <list>
+#include <map>
 #include <unordered_map>
 #include <algorithm>
 #include <cmath>
 #include <ctime>
-
-#include "vld.h"
+#include <io.h>
 
 #ifdef _DEBUG
+#include "vld.h"
 #include <iostream>
 #pragma comment (linker, "/entry:wWinMainCRTStartup /subsystem:console")
 #endif
+
+#include "../FMOD/fmod.h"
+#include "../FMOD/fmod.hpp"
+
+#pragma comment(lib, "fmodex_vc.lib")
+
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
 #include "Typedef.h"
@@ -44,3 +51,4 @@
 #include "InputManager.h"
 #include "BmpManager.h"
 #include "SceneManager.h"
+#include "SoundManager.h"

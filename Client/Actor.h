@@ -20,6 +20,8 @@ public:
 	float GetVelocityY() { return m_fVelocityY; }
 	float GetStartX() { return m_fStartX; }
 	float GetStartY() { return m_fStartY; }
+	bool GetIsDamage() { return m_bIsDamage; }
+	float GetHpRatio() { return m_iHp / (float)m_iMaxHp; }
 
 public:
 	void SetVelocityX(float fVelocityX) { m_fVelocityX = fVelocityX; }

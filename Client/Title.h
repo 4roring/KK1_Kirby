@@ -16,7 +16,11 @@ public:
 	virtual void Release() override;
 
 private:
+	void FileLoad();
+
+private:
 	bool m_bTitle;
 	bool m_bNextScene;
+	bool m_bFileLoad;
 };
 

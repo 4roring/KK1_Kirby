@@ -17,6 +17,7 @@ public:
 	bool GetInhail() { return m_bInhail; }
 	bool GetHitBoxType() { return m_bHitBoxType; }
 	ENEMYTYPE GetInhailType() { return m_eInhailType; }
+	HIT_SOUNDTYPE GetHitSoundType() { return m_eHitSoundType; }
 
 public:
 	void SetPos(float fX, float fY) { m_tInfo.fX = fX, m_tInfo.fY = fY; }
@@ -29,6 +30,7 @@ public:
 	void SetInhail() { m_bInhail = true; }
 	void SetInhailType(ENEMYTYPE eInhailType) { m_eInhailType = eInhailType; }
 	void SetHitBoxType(bool bHitBoxType) { m_bHitBoxType = bHitBoxType; }
+	void SetHitSoundType(HIT_SOUNDTYPE eHitSoundType) { m_eHitSoundType = eHitSoundType; }
 
 public:
 	virtual void Initialize() PURE;
@@ -40,10 +42,11 @@ public:
 	void UpdateRect();
 
 protected:
-	
 	void UpdateRect(float fX, float fY);
 	void FrameMove();
 	void DrawObject(HDC hDC, const TCHAR* szName);
+	void DrawObject(HDC hDC, const TCHAR* szName, float fX, float fY);
+	void DrawObject(HDC hDC, const TCHAR* szName, float Ratio);
 	void DrawHitBox(HDC hDC);
 
 protected:
@@ -68,5 +71,6 @@ protected:
 	CGameObject* m_pTarget;
 	
 	ENEMYTYPE m_eInhailType;
+	HIT_SOUNDTYPE m_eHitSoundType;
 };
 

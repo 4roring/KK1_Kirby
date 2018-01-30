@@ -47,8 +47,8 @@ public:
 		return pObj;
 	}
 
-	// HitBoxType에 따라 한방에 사라질지 생성자가 직접 삭제할지 결정.
-	static CGameObject* CreateHitBox(float fX, float fY , int iCX, int iCY, int iAtt, bool bHitBoxType)
+	// HitBoxType에 따라 한방에 사라질지 생성자가 직접 삭제할지 결정, 사운드 타입 선택
+	static CGameObject* CreateHitBox(float fX, float fY , int iCX, int iCY, int iAtt, bool bHitBoxType, HIT_SOUNDTYPE eType)
 	{
 		CGameObject* pObj = new T;
 		pObj->Initialize();
@@ -57,6 +57,7 @@ public:
 		pObj->SetAtt(iAtt);
 		pObj->SetHitBoxType(bHitBoxType);
 		pObj->LateInit();
+		pObj->SetHitSoundType(eType);
 
 		return pObj;
 	}

@@ -71,6 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);../FMOD;</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -181,6 +182,7 @@
     <ClInclude Include="Scarfy.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Stage1_1.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
@@ -188,6 +190,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Typedef.h" />
+    <ClInclude Include="UI_PlayerHp.h" />
     <ClInclude Include="Wadorudi.h" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +227,7 @@
     <ClCompile Include="Scarfy.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Stage1_1.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -233,6 +237,7 @@
     </ClCompile>
     <ClCompile Include="SwordKnight.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="UI_PlayerHp.cpp" />
     <ClCompile Include="Wadorudi.cpp" />
   </ItemGroup>
   <ItemGroup>

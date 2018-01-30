@@ -43,12 +43,15 @@ OBJ_STATE CEff_Tornado::Update()
 		GameManager->CameraShakingEnd();
 		m_iHitBoxCX = 50;
 		m_iHitBoxCY = 50;
-
+		SoundManager->StopSound(CSoundManager::ENEMY);
 		if(m_tFrame.iStart == m_tFrame.iEnd)
 			return DESTROY;
 	}
 	else
 	{
+		if (m_tFrame.iStart == 0)
+			SoundManager->PlaySound(TEXT("MetaKnight_Tornado.wav"), CSoundManager::ENEMY);
+
 		if (m_tFrame.iStart == 8)
 			m_tFrame.iStart = 0;
 		m_tInfo.fX += m_fSpeed;

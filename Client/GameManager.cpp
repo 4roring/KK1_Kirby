@@ -108,7 +108,7 @@ void CGameManager::Update()
 
 void CGameManager::LateUpdate()
 {
-	m_tScreenRect = { LONG(-400 - m_fScrollX), LONG(0 - m_fScrollY),
+	m_tScreenRect = { LONG(-200 - m_fScrollX), LONG(0 - m_fScrollY),
 		LONG(WINCX - m_fScrollX), LONG(WINCY - m_fScrollY) };
 
 	for (int i = 0; i < OBJ_END; ++i)

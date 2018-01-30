@@ -49,6 +49,8 @@ void CKirby::Initialize()
 	m_bIsGround = false;
 	m_bDash = false;
 	m_bAttack = false;
+	
+	m_bFlySound = false;
 
 	m_iInputFrame = g_iFrame;
 	m_iAttSquence = 0;
@@ -151,6 +153,8 @@ void CKirby::ApplyDamage(int iDamage)
 		CActor::ApplyDamage(iDamage);
 		if (m_eForm != NORMAL_FORM)
 			DisTransform();
+		
+		SoundManager->PlaySound(TEXT("Damage.wav"), CSoundManager::PLAYER);
 		m_eCurState = DAMAGE;
 		m_bNoDamage = true;
 	}
@@ -161,6 +165,17 @@ void CKirby::ApplyDamage(int iDamage)
 
 void CKirby::Input()
 {
+#ifdef _DEBUG
+	if (InputManager->KeyDown('1'))
+		SceneManager->SceneChange(SCENE_STAGE1);
+	if (InputManager->KeyDown('2'))
+		SceneManager->SceneChange(SCENE_MIDBOSS);
+	if (InputManager->KeyDown('3'))
+		SceneManager->SceneChange(SCENE_BOSS);
+	if (InputManager->KeyDown('H'))
+		m_iHp = m_iMaxHp;
+
+#endif
 	if (m_bSlide) return;
 
 	if (InputManager->KeyDown(VK_UP))
@@ -198,25 +213,31 @@ void CKirby::Input()
 	// 7프레임 안에 연타시 대시 입력
 	if (InputManager->KeyDown(VK_LEFT) && m_iInputFrame > g_iFrame && !m_bFly)
 	{
-		m_bFlipX = false;
+		if (!m_bAttack)
+			m_bFlipX = false;
 		m_bDash = true;
+		SoundManager->PlaySound(TEXT("Dash.wav"), CSoundManager::PLAYER);
 		CreateDashEffect();
 	}
 	else if (InputManager->KeyUp(VK_LEFT) && m_iInputFrame < g_iFrame && !m_bFly)
 	{
-		m_iInputFrame = g_iFrame + 7;
+		if(!m_bDash)
+			m_iInputFrame = g_iFrame + 7;
 		m_bDash = false;
 	}
 
-	if (InputManager->KeyDown(VK_RIGHT) && m_iInputFrame > g_iFrame && !m_bFly)
+	if (InputManager->KeyDown(VK_RIGHT) && m_iInputFrame > g_iFrame && !m_bFly && !m_bDash)
 	{
-		m_bFlipX = true;
+		if (!m_bAttack)
+			m_bFlipX = true;
 		m_bDash = true;
+		SoundManager->PlaySound(TEXT("Dash.wav"), CSoundManager::PLAYER);
 		CreateDashEffect();
 	}
 	else if (InputManager->KeyUp(VK_RIGHT) && m_iInputFrame < g_iFrame && !m_bFly)
 	{
-		m_iInputFrame = g_iFrame + 7;
+		if (!m_bDash)
+			m_iInputFrame = g_iFrame + 7;
 		m_bDash = false;
 	}
 
@@ -228,6 +249,7 @@ void CKirby::Input()
 		{
 			m_bEat = true;
 			m_bInhail = false;
+			SoundManager->PlaySound(TEXT("Eat.wav"), CSoundManager::PLAYER);
 		}
 		else if (!m_bSlide && !m_bFly && !m_bInhail)
 		{
@@ -245,7 +267,7 @@ void CKirby::Input()
 		{
 			m_bSlide = true;
 			CreateDashEffect();
-
+			SoundManager->PlaySound(TEXT("Slide.wav"), CSoundManager::PLAYER);
 			m_iAtt = 20;
 
 			if (m_eForm == SWORD_FORM)
@@ -259,6 +281,7 @@ void CKirby::Input()
 			m_bIsGround = false;
 			m_bJump = true;
 			m_fVelocityY = 1.f;
+			SoundManager->PlaySound(TEXT("Jump.wav"), CSoundManager::PLAYER);
 		}
 		else if (m_bJump && !m_bInhail)
 			m_bFly = true;
@@ -301,8 +324,11 @@ void CKirby::Move()
 		else if (m_eCurState != DOWN && !m_bAttack)
 			m_fVelocityX -= m_fAccX;
 
-		m_bFlipX = false;
-		m_pFrameKey = m_pLeftKey;
+		if (!m_bAttack)
+		{
+			m_bFlipX = false;
+			m_pFrameKey = m_pLeftKey;
+		}
 	}
 	else if (InputManager->Key(VK_RIGHT))
 	{
@@ -311,8 +337,11 @@ void CKirby::Move()
 		else if (m_eCurState != DOWN && !m_bAttack)
 			m_fVelocityX += m_fAccX;
 
-		m_bFlipX = true;
-		m_pFrameKey = m_pRightKey;
+		if (!m_bAttack)
+		{
+			m_bFlipX = true;
+			m_pFrameKey = m_pRightKey;
+		}
 	}
 
 	// 최대 속도를 넘지 않음
@@ -348,6 +377,9 @@ void CKirby::Attack()
 			m_eCurState = SHOOTSTAR;
 		else
 		{
+			if(m_eForm == NORMAL_FORM)
+				SoundManager->PlaySound(TEXT("Inhail.wav"), CSoundManager::PLAYER);
+			
 			m_eCurState = ATTACK;
 			m_iAttSquence = 0;
 		}
@@ -361,6 +393,7 @@ void CKirby::Attack()
 		{
 			++m_tFrame.iStart;
 			float fX = m_bFlipX ? 50.f : -50.f;
+			SoundManager->PlaySound(TEXT("FlyAttack.wav"), CSoundManager::PLAYER);
 			GameManager->AddObject(CAbsFactory<CEff_Normal_FlyAtt>::CreateObject(m_tInfo.fX + fX, m_tInfo.fY, m_bFlipX), PLAYER_ATT);
 		}
 		if (m_tFrame.iStart == m_tFrame.iEnd)
@@ -374,8 +407,8 @@ void CKirby::Attack()
 		m_eCurState = SHOOTSTAR;
 		if (m_tFrame.iStart == 0)
 		{
+			SoundManager->PlaySound(TEXT("ShootStar.wav"), CSoundManager::PLAYER);
 			GameManager->AddObject(CAbsFactory<CEff_ShootingStar>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), PLAYER_ATT);
-			std::cout << "별 발사!" << std::endl;
 			++m_tFrame.iStart;
 		}
 
@@ -415,6 +448,7 @@ void CKirby::Attack()
 		{
 			if (m_pTarget)
 			{
+				SoundManager->StopSound(CSoundManager::PLAYER);
 				m_pTarget->SetActive(false);
 				m_pTarget = nullptr;
 			}
@@ -428,6 +462,7 @@ void CKirby::Attack()
 	}
 	else if (InputManager->KeyUp('X') && m_bAttack && m_eForm == NORMAL_FORM)
 	{
+		SoundManager->StopSound(CSoundManager::PLAYER);
 		m_bAttack = false;
 		m_iAttSquence = 0;
 		if (m_pTarget)
@@ -472,8 +507,17 @@ void CKirby::Jump()
 		if (m_tFrame.iStart > 3)
 			m_tFrame.dwSpeed = 50;
 
+		if (!m_bFlySound)
+		{
+			SoundManager->PlaySound(TEXT("Fly.wav"), CSoundManager::PLAYER);
+			m_bFlySound = true;
+		}
+			
 		if (m_tFrame.iStart == m_tFrame.iEnd)
+		{
 			m_tFrame.iStart = 4;
+			m_bFlySound = false;
+		}	
 	}
 	else if (m_fVelocityY > 0 && m_bJump && !m_bAttack)
 	{
@@ -512,10 +556,12 @@ void CKirby::Jump()
 			GameManager->AddObject(CAbsFactory<CEff_MiniStar>::CreateObject(m_tInfo.fX, m_tInfo.fY + 20.f), OBJ_EFFECT);
 			m_tFrame.iStart = m_tFrame.iEnd - 2;
 			m_tFrame.dwSpeed = 50;
+			SoundManager->PlaySound(TEXT("JumpEnd.wav"), CSoundManager::PLAYER);
 		}
 		m_fGravity = -0.2f;
 		m_fVelocityY = m_fGravity;
 		m_bJump = false;
+		m_bFlySound = false;
 	}
 	else
 	{
@@ -906,6 +952,7 @@ void CKirby::Eat()
 				m_eForm = SWORD_FORM;
 				m_eCurState = TRANSFORM;
 				m_iInputFrame = g_iFrame + 40;
+				SoundManager->PlaySound(TEXT("Transform.wav"), CSoundManager::PLAYER);
 				GameManager->AddObject(CAbsFactory<CEff_Transform>::CreateObject(m_tInfo.fX, m_tInfo.fY + 20.f), OBJ_EFFECT);
 				break;
 			}
@@ -940,8 +987,9 @@ void CKirby::SwordAttack()
 	{
 		if (m_pTarget == nullptr)
 		{
-			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX, m_tInfo.fY - 15.f, 120, 120, 30, true), PLAYER_ATT);
+			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX, m_tInfo.fY - 15.f, 120, 120, 30, true, SLASH), PLAYER_ATT);
 			m_pTarget = GameManager->GetObjList(PLAYER_ATT).back();
+			SoundManager->PlaySound(TEXT("SwordKirbyAttack.wav"), CSoundManager::PLAYER);
 		}
 		else
 			m_pTarget->SetPos(m_tInfo.fX, m_tInfo.fY - 15.f);
@@ -957,11 +1005,11 @@ void CKirby::SwordAttack()
 				m_eCurState = IDLE;
 				m_tInfo.fCX = 213;
 				m_tInfo.fCY = 180;
-				if (m_pTarget)
-				{
-					m_pTarget->SetActive(false);
-					m_pTarget = nullptr;
-				}
+			}
+			if (m_pTarget)
+			{
+				m_pTarget->SetActive(false);
+				m_pTarget = nullptr;
 			}
 		}
 	}
@@ -985,8 +1033,9 @@ void CKirby::SwordAttack()
 		if (m_pTarget == nullptr)
 		{
 			float fX = m_bFlipX ? 30.f : -30.f;
-			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX + fX, m_tInfo.fY - 15.f, 200, 130, 50, true), PLAYER_ATT);
+			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX + fX, m_tInfo.fY - 15.f, 200, 130, 50, true, SLASH), PLAYER_ATT);
 			m_pTarget = GameManager->GetObjList(PLAYER_ATT).back();
+			SoundManager->PlaySound(TEXT("SwordKirbyAttack.wav"), CSoundManager::PLAYER);
 		}
 
 		if (m_tFrame.iStart == m_tFrame.iEnd)

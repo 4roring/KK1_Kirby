@@ -28,6 +28,8 @@ void CBoss::Initialize()
 	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ 750, 0, WINCX + 50, WINCY }), OBJ_GROUND);
 	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ -50, 450, WINCX, WINCY }), OBJ_GROUND);
 
+	SoundManager->PlayBGM(TEXT("MetaKnightTheme.mp3"));
+
 	GameManager->SetScrollX(77.f);
 	GameManager->SetMaxScrollX(-38.f);
 
@@ -59,6 +61,7 @@ void CBoss::Render(HDC hDC)
 
 void CBoss::Release()
 {
+	SoundManager->StopSound(CSoundManager::BGM);
 	GameManager->ReleaseObj(OBJ_GROUND);
 	GameManager->ReleaseObj(OBJ_ENEMY);
 }

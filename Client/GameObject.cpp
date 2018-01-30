@@ -3,7 +3,7 @@
 
 
 CGameObject::CGameObject()
-	: m_bActive(true), m_bFlipX(false), m_pTarget(nullptr), m_bInhail(false), m_bHitBoxType(false)
+	: m_bActive(true), m_bFlipX(false), m_pTarget(nullptr), m_bInhail(false), m_bHitBoxType(false), m_eHitSoundType(HIT)
 {
 	m_tInfo = {};
 	m_tRect = {};
@@ -68,6 +68,28 @@ void CGameObject::DrawObject(HDC hDC, const TCHAR* szName)
 		iSizeX, iSizeY, hMemDC,
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY,
 		iSizeX, iSizeY, RGB(255, 0, 255));
+}
+
+// 위치를 옮길 수 있는 DrawObject
+void CGameObject::DrawObject(HDC hDC, const TCHAR * szName, float fX, float fY)
+{
+	int iScrollX = (int)GameManager->GetScrollX();
+	int iScrollY = (int)GameManager->GetScrollY();
+
+	HDC hMemDC = BmpManager->GetMapBit()[szName]->GetMemDC();
+
+	int iSizeX = (int)m_tInfo.fCX;
+	int iSizeY = (int)m_tInfo.fCY;
+
+	GdiTransparentBlt(hDC, m_tRect.left + fX + iScrollX, m_tRect.top + iScrollY + fY,
+		iSizeX + fX, iSizeY + fY, hMemDC,
+		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY,
+		iSizeX, iSizeY, RGB(255, 0, 255));
+}
+
+// 비율만큼 빼고 그리는 DrawObeject
+void CGameObject::DrawObject(HDC hDC, const TCHAR * szName, float Ratio)
+{
 }
 
 void CGameObject::DrawHitBox(HDC hDC)
