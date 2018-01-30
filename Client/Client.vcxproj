@@ -175,6 +175,8 @@
     <ClInclude Include="Kirby.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Mario.h" />
+    <ClInclude Include="MarioFire.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MetaKnight.h" />
     <ClInclude Include="MidBoss.h" />
@@ -183,6 +185,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="SpecialMap.h" />
     <ClInclude Include="Stage1_1.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
@@ -190,6 +193,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Typedef.h" />
+    <ClInclude Include="UI_BossHp.h" />
     <ClInclude Include="UI_PlayerHp.h" />
     <ClInclude Include="Wadorudi.h" />
   </ItemGroup>
@@ -221,6 +225,8 @@
     <ClCompile Include="Kirby.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MarioFire.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MetaKnight.cpp" />
     <ClCompile Include="MidBoss.cpp" />
@@ -228,6 +234,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="SpecialMap.cpp" />
     <ClCompile Include="Stage1_1.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -237,6 +244,7 @@
     </ClCompile>
     <ClCompile Include="SwordKnight.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="UI_BossHp.cpp" />
     <ClCompile Include="UI_PlayerHp.cpp" />
     <ClCompile Include="Wadorudi.cpp" />
   </ItemGroup>

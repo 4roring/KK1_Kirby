@@ -12,6 +12,7 @@ CBoss::CBoss()
 
 CBoss::~CBoss()
 {
+	Release();
 }
 
 void CBoss::Initialize()
@@ -25,8 +26,8 @@ void CBoss::Initialize()
 
 	GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(500.f, 400.f), OBJ_ENEMY);
 
-	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ 750, 0, WINCX + 50, WINCY }), OBJ_GROUND);
-	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ -50, 450, WINCX, WINCY }), OBJ_GROUND);
+	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ 750, 0, 750 + 50, WINCY }), OBJ_GROUND);
+	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ -50, 450, 760, WINCY }), OBJ_GROUND);
 
 	SoundManager->PlayBGM(TEXT("MetaKnightTheme.mp3"));
 

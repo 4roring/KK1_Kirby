@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Stage1_1.h"
 #include "MidBoss.h"
+#include "SpecialMap.h"
 #include "Boss.h"
 #include "Title.h"
 
@@ -37,6 +38,9 @@ void CSceneManager::SceneChange(SCENEID eID)
 			break;
 		case SCENE_MIDBOSS:
 			m_pScene = new CMidBoss;
+			break;
+		case SCENE_SPECIAL:
+			m_pScene = new CSpecialMap;
 			break;
 		case SCENE_BOSS:
 			m_pScene = new CBoss;
@@ -116,6 +120,5 @@ bool CSceneManager::SceneEnd()
 		return true;
 	}
 		
-
 	return false;
 }

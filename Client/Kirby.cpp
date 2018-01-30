@@ -8,6 +8,7 @@
 #include "Eff_Transform.h"
 #include "InhailStar.h"
 #include "HitBox.h"
+#include "UI_PlayerHp.h"
 
 CKirby::CKirby()
 {
@@ -71,6 +72,8 @@ void CKirby::Initialize()
 	m_tFrame.dwSpeed = 100;
 
 	m_iAtt = 10;
+
+	GameManager->AddObject(CAbsFactory<CUI_PlayerHp>::CreateObject(this), OBJ_UI);
 }
 
 void CKirby::LateInit()
@@ -79,6 +82,12 @@ void CKirby::LateInit()
 
 OBJ_STATE CKirby::Update()
 {
+	if (!m_bActive)
+	{
+		Dead();
+		return PLAY;
+	}
+
 	if (m_eCurState == TRANSFORM) return PLAY;
 	if (m_eCurState == DAMAGE) return PLAY;
 	if (m_bEat) return PLAY;
@@ -150,13 +159,25 @@ void CKirby::ApplyDamage(int iDamage)
 {
 	if (!m_bNoDamage)
 	{
-		CActor::ApplyDamage(iDamage);
+		CActor::ApplyDamage(10);
 		if (m_eForm != NORMAL_FORM)
 			DisTransform();
 		
 		SoundManager->PlaySound(TEXT("Damage.wav"), CSoundManager::PLAYER);
-		m_eCurState = DAMAGE;
-		m_bNoDamage = true;
+
+		if (m_iHp <= 0)
+		{
+			m_bActive = false;
+			m_bFlipX = false;
+			m_fVelocityY = 8.f;
+			SoundManager->StopAll();
+			SoundManager->PlaySound(TEXT("Dead.wav"), CSoundManager::PLAYER);
+		}
+		else
+		{
+			m_eCurState = DAMAGE;
+			m_bNoDamage = true;
+		}
 	}
 
 	if (m_bSlide)
@@ -171,6 +192,8 @@ void CKirby::Input()
 	if (InputManager->KeyDown('2'))
 		SceneManager->SceneChange(SCENE_MIDBOSS);
 	if (InputManager->KeyDown('3'))
+		SceneManager->SceneChange(SCENE_SPECIAL);
+	if (InputManager->KeyDown('4'))
 		SceneManager->SceneChange(SCENE_BOSS);
 	if (InputManager->KeyDown('H'))
 		m_iHp = m_iMaxHp;
@@ -783,6 +806,13 @@ void CKirby::NormalScene()
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 40;
 		break;
+	case DEAD:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 15;
+		m_tFrame.iScene = 23;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 40;
+		break;
 	}
 }
 
@@ -962,6 +992,26 @@ void CKirby::Eat()
 	}
 }
 
+void CKirby::Dead()
+{
+	m_fVelocityX = 0;
+	m_eCurState = DEAD;
+
+	m_fVelocityY -= 0.2f;
+
+	m_tInfo.fY -= m_fVelocityY;
+
+	if (m_tInfo.fY > 800.f)
+	{
+		if (SceneManager->SceneEnd())
+		{
+			Initialize();
+			m_bActive = true;
+			SceneManager->SceneRestart();
+		}
+	}
+}
+
 void CKirby::KirbyUpdateRect()
 {
 	m_tRect.left = LONG(m_tInfo.fX + m_fImageX - m_tInfo.fCX / 2.f);
@@ -1056,7 +1106,7 @@ void CKirby::SwordAttack()
 void CKirby::DisTransform()
 {
 	ENEMYTYPE eType = NORMAL;
-
+	
 	switch (m_eForm)
 	{
 	case SWORD_FORM:

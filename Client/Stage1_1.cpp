@@ -19,7 +19,12 @@ CStage1_1::~CStage1_1()
 
 void CStage1_1::Initialize()
 {
-	GameManager->AddObject(CAbsFactory<CKirby>::CreateObject(100.f, 440.f), OBJ_PLAYER);
+	if (GameManager->GetObjList(OBJ_PLAYER).empty())
+		GameManager->AddObject(CAbsFactory<CKirby>::CreateObject(100.f, 440.f), OBJ_PLAYER);
+	else
+		GameManager->GetPlayer()->SetPos(100.f, 440.f);
+
+
 	GameManager->AddObject(CAbsFactory<CDoor>::CreateDoor(3970.f, 127.f, SCENE_MIDBOSS), OBJ_INTERECTION);
 
 	// 1-1 ÁöÇü BoxCollider

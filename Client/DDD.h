@@ -35,7 +35,6 @@ private:
 	STATE m_ePreState;
 
 	int m_iCondition;
-
 	int m_iPatternCnt;
 
 	DWORD m_dwStateTime;

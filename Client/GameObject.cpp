@@ -70,27 +70,45 @@ void CGameObject::DrawObject(HDC hDC, const TCHAR* szName)
 		iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
-// 위치를 옮길 수 있는 DrawObject
-void CGameObject::DrawObject(HDC hDC, const TCHAR * szName, float fX, float fY)
+// UI Draw 1 그릴 위치 재설정
+void CGameObject::DrawUI(HDC hDC, const TCHAR * szName, float fX, float fY)
 {
-	int iScrollX = (int)GameManager->GetScrollX();
-	int iScrollY = (int)GameManager->GetScrollY();
-
 	HDC hMemDC = BmpManager->GetMapBit()[szName]->GetMemDC();
 
 	int iSizeX = (int)m_tInfo.fCX;
 	int iSizeY = (int)m_tInfo.fCY;
 
-	GdiTransparentBlt(hDC, m_tRect.left + fX + iScrollX, m_tRect.top + iScrollY + fY,
-		iSizeX + fX, iSizeY + fY, hMemDC,
+	GdiTransparentBlt(hDC, m_tRect.left + fX, m_tRect.top + fY ,
+		iSizeX, iSizeY, hMemDC,
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY,
 		iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
-// 비율만큼 빼고 그리는 DrawObeject
-void CGameObject::DrawObject(HDC hDC, const TCHAR * szName, float Ratio)
+// UI Draw 2 그릴 비율 설정
+void CGameObject::DrawUI(HDC hDC, const TCHAR * szName, float fRatio)
 {
+	HDC hMemDC = BmpManager->GetMapBit()[szName]->GetMemDC();
+
+	int iSizeX = (int)m_tInfo.fCX;
+	int iSizeY = (int)m_tInfo.fCY;
+
+	GdiTransparentBlt(hDC, m_tRect.left, m_tRect.top,
+		iSizeX * fRatio, iSizeY, hMemDC,
+		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY,
+		iSizeX * fRatio, iSizeY, RGB(255, 0, 255));
 }
+
+// UI Draw 3 그릴 위치와 크기 설정, Scene 번호 설정
+void CGameObject::DrawUI(HDC hDC, const TCHAR * szName, int StartX, int StartY, int iSizeX, int iSizeY, int iScene)
+{
+	HDC hMemDC = BmpManager->GetMapBit()[szName]->GetMemDC();
+
+	GdiTransparentBlt(hDC, StartX, StartY,
+		iSizeX, iSizeY, hMemDC,
+		0, iScene * iSizeY,
+		iSizeX, iSizeY, RGB(255, 0, 255));
+}
+
 
 void CGameObject::DrawHitBox(HDC hDC)
 {

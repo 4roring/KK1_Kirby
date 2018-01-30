@@ -2,9 +2,10 @@
 #include "DDD.h"
 #include "InhailStar.h"
 #include "Door.h"
+#include "UI_BossHp.h"
 
 CDDD::CDDD()
-	: m_dwIdleTime(3000)
+	: m_dwIdleTime(2000)
 {
 }
 
@@ -17,7 +18,7 @@ CDDD::~CDDD()
 void CDDD::Initialize()
 {
 	// 상태 초기화
-	m_iMaxHp = 500;
+	m_iMaxHp = 600;
 	m_iHp = m_iMaxHp;
 	SetPosToStart();
 	m_tInfo.fCX = 330;
@@ -38,11 +39,12 @@ void CDDD::Initialize()
 	m_iPatternCnt = 0;
 
 	m_pFrameKey = TEXT("DDD_Left");
-	m_dwStateTime = GetTickCount() + 2000;
-	m_dwDamageTime = GetTickCount();
+	m_dwStateTime = GetTickCount() + 3000;
 	m_pTarget = GameManager->GetPlayer();
 
 	m_eInhailType = TYPE_BOSS;
+
+	GameManager->AddObject(CAbsFactory<CUI_BossHp>::CreateObject(this), OBJ_UI);
 }
 
 void CDDD::LateInit()
@@ -217,7 +219,7 @@ OBJ_STATE CDDD::Update()
 		if (m_dwStateTime < GetTickCount()) // 패턴 종료
 		{
 			m_eCurState = IDLE;
-			m_dwStateTime = GetTickCount() + m_dwIdleTime - 2000;
+			m_dwStateTime = GetTickCount() + m_dwIdleTime - 200;
 
 			m_bIsDamage = false;
 
@@ -257,7 +259,13 @@ void CDDD::Render(HDC hDC)
 {
 	if (GameManager->GetDebugMode())
 		DrawHitBox(hDC);
-	DrawObject(hDC, m_pFrameKey);
+
+	if (!m_bIsDamage)
+		DrawObject(hDC, m_pFrameKey);
+	else if (m_bIsDamage && g_iFrame % 3 == 0)
+		DrawObject(hDC, m_pFrameKey);
+
+	DrawUI(hDC, TEXT("BossName"), 430, 520, 120, 30, 1);
 }
 
 void CDDD::Release()

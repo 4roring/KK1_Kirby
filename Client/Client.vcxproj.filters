@@ -61,9 +61,6 @@
     <Filter Include="05.Scene\99.Boss">
       <UniqueIdentifier>{9793db2f-be2b-474d-b2a8-4fce7182b619}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05.Scene\98.MidBoss">
-      <UniqueIdentifier>{a1077753-6b13-45af-9548-34e38bd943fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Kirby">
       <UniqueIdentifier>{85c68ade-68ef-4da5-afd3-9dafbd0c5e79}</UniqueIdentifier>
     </Filter>
@@ -75,9 +72,6 @@
     </Filter>
     <Filter Include="01.GameObject\03.MapObject">
       <UniqueIdentifier>{e3844d6d-275f-46d0-b3c8-fcd6e592edf2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Enemy\98.DDD">
-      <UniqueIdentifier>{95e63016-fab7-48ff-8f48-31313b82b93e}</UniqueIdentifier>
     </Filter>
     <Filter Include="03.Enemy\00.InhailStar">
       <UniqueIdentifier>{116050ff-57e8-45a9-9feb-4dae768ad065}</UniqueIdentifier>
@@ -138,6 +132,21 @@
     </Filter>
     <Filter Include="06.UI\00.PlayerHp">
       <UniqueIdentifier>{ab4150c1-a0e5-4a3b-90a1-66ffdf01997a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\97.MidBoss">
+      <UniqueIdentifier>{a1077753-6b13-45af-9548-34e38bd943fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\98.Special">
+      <UniqueIdentifier>{963393f1-e098-43a5-9720-06986e7ba9a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\97.DDD">
+      <UniqueIdentifier>{95e63016-fab7-48ff-8f48-31313b82b93e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\98.Mario">
+      <UniqueIdentifier>{9688cd2f-4f47-4e40-ba7d-26718f26e3dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\02.MarioFire">
+      <UniqueIdentifier>{6dba892a-cac5-4a66-938c-48bfe9b1bbe7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -251,10 +260,10 @@
       <Filter>01.GameObject\03.MapObject</Filter>
     </ClInclude>
     <ClInclude Include="MidBoss.h">
-      <Filter>05.Scene\98.MidBoss</Filter>
+      <Filter>05.Scene\97.MidBoss</Filter>
     </ClInclude>
     <ClInclude Include="DDD.h">
-      <Filter>03.Enemy\98.DDD</Filter>
+      <Filter>03.Enemy\97.DDD</Filter>
     </ClInclude>
     <ClInclude Include="InhailStar.h">
       <Filter>03.Enemy\00.InhailStar</Filter>
@@ -285,6 +294,16 @@
     </ClInclude>
     <ClInclude Include="UI_PlayerHp.h">
       <Filter>06.UI\00.PlayerHp</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_BossHp.h">
+      <Filter>06.UI\01.BossHp</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecialMap.h">
+      <Filter>05.Scene\98.Special</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h" />
+    <ClInclude Include="MarioFire.h">
+      <Filter>04.Effect\02.MarioFire</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -371,10 +390,10 @@
       <Filter>01.GameObject\03.MapObject</Filter>
     </ClCompile>
     <ClCompile Include="MidBoss.cpp">
-      <Filter>05.Scene\98.MidBoss</Filter>
+      <Filter>05.Scene\97.MidBoss</Filter>
     </ClCompile>
     <ClCompile Include="DDD.cpp">
-      <Filter>03.Enemy\98.DDD</Filter>
+      <Filter>03.Enemy\97.DDD</Filter>
     </ClCompile>
     <ClCompile Include="InhailStar.cpp">
       <Filter>03.Enemy\00.InhailStar</Filter>
@@ -405,6 +424,16 @@
     </ClCompile>
     <ClCompile Include="UI_PlayerHp.cpp">
       <Filter>06.UI\00.PlayerHp</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_BossHp.cpp">
+      <Filter>06.UI\01.BossHp</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecialMap.cpp">
+      <Filter>05.Scene\98.Special</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MarioFire.cpp">
+      <Filter>04.Effect\02.MarioFire</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

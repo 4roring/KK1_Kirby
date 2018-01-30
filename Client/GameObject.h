@@ -45,8 +45,10 @@ protected:
 	void UpdateRect(float fX, float fY);
 	void FrameMove();
 	void DrawObject(HDC hDC, const TCHAR* szName);
-	void DrawObject(HDC hDC, const TCHAR* szName, float fX, float fY);
-	void DrawObject(HDC hDC, const TCHAR* szName, float Ratio);
+	void DrawUI(HDC hDC, const TCHAR* szName, float fX, float fY);
+	void DrawUI(HDC hDC, const TCHAR* szName, float fRatio);
+	void DrawUI(HDC hDC, const TCHAR * szName, int StartX, int StartY, int iSizeX, int iSizeY, int iScene);
+	
 	void DrawHitBox(HDC hDC);
 
 protected:

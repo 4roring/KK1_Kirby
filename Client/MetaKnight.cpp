@@ -4,6 +4,7 @@
 #include "InhailStar.h"
 #include "Eff_SlashSkill.h"
 #include "Eff_Tornado.h"
+#include "UI_BossHp.h"
 
 CMetaKnight::CMetaKnight()
 	: m_dwIdleTime(3000), m_pTornado(nullptr)
@@ -51,6 +52,8 @@ void CMetaKnight::Initialize()
 
 	m_pTarget = GameManager->GetPlayer();
 	m_eInhailType = TYPE_BOSS;
+
+	GameManager->AddObject(CAbsFactory<CUI_BossHp>::CreateObject(this), OBJ_UI);
 }
 
 void CMetaKnight::LateInit()
@@ -133,7 +136,11 @@ OBJ_STATE CMetaKnight::Update()
 		m_fVelocityX = m_bFlipX ? 7.5f : -7.5f;
 
 		if (abs(m_tInfo.fX - m_pTarget->GetInfo().fX) < 100.f)
+		{
+			SoundManager->PlaySound(TEXT("MetaKnight_DashSlash.wav"), CSoundManager::ENEMY);
 			m_eCurState = DASHATTACK;
+		}
+			
 		break;
 	case CMetaKnight::DASHATTACK:
 		m_fVelocityX = m_bFlipX ? 1.5f : -1.5f;
@@ -419,6 +426,8 @@ void CMetaKnight::Render(HDC hDC)
 		DrawObject(hDC, m_pFrameKey);
 	else if (m_bIsDamage && g_iFrame % 3 == 0)
 		DrawObject(hDC, m_pFrameKey);
+
+	DrawUI(hDC, TEXT("BossName"), 430, 520, 120, 30, 0);
 
 	if (GameManager->GetDebugMode())
 		DrawHitBox(hDC);

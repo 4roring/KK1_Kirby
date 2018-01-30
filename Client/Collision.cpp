@@ -144,6 +144,9 @@ void CCollision::Ground(OBJLIST & dstList, OBJLIST & srcList)
 
 bool CCollision::PlayerToGround(CActor* pPlayer, OBJLIST & srcList)
 {
+	if (!pPlayer->GetActive())
+		return false;
+
 	for (auto& pSrc : srcList)
 	{
 		if (!pSrc->GetActive())

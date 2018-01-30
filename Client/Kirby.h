@@ -7,7 +7,7 @@ public:
 	enum STATE { 
 		IDLE, INHAILIDLE, DOWN, SLIDE, MOVE, DASH, 
 		JUMP, JUMPATTACK, FLY, FLYATTACK, ATTACK, INHAIL, DAMAGE, 
-		EAT, SHOOTSTAR, TRANSFORM, END 
+		EAT, SHOOTSTAR, TRANSFORM, DEAD, END 
 	};
 	enum FORM { NORMAL_FORM, SWORD_FORM, FORM_END};
 
@@ -36,7 +36,7 @@ private:
 	void isDamage();
 	void NoDamageState();
 	void Eat();
-	
+	void Dead();
 
 private:
 	void KirbyUpdateRect();

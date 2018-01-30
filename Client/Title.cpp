@@ -80,6 +80,10 @@ void CTitle::FileLoad()
 	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Background_4"), TEXT("../Image/Map/MidBoss_Background_4.bmp"));
 	BmpManager->RegistBitmap(TEXT("Map_MidBoss_Ground"), TEXT("../Image/Map/MidBoss_Ground.bmp"));
 
+	// 스페셜 스테이지 배경, 땅 로딩
+	BmpManager->RegistBitmap(TEXT("Map_Special_Background"), TEXT("../Image/Map/VsMarioBackground.bmp"));
+	BmpManager->RegistBitmap(TEXT("Map_Special_Ground"), TEXT("../Image/Map/VsMarioGround.bmp"));
+
 	// 기타 맵 소스
 	BmpManager->RegistBitmap(TEXT("Map_Door"), TEXT("../Image/Map/Door.bmp"));
 
@@ -124,6 +128,11 @@ void CTitle::FileLoad()
 	BmpManager->RegistBitmap(TEXT("DDD_Right"),
 		TEXT("../Image/Enemy/DDD/RIght.bmp"));
 
+	BmpManager->RegistBitmap(TEXT("Mario_Left"), // 마리오
+		TEXT("../Image/Enemy/Mario/Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("Mario_Right"),
+		TEXT("../Image/Enemy/Mario/RIght.bmp"));
+
 	BmpManager->RegistBitmap(TEXT("MetaKnight_Apper"), // 메타나이트
 		TEXT("../Image/Enemy/MetaKnight/Appear.bmp"));
 	BmpManager->RegistBitmap(TEXT("MetaKnight_Dead"),
@@ -138,9 +147,12 @@ void CTitle::FileLoad()
 	BmpManager->RegistBitmap(TEXT("MetaKnight_SlashSkill_Right"), TEXT("../Image/Effect/MetaKnight_SlashSkill_Right.bmp"));
 	BmpManager->RegistBitmap(TEXT("MetaKnight_Tornado"), TEXT("../Image/Effect/MetaKnight_Tornado.bmp"));
 
+	// 마리오 이펙트 로딩
+	BmpManager->RegistBitmap(TEXT("MarioFire"), TEXT("../Image/Effect/MarioFire.bmp"));
+
 	// UI 로딩
 	BmpManager->RegistBitmap(TEXT("PlayerHp"), TEXT("../Image/UI/PlayerHp.bmp"));
-	BmpManager->RegistBitmap(TEXT("BossHP"), TEXT("../Image/UI/BossHP.bmp"));	
+	BmpManager->RegistBitmap(TEXT("BossHp"), TEXT("../Image/UI/BossHP.bmp"));	
 	BmpManager->RegistBitmap(TEXT("BossName"), TEXT("../Image/UI/BossName.bmp"));
 
 	SoundManager->Initialize();

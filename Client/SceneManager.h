@@ -19,6 +19,7 @@ public:
 	void DrawAlphaColor(HDC hDC, BYTE Alpha, bool bColor);
 	bool SceneStart();
 	bool SceneEnd();
+	void SceneRestart() { m_ePreScene = SCENE_END; SceneChange(m_eCurScene); }
 
 private:
 	CScene* m_pScene;
