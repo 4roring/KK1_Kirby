@@ -63,4 +63,6 @@ void CSpecialMap::Release()
 	SoundManager->StopSound(CSoundManager::BGM);
 	GameManager->ReleaseObj(OBJ_GROUND);
 	GameManager->ReleaseObj(OBJ_ENEMY);
+	GameManager->GetObjList(OBJ_UI).back()->SetActive(false);
+	GameManager->ReleaseObj(ENEMY_ATT);
 }

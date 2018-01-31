@@ -221,11 +221,9 @@ OBJ_STATE CDDD::Update()
 			m_eCurState = IDLE;
 			m_dwStateTime = GetTickCount() + m_dwIdleTime - 200;
 
-			m_bIsDamage = false;
-
 			if (m_iHp <= 0)
 			{
-				GameManager->AddObject(CAbsFactory<CDoor>::CreateDoor(588.f, 172.f, SCENE_BOSS), OBJ_INTERECTION);
+				GameManager->AddObject(CAbsFactory<CDoor>::CreateDoor(588.f, 172.f, SCENE_SPECIAL), OBJ_INTERECTION);
 				m_eCurState = DEAD;
 			}
 		}
@@ -247,6 +245,9 @@ OBJ_STATE CDDD::Update()
 
 void CDDD::LateUpdate()
 {
+	if (m_bIsDamage && m_dwDamageTime < GetTickCount())
+		m_bIsDamage = false;
+
 	FrameMove();
 	SceneChange();
 	UpdateRect(m_fImageX, m_fImageY);
@@ -282,7 +283,8 @@ void CDDD::ApplyDamage(int iDamage)
 	{
 		CActor::ApplyDamage(iDamage);
 		m_eCurState = DAMAGE;
-		m_dwStateTime = GetTickCount() + 500;
+		m_dwStateTime = GetTickCount() + 300;
+		m_dwDamageTime = GetTickCount() + 3000;
 		m_bIsDamage = true;
 	}
 }

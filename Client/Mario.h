@@ -23,6 +23,7 @@ public:
 	void isInhail();
 	void SceneChange();
 	void CreateInhailStar();
+	void Shot();
 
 private:
 	STATE m_eCurState;

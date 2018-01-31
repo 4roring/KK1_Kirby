@@ -301,9 +301,11 @@
     <ClInclude Include="SpecialMap.h">
       <Filter>05.Scene\98.Special</Filter>
     </ClInclude>
-    <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioFire.h">
       <Filter>04.Effect\02.MarioFire</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>03.Enemy\98.Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -431,9 +433,11 @@
     <ClCompile Include="SpecialMap.cpp">
       <Filter>05.Scene\98.Special</Filter>
     </ClCompile>
-    <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioFire.cpp">
       <Filter>04.Effect\02.MarioFire</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>03.Enemy\98.Mario</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

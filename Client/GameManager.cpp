@@ -60,8 +60,8 @@ void CGameManager::Update()
 {
 	for (int i = 0; i < OBJ_END; ++i)
 	{
-		if (m_bPause) // 변신중에는 몬스터는 못움직임.
-			if (i == OBJ_ENEMY)
+		if (m_bPause) // 변신중에는 몬스터와 몬스터의 공격 관련 오브젝트는 멈춤.
+			if (i == OBJ_ENEMY || i == ENEMY_ATT)
 				continue;
 
 		for (auto iter = m_ObjectList[i].begin(); iter != m_ObjectList[i].end();)
@@ -114,7 +114,7 @@ void CGameManager::LateUpdate()
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		if (m_bPause) // 변신중에는 몬스터는 못움직임.
-			if (i == OBJ_ENEMY)
+			if (i == OBJ_ENEMY || i == ENEMY_ATT)
 				continue;
 
 		for (auto& pObject : m_ObjectList[i])

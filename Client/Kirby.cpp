@@ -9,6 +9,7 @@
 #include "InhailStar.h"
 #include "HitBox.h"
 #include "UI_PlayerHp.h"
+#include "MarioFire.h"
 
 CKirby::CKirby()
 {
@@ -26,7 +27,6 @@ void CKirby::Initialize()
 	m_iMaxHp = 60;
 	m_iHp = m_iMaxHp;
 
-	//m_tInfo = { 50, 400, 96, 105 };
 	m_tInfo.fCX = 96;
 	m_tInfo.fCY = 105;
 	m_iHitBoxCX = 40;
@@ -50,7 +50,8 @@ void CKirby::Initialize()
 	m_bIsGround = false;
 	m_bDash = false;
 	m_bAttack = false;
-	
+	m_bInhail = false;
+
 	m_bFlySound = false;
 
 	m_iInputFrame = g_iFrame;
@@ -144,7 +145,7 @@ void CKirby::Render(HDC hDC)
 			m_eCurState = IDLE;
 		}
 	}
-	
+
 	if (!m_bNoDamage)
 		DrawObject(hDC, m_pFrameKey);
 	else if (m_bNoDamage && g_iFrame % 3 == 0)
@@ -162,7 +163,7 @@ void CKirby::ApplyDamage(int iDamage)
 		CActor::ApplyDamage(10);
 		if (m_eForm != NORMAL_FORM)
 			DisTransform();
-		
+
 		SoundManager->PlaySound(TEXT("Damage.wav"), CSoundManager::PLAYER);
 
 		if (m_iHp <= 0)
@@ -244,7 +245,7 @@ void CKirby::Input()
 	}
 	else if (InputManager->KeyUp(VK_LEFT) && m_iInputFrame < g_iFrame && !m_bFly)
 	{
-		if(!m_bDash)
+		if (!m_bDash)
 			m_iInputFrame = g_iFrame + 7;
 		m_bDash = false;
 	}
@@ -400,9 +401,9 @@ void CKirby::Attack()
 			m_eCurState = SHOOTSTAR;
 		else
 		{
-			if(m_eForm == NORMAL_FORM)
+			if (m_eForm == NORMAL_FORM)
 				SoundManager->PlaySound(TEXT("Inhail.wav"), CSoundManager::PLAYER);
-			
+
 			m_eCurState = ATTACK;
 			m_iAttSquence = 0;
 		}
@@ -432,6 +433,7 @@ void CKirby::Attack()
 		{
 			SoundManager->PlaySound(TEXT("ShootStar.wav"), CSoundManager::PLAYER);
 			GameManager->AddObject(CAbsFactory<CEff_ShootingStar>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), PLAYER_ATT);
+			m_eInhailType = EMPTY;
 			++m_tFrame.iStart;
 		}
 
@@ -495,6 +497,7 @@ void CKirby::Attack()
 		}
 	}
 	else if (m_eForm == SWORD_FORM && m_bAttack && !m_bFly) SwordAttack();
+	else if (m_eForm == MARIO_FORM && m_bAttack && !m_bFly) MarioAttack();
 }
 
 // 점프, 날기
@@ -535,12 +538,12 @@ void CKirby::Jump()
 			SoundManager->PlaySound(TEXT("Fly.wav"), CSoundManager::PLAYER);
 			m_bFlySound = true;
 		}
-			
+
 		if (m_tFrame.iStart == m_tFrame.iEnd)
 		{
 			m_tFrame.iStart = 4;
 			m_bFlySound = false;
-		}	
+		}
 	}
 	else if (m_fVelocityY > 0 && m_bJump && !m_bAttack)
 	{
@@ -657,6 +660,9 @@ void CKirby::SceneChange()
 			break;
 		case SWORD_FORM:
 			SwordScene();
+			break;
+		case MARIO_FORM:
+			MarioScene();
 			break;
 		}
 		m_ePreState = m_eCurState;
@@ -913,6 +919,90 @@ void CKirby::SwordScene()
 	m_pFrameKey = m_bFlipX ? m_pRightKey : m_pLeftKey;
 }
 
+void CKirby::MarioScene()
+{
+	m_tInfo.fCX = 96;
+	m_tInfo.fCY = 105;
+
+	m_pLeftKey = TEXT("Mario_Kirby_Left");
+	m_pRightKey = TEXT("Mario_Kirby_Right");
+	m_pFrameKey = m_bFlipX ? m_pRightKey : m_pLeftKey;
+
+	switch (m_eCurState)
+	{
+	case IDLE:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 1;
+		m_tFrame.iScene = 0;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 100;
+		break;
+	case DOWN:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 1;
+		m_tFrame.iScene = 1;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 1000;
+		break;
+	case SLIDE:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 1;
+		m_tFrame.iScene = 2;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 100;
+		break;
+	case MOVE:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 9;
+		m_tFrame.iScene = 3;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 70;
+		break;
+	case DASH:
+		m_tFrame.iStart = 1;
+		m_tFrame.iEnd = 7;
+		m_tFrame.iScene = 5;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 40;
+		break;
+	case JUMP:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 11;
+		m_tFrame.iScene = 6;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 100;
+		break;
+	case FLY:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 8;
+		m_tFrame.iScene = 10;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 60;
+		break;
+	case FLYATTACK:
+		m_tFrame.iStart = 2;
+		m_tFrame.iEnd = 4;
+		m_tFrame.iScene = 11;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 130;
+		break;
+	case ATTACK:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 1;
+		m_tFrame.iScene = 12;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 50;
+		break;
+	case TRANSFORM:
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 0;
+		m_tFrame.iScene = 13;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 15;
+		break;
+	}
+}
+
 void CKirby::ScrollMove()
 {
 	float fScrollX = GameManager->GetScrollX();
@@ -974,20 +1064,27 @@ void CKirby::Eat()
 		{
 			m_eCurState = IDLE;
 
-			std::cout << m_eInhailType << std::endl;
-
 			switch (m_eInhailType)
 			{
 			case SWORD:
 				m_eForm = SWORD_FORM;
+				break;
+			case MARIO:
+				m_eForm = MARIO_FORM;
+				break;
+			}
+
+			if (m_eForm != NORMAL_FORM)
+			{
 				m_eCurState = TRANSFORM;
 				m_iInputFrame = g_iFrame + 40;
 				SoundManager->PlaySound(TEXT("Transform.wav"), CSoundManager::PLAYER);
 				GameManager->AddObject(CAbsFactory<CEff_Transform>::CreateObject(m_tInfo.fX, m_tInfo.fY + 20.f), OBJ_EFFECT);
-				break;
 			}
+
 			m_eInhailType = EMPTY;
 			m_bEat = false;
+			m_bInhail = false;
 		}
 	}
 }
@@ -1045,7 +1142,7 @@ void CKirby::SwordAttack()
 			m_pTarget->SetPos(m_tInfo.fX, m_tInfo.fY - 15.f);
 
 		m_eCurState = JUMPATTACK;
-		if (m_tFrame.iStart == m_tFrame.iEnd-1)
+		if (m_tFrame.iStart == m_tFrame.iEnd - 1)
 		{
 			m_tFrame.iStart = 0;
 			if (++m_iAttSquence > 1)
@@ -1080,7 +1177,7 @@ void CKirby::SwordAttack()
 	{
 		m_eCurState = ATTACK;
 
-		if (m_pTarget == nullptr)
+		if (m_pTarget == nullptr && m_tFrame.iStart == 2)
 		{
 			float fX = m_bFlipX ? 30.f : -30.f;
 			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX + fX, m_tInfo.fY - 15.f, 200, 130, 50, true, SLASH), PLAYER_ATT);
@@ -1103,14 +1200,30 @@ void CKirby::SwordAttack()
 	}
 }
 
+void CKirby::MarioAttack()
+{
+	if (m_tFrame.iStart == m_tFrame.iEnd)
+	{
+		// 불꽃 발사! 후 IDLE
+		float fX = m_bFlipX ? 15.f : -15.f;
+		GameManager->AddObject(CAbsFactory<CMarioFire>::CreateObject(m_tInfo.fX + fX, m_tInfo.fY, m_bFlipX), PLAYER_ATT);
+		SoundManager->PlaySound(TEXT("Mario_Fire.wav"), CSoundManager::PLAYER);
+		m_bAttack = false;
+		m_eCurState = IDLE;
+	}
+}
+
 void CKirby::DisTransform()
 {
 	ENEMYTYPE eType = NORMAL;
-	
+
 	switch (m_eForm)
 	{
 	case SWORD_FORM:
 		eType = SWORD;
+		break;
+	case MARIO_FORM:
+		eType = MARIO;
 		break;
 	}
 	m_eForm = NORMAL_FORM;

@@ -9,7 +9,7 @@ public:
 		JUMP, JUMPATTACK, FLY, FLYATTACK, ATTACK, INHAIL, DAMAGE, 
 		EAT, SHOOTSTAR, TRANSFORM, DEAD, END 
 	};
-	enum FORM { NORMAL_FORM, SWORD_FORM, FORM_END};
+	enum FORM { NORMAL_FORM, SWORD_FORM, MARIO_FORM, FORM_END};
 
 public:
 	CKirby();
@@ -43,12 +43,14 @@ private:
 	void SceneChange();
 	void NormalScene();
 	void SwordScene();
+	void MarioScene();
 
 private:
 	void CreateDashEffect();
 
 private: // Æû °ü·Ã ÇÔ¼ö
 	void SwordAttack();
+	void MarioAttack();
 	void DisTransform();
 
 private:

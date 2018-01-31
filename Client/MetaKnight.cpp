@@ -107,7 +107,7 @@ OBJ_STATE CMetaKnight::Update()
 			m_fVelocityX = m_bFlipX ? 3.5f : -3.5f;
 
 			if (abs(m_tInfo.fX - m_pTarget->GetInfo().fX) < 150.f)
-				m_iCondition = rand() % 2 + 1;
+				m_iCondition = rand() % 3 + 1;
 			break;
 		case 1: // Back Move (대시 어택으로 변경)
 			m_bFlipX = (m_tInfo.fX < m_pTarget->GetInfo().fX) ? true : false;
@@ -123,7 +123,8 @@ OBJ_STATE CMetaKnight::Update()
 				m_dwStateTime = GetTickCount() + m_dwIdleTime;
 			}
 			break;
-		case 2: // 점프로 넘어감.
+		case 2:
+		case 3: // 점프로 넘어감.
 			m_eCurState = JUMP;
 			// 컨디션을 지정해줘서 일반점프와 빽점프를 하게한다.
 			m_iCondition = rand() % 2;
@@ -193,9 +194,12 @@ OBJ_STATE CMetaKnight::Update()
 				// TODO: Condition 지정해서 스킬 사용하게 지정.
 				// 0: MOVE, 2: SKILL1, 3: SKILL2
 
-				while (m_iCondition == 1)
-					m_iCondition = rand() % 4;
-				//m_iCondition = 3;
+				if (m_iHp < 500)
+					while (m_iCondition == 1)
+						m_iCondition = rand() % 4;
+				else
+					m_iCondition = 0;
+
 				m_fVelocityX = 0;
 			}
 			else if (m_tFrame.iStart == 9)

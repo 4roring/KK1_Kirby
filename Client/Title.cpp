@@ -106,6 +106,8 @@ void CTitle::FileLoad()
 	BmpManager->RegistBitmap(TEXT("Sword_Right"), TEXT("../Image/Kirby/Sword_Kirby/Right.bmp"));
 	BmpManager->RegistBitmap(TEXT("Sword_LeftAttack"), TEXT("../Image/Kirby/Sword_Kirby/Left_Attack.bmp"));
 	BmpManager->RegistBitmap(TEXT("Sword_RightAttack"), TEXT("../Image/Kirby/Sword_Kirby/Right_Attack.bmp"));
+	BmpManager->RegistBitmap(TEXT("Mario_Kirby_Left"), TEXT("../Image/Kirby/Mario_Kirby/Left.bmp"));
+	BmpManager->RegistBitmap(TEXT("Mario_Kirby_Right"), TEXT("../Image/Kirby/Mario_Kirby/Right.bmp"));
 
 	// 적 캐릭터 로딩
 	BmpManager->RegistBitmap(TEXT("Wadorudi_Left"), // 와도루디

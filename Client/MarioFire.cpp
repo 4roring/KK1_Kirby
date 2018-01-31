@@ -22,7 +22,7 @@ void CMarioFire::Initialize()
 
 	m_fVelocityY = -1.f;
 
-	m_iAtt = 3;
+	m_iAtt = 7;
 }
 
 void CMarioFire::LateInit()
@@ -32,7 +32,7 @@ void CMarioFire::LateInit()
 	m_tFrame.iScene = 0;
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 30;
-	m_fSpeed = m_bFlipX ? 3.f : -3.f;
+	m_fSpeed = m_bFlipX ? 5.f : -5.f;
 	m_pFrameKey = TEXT("MarioFire");
 }
 
@@ -44,6 +44,7 @@ OBJ_STATE CMarioFire::Update()
 		return DESTROY;
 	}
 
+	m_tInfo.fX += m_fSpeed;
 	m_tInfo.fY -= m_fVelocityY;
 
 	return PLAY;
@@ -56,12 +57,13 @@ void CMarioFire::LateUpdate()
 		RECT rc = {};
 
 		if (IntersectRect(&rc, &m_tHitBox, &pGround->GetRect()))
-		{
-			m_fVelocityY = 3.f;
-		}
+			m_fVelocityY = 6.f;
 	}
 
-	m_fVelocityY -= 0.1f;
+	if (m_tInfo.fX < -10.f || m_tInfo.fX > 5000.f)
+		m_bActive = false;
+
+	m_fVelocityY -= 0.3f;
 
 	FrameMove();
 	UpdateRect();
@@ -69,9 +71,9 @@ void CMarioFire::LateUpdate()
 
 void CMarioFire::Render(HDC hDC)
 {
+	DrawObject(hDC, m_pFrameKey);
 	if (GameManager->GetDebugMode())
 		DrawHitBox(hDC);
-	DrawObject(hDC, m_pFrameKey);
 }
 
 void CMarioFire::Release()

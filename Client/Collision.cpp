@@ -16,7 +16,7 @@ void CCollision::ActorToActor(OBJLIST & dstList, OBJLIST & srcList)
 {
 	for (auto pDst : dstList)
 	{
-		if (!pDst->GetActive())
+		if (!pDst->GetActive() || dynamic_cast<CActor*>(pDst)->GetIsDamage())
 			continue;
 
 		for (auto pSrc : srcList)
@@ -248,9 +248,12 @@ void CCollision::HitBox(OBJLIST & dstList, OBJLIST & HitBoxList)
 			RECT rc = {};
 			if (IntersectRect(&rc, &(pDst->GetHitBox()), &(pHitBox->GetHitBox())))
 			{
-				bool bFlipX = pDst->GetInfo().fX < pHitBox->GetInfo().fX ? true : false;
-				pDst->SetFlipX(bFlipX);
-
+				if (pDst->GetInhailType() != TYPE_BOSS)
+				{
+					bool bFlipX = pDst->GetInfo().fX < pHitBox->GetInfo().fX ? true : false;
+					pDst->SetFlipX(bFlipX);
+				}
+			
 				switch (pHitBox->GetHitSoundType())
 				{
 				case HIT:

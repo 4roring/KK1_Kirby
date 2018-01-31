@@ -78,7 +78,7 @@ void CGameObject::DrawUI(HDC hDC, const TCHAR * szName, float fX, float fY)
 	int iSizeX = (int)m_tInfo.fCX;
 	int iSizeY = (int)m_tInfo.fCY;
 
-	GdiTransparentBlt(hDC, m_tRect.left + fX, m_tRect.top + fY ,
+	GdiTransparentBlt(hDC, LONG(m_tRect.left + fX), LONG(m_tRect.top + fY) ,
 		iSizeX, iSizeY, hMemDC,
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY,
 		iSizeX, iSizeY, RGB(255, 0, 255));
@@ -93,9 +93,9 @@ void CGameObject::DrawUI(HDC hDC, const TCHAR * szName, float fRatio)
 	int iSizeY = (int)m_tInfo.fCY;
 
 	GdiTransparentBlt(hDC, m_tRect.left, m_tRect.top,
-		iSizeX * fRatio, iSizeY, hMemDC,
+		LONG(iSizeX * fRatio), iSizeY, hMemDC,
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY,
-		iSizeX * fRatio, iSizeY, RGB(255, 0, 255));
+		LONG(iSizeX * fRatio), iSizeY, RGB(255, 0, 255));
 }
 
 // UI Draw 3 그릴 위치와 크기 설정, Scene 번호 설정
