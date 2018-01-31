@@ -26,7 +26,6 @@ public:
 	void SetFlipX(bool bFlipX) { m_bFlipX = bFlipX; }
 	void SetTarget(CGameObject* pObj) { m_pTarget = pObj; }
 	void SetAtt(int iAtt) { m_iAtt = iAtt; }
-	void SetHp(int iHp) { iHp = 0; }
 	void SetInhail() { m_bInhail = true; }
 	void SetInhailType(ENEMYTYPE eInhailType) { m_eInhailType = eInhailType; }
 	void SetHitBoxType(bool bHitBoxType) { m_bHitBoxType = bHitBoxType; }

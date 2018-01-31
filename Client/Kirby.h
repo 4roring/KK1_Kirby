@@ -25,6 +25,7 @@ public:
 
 public:
 	virtual void ApplyDamage(int iDamage) override;
+	void FormChange(FORM eForm);
 
 private:
 	void Input();

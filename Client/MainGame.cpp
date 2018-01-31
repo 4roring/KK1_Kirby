@@ -16,12 +16,14 @@ void CMainGame::Initialize()
 {
 	m_hDC = GetDC(g_hWnd);
 	srand((unsigned)time(nullptr));
+
 	BmpManager->RegistBitmap(TEXT("BackBuffer"), TEXT("../Image/BackBuffer.bmp"));
 	BmpManager->RegistBitmap(TEXT("BackBlack"), TEXT("../Image/BackBlack.bmp"));
 	BmpManager->RegistBitmap(TEXT("BackWhite"), TEXT("../Image/BackWhite.bmp"));
 	BmpManager->RegistBitmap(TEXT("Title_1"), TEXT("../Image/Title_1.bmp"));
 	BmpManager->RegistBitmap(TEXT("Title_2"), TEXT("../Image/Title_2.bmp"));
 	BmpManager->RegistBitmap(TEXT("Title_Load"), TEXT("../Image/Title_Load.bmp"));
+	BmpManager->RegistBitmap(TEXT("Ending"), TEXT("../Image/Ending.bmp"));
 
 	SceneManager->SceneChange(SCENE_TITLE);
 }
@@ -33,8 +35,6 @@ void CMainGame::LateInit()
 
 void CMainGame::Update()
 {
-
-
 	SceneManager->Update();
 }
 

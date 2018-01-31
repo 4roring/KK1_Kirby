@@ -185,6 +185,19 @@ void CKirby::ApplyDamage(int iDamage)
 		m_bNoDamage = true;
 }
 
+void CKirby::FormChange(FORM eForm)
+{
+	if (eForm != NORMAL_FORM)
+	{
+		m_eForm = eForm;
+		m_eCurState = TRANSFORM;
+		m_iInputFrame = g_iFrame + 40;
+		SoundManager->PlaySound(TEXT("Transform.wav"), CSoundManager::PLAYER);
+		GameManager->AddObject(CAbsFactory<CEff_Transform>::CreateObject(m_tInfo.fX, m_tInfo.fY + 20.f), OBJ_EFFECT);
+	}
+}
+
+
 void CKirby::Input()
 {
 #ifdef _DEBUG
@@ -196,10 +209,11 @@ void CKirby::Input()
 		SceneManager->SceneChange(SCENE_SPECIAL);
 	if (InputManager->KeyDown('4'))
 		SceneManager->SceneChange(SCENE_BOSS);
+#endif
+
 	if (InputManager->KeyDown('H'))
 		m_iHp = m_iMaxHp;
 
-#endif
 	if (m_bSlide) return;
 
 	if (InputManager->KeyDown(VK_UP))
@@ -1074,13 +1088,7 @@ void CKirby::Eat()
 				break;
 			}
 
-			if (m_eForm != NORMAL_FORM)
-			{
-				m_eCurState = TRANSFORM;
-				m_iInputFrame = g_iFrame + 40;
-				SoundManager->PlaySound(TEXT("Transform.wav"), CSoundManager::PLAYER);
-				GameManager->AddObject(CAbsFactory<CEff_Transform>::CreateObject(m_tInfo.fX, m_tInfo.fY + 20.f), OBJ_EFFECT);
-			}
+			FormChange(m_eForm);
 
 			m_eInhailType = EMPTY;
 			m_bEat = false;

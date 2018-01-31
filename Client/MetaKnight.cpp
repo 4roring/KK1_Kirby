@@ -5,20 +5,23 @@
 #include "Eff_SlashSkill.h"
 #include "Eff_Tornado.h"
 #include "UI_BossHp.h"
+#include "Door.h"
+#include "HitBox.h"
 
 CMetaKnight::CMetaKnight()
-	: m_dwIdleTime(3000), m_pTornado(nullptr)
+	: m_dwIdleTime(3000), m_pTornado(nullptr), m_pHitBox(nullptr)
 {
 }
 
 
 CMetaKnight::~CMetaKnight()
 {
+	Release();
 }
 
 void CMetaKnight::Initialize()
 {
-	m_iMaxHp = 1000;
+	m_iMaxHp = 1700;
 	m_iHp = m_iMaxHp;
 	SetPosToStart();
 	m_tInfo.fCX = 480;
@@ -53,6 +56,10 @@ void CMetaKnight::Initialize()
 	m_pTarget = GameManager->GetPlayer();
 	m_eInhailType = TYPE_BOSS;
 
+	m_bDashAttack = false;
+	m_bSlashSkill = false;
+	m_bTornadoSkill = false;
+
 	GameManager->AddObject(CAbsFactory<CUI_BossHp>::CreateObject(this), OBJ_UI);
 }
 
@@ -62,6 +69,12 @@ void CMetaKnight::LateInit()
 
 OBJ_STATE CMetaKnight::Update()
 {
+	if (!m_bActive)
+	{
+		GameManager->AddObject(CAbsFactory<CDoor>::CreateDoor(588.f, 172.f, SCENE_END), OBJ_INTERECTION);
+		return DESTROY;
+	}
+
 	m_bInhail = false;
 	switch (m_eCurState)
 	{
@@ -86,14 +99,35 @@ OBJ_STATE CMetaKnight::Update()
 				m_iCondition = 0;
 				break;
 			case 1: // 대시 어택
-				m_eCurState = DASH;
-				GameManager->AddObject(CAbsFactory<CEff_Dash>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), OBJ_EFFECT);
+				if (m_bDashAttack)
+					m_iCondition = rand() % 6;
+				else
+				{
+					m_eCurState = DASH;
+					GameManager->AddObject(CAbsFactory<CEff_Dash>::CreateObject(m_tInfo.fX, m_tInfo.fY - 10.f, m_bFlipX), OBJ_EFFECT);
+				}
 				break;
-			case 2: // 검기 발사
-				m_eCurState = ATTACK_DOWN;
+			case 2:
+			case 3: // 검기 발사
+				if(m_bSlashSkill)
+					m_iCondition = rand() % 6;
+				else
+				{
+					m_eCurState = ATTACK_DOWN;
+					m_bDashAttack = false;
+					m_bTornadoSkill = false;
+				}
 				break;
-			case 3: // 토네이도
-				m_eCurState = SKILL2;
+			case 4:
+			case 5: // 토네이도
+				if(m_bTornadoSkill)
+					m_iCondition = rand() % 6;
+				else
+				{
+					m_eCurState = SKILL2;
+					m_bDashAttack = false;
+					m_bSlashSkill = false;
+				}
 				break;
 			}
 		}
@@ -107,9 +141,11 @@ OBJ_STATE CMetaKnight::Update()
 			m_fVelocityX = m_bFlipX ? 3.5f : -3.5f;
 
 			if (abs(m_tInfo.fX - m_pTarget->GetInfo().fX) < 150.f)
-				m_iCondition = rand() % 3 + 1;
+				m_iCondition = rand() % 4 + 1;
+
 			break;
-		case 1: // Back Move (대시 어택으로 변경)
+		case 1:
+		case 2: // Back Move (대시 어택으로 변경)
 			m_bFlipX = (m_tInfo.fX < m_pTarget->GetInfo().fX) ? true : false;
 			m_pFrameKey = m_bFlipX ? TEXT("MetaKnight_Right") : TEXT("MetaKnight_Left");
 			m_fVelocityX = m_bFlipX ? -3.5f : 3.5f;
@@ -123,11 +159,12 @@ OBJ_STATE CMetaKnight::Update()
 				m_dwStateTime = GetTickCount() + m_dwIdleTime;
 			}
 			break;
-		case 2:
-		case 3: // 점프로 넘어감.
+		case 3:
+		case 4: // 점프로 넘어감.
 			m_eCurState = JUMP;
 			// 컨디션을 지정해줘서 일반점프와 빽점프를 하게한다.
-			m_iCondition = rand() % 2;
+			m_iCondition = rand() % 3;
+
 			break;
 		}
 		break;
@@ -138,24 +175,52 @@ OBJ_STATE CMetaKnight::Update()
 
 		if (abs(m_tInfo.fX - m_pTarget->GetInfo().fX) < 100.f)
 		{
-			SoundManager->PlaySound(TEXT("MetaKnight_DashSlash.wav"), CSoundManager::ENEMY);
-			m_eCurState = DASHATTACK;
+			if (abs(m_tInfo.fY - m_pTarget->GetInfo().fX) > 200.f)
+			{
+				m_eCurState = JUMP;
+				m_iCondition = 1; // 대시 어택.
+			}
+			else
+			{
+				SoundManager->PlaySound(TEXT("MetaKnight_DashSlash.wav"), CSoundManager::ENEMY);
+				m_eCurState = DASHATTACK;
+			}
 		}
 			
 		break;
 	case CMetaKnight::DASHATTACK:
 		m_fVelocityX = m_bFlipX ? 1.5f : -1.5f;
+
+		if (m_tFrame.iStart == 3)
+		{
+			if (m_pHitBox == nullptr)
+			{
+				float fX = m_bFlipX ? 90.f : -90.f;
+				GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX + fX, m_tInfo.fY, 130, 40, 10, true, SLASH), ENEMY_ATT);
+				m_pHitBox = GameManager->GetObjList(ENEMY_ATT).back();
+			}
+		}
+
 		if (m_tFrame.iStart == m_tFrame.iEnd)
 		{
+			if (m_pHitBox)
+			{
+				m_pHitBox->SetActive(false);
+				m_pHitBox = false;
+			}
+
 			CreateInhailStar(1);
 			m_eCurState = JUMP;
-			m_iCondition = 1;
+			m_iCondition = 2;
+			if(m_iHp < 700)
+				m_bDashAttack = true;
 		}
 		break;
 	case CMetaKnight::JUMP:
 		switch (m_iCondition)
 		{
-		case 0: // 일반 점프
+		case 0:
+		case 1: // 일반 점프
 			if (m_tFrame.iStart == 9 && m_fVelocityY == 0.f)
 			{
 				m_eCurState = IDLE;
@@ -165,7 +230,7 @@ OBJ_STATE CMetaKnight::Update()
 			}
 			else if (m_tFrame.iStart == 9)
 			{
-				// TODO: 점프 어택 또는 점프 다운 어택으로 전환
+				// 점프 어택 또는 점프 다운 어택으로 전환
 				int iPattern = rand() % 3;
 
 				switch (iPattern)
@@ -187,16 +252,16 @@ OBJ_STATE CMetaKnight::Update()
 				m_fVelocityX = m_bFlipX ? 2.8f : -2.8f;
 			}
 			break;
-		case 1: // 빽 점프
+		case 2: // 빽 점프
 			if (m_tFrame.iStart == 9 && m_fVelocityY == 0.f)
 			{
 				m_eCurState = IDLE;
 				// TODO: Condition 지정해서 스킬 사용하게 지정.
 				// 0: MOVE, 2: SKILL1, 3: SKILL2
 
-				if (m_iHp < 500)
+				if (m_iHp < 800)
 					while (m_iCondition == 1)
-						m_iCondition = rand() % 4;
+						m_iCondition = rand() % 7;
 				else
 					m_iCondition = 0;
 
@@ -225,14 +290,34 @@ OBJ_STATE CMetaKnight::Update()
 
 		if (m_tFrame.iStart == 4 && m_iPatternCnt < 1)
 		{
+			if (m_pHitBox == nullptr)
+			{
+				GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX, m_tInfo.fY, 140, 140, 10, true, SLASH), ENEMY_ATT);
+				m_pHitBox = GameManager->GetObjList(ENEMY_ATT).back();
+			}
+			else
+				m_pHitBox->SetPos(m_tInfo.fX, m_tInfo.fY);
+
 			m_tFrame.iStart = 0;
 			++m_iPatternCnt;
 		}
 		else if (m_tFrame.iStart == 6)
+		{
+			if (m_pHitBox)
+			{
+				m_pHitBox->SetActive(false);
+				m_pHitBox = false;
+			}
 			m_tFrame.dwTime = 5000;
+		}
 
 		if (m_fVelocityY == 0.f)
 		{
+			if (m_pHitBox)
+			{
+				m_pHitBox->SetActive(false);
+				m_pHitBox = false;
+			}
 			m_eCurState = IDLE;
 			m_iCondition = 0;
 			m_fVelocityX = 0;
@@ -243,6 +328,11 @@ OBJ_STATE CMetaKnight::Update()
 	case CMetaKnight::JUMPDOWN_ATTACK:
 		if (m_fVelocityY == 0.f && m_tFrame.iStart == 1)
 		{
+			if (m_pHitBox)
+			{
+				m_pHitBox->SetActive(false);
+				m_pHitBox = false;
+			}
 			m_tFrame.iStart = 2;
 			m_dwStateTime = GetTickCount() + 300;
 			CreateInhailStar(2);
@@ -250,6 +340,14 @@ OBJ_STATE CMetaKnight::Update()
 		}
 		else if (m_tFrame.iStart == 1)
 		{
+			if (m_pHitBox == nullptr)
+			{
+				GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX, m_tInfo.fY + 50, 50, 130, 10, true, SLASH), ENEMY_ATT);
+				m_pHitBox = GameManager->GetObjList(ENEMY_ATT).back();
+			}
+			else
+				m_pHitBox->SetPos(m_tInfo.fX, m_tInfo.fY + 50);
+
 			m_tFrame.dwSpeed = 3000;
 			m_fVelocityX = 0.f;
 			m_fVelocityY -= 1.1f;
@@ -317,6 +415,7 @@ OBJ_STATE CMetaKnight::Update()
 			m_fVelocityX = 0;
 			m_iPatternCnt = 0;
 			m_dwStateTime = GetTickCount() + m_dwIdleTime + 500;
+			m_bSlashSkill = true;
 		}
 		else if (m_dwStateTime > GetTickCount())
 			m_tFrame.dwSpeed = 1000;
@@ -339,7 +438,6 @@ OBJ_STATE CMetaKnight::Update()
 					GameManager->AddObject(CAbsFactory<CEff_Tornado>::CreateObject(m_tInfo.fX, m_tInfo.fY - 150, m_bFlipX), ENEMY_ATT);
 					m_pTornado = GameManager->GetObjList(ENEMY_ATT).back();
 				}
-
 			}
 		}
 
@@ -359,6 +457,7 @@ OBJ_STATE CMetaKnight::Update()
 				m_fVelocityX = 0;
 				m_iPatternCnt = 0;
 				m_dwStateTime = GetTickCount() + m_dwIdleTime + 500;
+				m_bTornadoSkill = true;
 			}
 		}
 		break;
@@ -389,6 +488,9 @@ OBJ_STATE CMetaKnight::Update()
 			{
 				m_tFrame.dwSpeed = 5000;
 				m_fVelocityY = 20.f;
+
+				if (m_tInfo.fY < -100.f)
+					m_bActive = false;
 			}
 			break;
 		}
@@ -439,6 +541,11 @@ void CMetaKnight::Render(HDC hDC)
 
 void CMetaKnight::Release()
 {
+	if (m_pHitBox)
+	{
+		m_pHitBox->SetActive(false);
+		m_pHitBox = false;
+	}
 }
 
 void CMetaKnight::ApplyDamage(int iDamage)
@@ -576,8 +683,4 @@ void CMetaKnight::CreateInhailStar(int iCount)
 		GameManager->AddObject(CAbsFactory<CInhailStar>::CreateInhailStar(m_tInfo.fX + fX, fY, NORMAL), OBJ_ENEMY);
 		GameManager->AddObject(CAbsFactory<CInhailStar>::CreateInhailStar(m_tInfo.fX - fX, fY, NORMAL), OBJ_ENEMY);
 	}
-
-	
-
-	
 }

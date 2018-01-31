@@ -3,6 +3,7 @@
 #include "InhailStar.h"
 #include "Door.h"
 #include "UI_BossHp.h"
+#include "HpItem.h"
 
 CDDD::CDDD()
 	: m_dwIdleTime(2000)
@@ -224,6 +225,7 @@ OBJ_STATE CDDD::Update()
 			if (m_iHp <= 0)
 			{
 				GameManager->AddObject(CAbsFactory<CDoor>::CreateDoor(588.f, 172.f, SCENE_SPECIAL), OBJ_INTERECTION);
+				GameManager->AddObject(CAbsFactory<CHpItem>::CreateObject(m_tInfo.fX, m_tInfo.fY - 30.f), OBJ_INTERECTION);
 				m_eCurState = DEAD;
 			}
 		}

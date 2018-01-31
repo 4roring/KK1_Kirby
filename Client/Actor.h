@@ -28,6 +28,7 @@ public:
 	void SetVelocityY(float fVelocityY) { m_fVelocityY = fVelocityY; }
 	void SetStartPos(float fX, float fY) { m_fStartX = fX, m_fStartY = fY; }
 	void SetPosToStart() { m_tInfo.fX = m_fStartX, m_tInfo.fY = m_fStartY; }
+	void SetHp(int iHp) { m_iHp = iHp; }
 
 	
 public: // 전투 관련

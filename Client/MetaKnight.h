@@ -43,5 +43,11 @@ private:
 	DWORD m_dwDamageTime;
 
 	CGameObject* m_pTornado;
+
+	CGameObject* m_pHitBox;
+
+	bool m_bDashAttack;
+	bool m_bSlashSkill;
+	bool m_bTornadoSkill;
 };
 

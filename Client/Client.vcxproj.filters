@@ -148,6 +148,15 @@
     <Filter Include="04.Effect\02.MarioFire">
       <UniqueIdentifier>{6dba892a-cac5-4a66-938c-48bfe9b1bbe7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.GameObject\04.HpItem">
+      <UniqueIdentifier>{a1c08264-502f-4e0f-83d7-72bf1a06be26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\05.SwordItem">
+      <UniqueIdentifier>{b4415250-19da-44b2-b55e-8846872cbfc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\03.Ending">
+      <UniqueIdentifier>{9d9f217e-544d-4da5-a4da-191d44a55e40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -307,6 +316,15 @@
     <ClInclude Include="Mario.h">
       <Filter>03.Enemy\98.Mario</Filter>
     </ClInclude>
+    <ClInclude Include="Ending.h">
+      <Filter>05.Scene\03.Ending</Filter>
+    </ClInclude>
+    <ClInclude Include="HpItem.h">
+      <Filter>01.GameObject\04.HpItem</Filter>
+    </ClInclude>
+    <ClInclude Include="SwordItem.h">
+      <Filter>01.GameObject\05.SwordItem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -438,6 +456,15 @@
     </ClCompile>
     <ClCompile Include="Mario.cpp">
       <Filter>03.Enemy\98.Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="Ending.cpp">
+      <Filter>05.Scene\03.Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="HpItem.cpp">
+      <Filter>01.GameObject\04.HpItem</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordItem.cpp">
+      <Filter>01.GameObject\05.SwordItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

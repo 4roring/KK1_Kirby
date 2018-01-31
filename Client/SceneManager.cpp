@@ -6,6 +6,7 @@
 #include "SpecialMap.h"
 #include "Boss.h"
 #include "Title.h"
+#include "Ending.h"
 
 
 CSceneManager::CSceneManager()
@@ -44,6 +45,9 @@ void CSceneManager::SceneChange(SCENEID eID)
 			break;
 		case SCENE_BOSS:
 			m_pScene = new CBoss;
+			break;
+		case SCENE_END:
+			m_pScene = new CEnding;
 			break;
 		}
 

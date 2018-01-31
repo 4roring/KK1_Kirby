@@ -162,6 +162,7 @@
     <ClInclude Include="Eff_SlashSkill.h" />
     <ClInclude Include="Eff_Tornado.h" />
     <ClInclude Include="Eff_Transform.h" />
+    <ClInclude Include="Ending.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HitBox.h" />
+    <ClInclude Include="HpItem.h" />
     <ClInclude Include="InhailStar.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Kirby.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="Stage1_1.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="SwordItem.h" />
     <ClInclude Include="SwordKnight.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Title.h" />
@@ -215,11 +218,13 @@
     <ClCompile Include="Eff_SlashSkill.cpp" />
     <ClCompile Include="Eff_Tornado.cpp" />
     <ClCompile Include="Eff_Transform.cpp" />
+    <ClCompile Include="Ending.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="HitBox.cpp" />
+    <ClCompile Include="HpItem.cpp" />
     <ClCompile Include="InhailStar.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Kirby.cpp" />
@@ -242,6 +247,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SwordItem.cpp" />
     <ClCompile Include="SwordKnight.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="UI_BossHp.cpp" />

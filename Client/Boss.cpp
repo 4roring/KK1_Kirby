@@ -4,6 +4,8 @@
 #include "MetaKnight.h"
 #include "SwordKnight.h"
 #include "Ground.h"
+#include "SwordItem.h"
+#include "HpItem.h"
 
 CBoss::CBoss()
 {
@@ -24,7 +26,9 @@ void CBoss::Initialize()
 
 	GameManager->AddObject(CAbsFactory<CMetaKnight>::CreateObject(600.f, 500.f), OBJ_ENEMY);
 
-	GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(500.f, 400.f), OBJ_ENEMY);
+	//GameManager->AddObject(CAbsFactory<CSwordKnight>::CreateEnemy(500.f, 400.f), OBJ_ENEMY);
+
+	GameManager->AddObject(CAbsFactory<CSwordItem>::CreateObject(400.f, 400.f), OBJ_INTERECTION);
 
 	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ 750, 0, 750 + 50, WINCY }), OBJ_GROUND);
 	GameManager->AddObject(CAbsFactory<CGround>::CreateGround(RECT{ -50, 450, 760, WINCY }), OBJ_GROUND);

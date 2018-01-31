@@ -157,6 +157,10 @@ void CTitle::FileLoad()
 	BmpManager->RegistBitmap(TEXT("BossHp"), TEXT("../Image/UI/BossHP.bmp"));	
 	BmpManager->RegistBitmap(TEXT("BossName"), TEXT("../Image/UI/BossName.bmp"));
 
+	// 아이템 로딩
+	BmpManager->RegistBitmap(TEXT("HpItem"), TEXT("../Image/Item/HpItem.bmp"));
+	BmpManager->RegistBitmap(TEXT("SwordItem"), TEXT("../Image/Item/SwordItem.bmp"));
+
 	SoundManager->Initialize();
 
 	SoundManager->PlayBGM(TEXT("Title.mp3"));

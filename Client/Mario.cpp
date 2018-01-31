@@ -4,6 +4,7 @@
 #include "MarioFire.h"
 #include "InhailStar.h"
 #include "Door.h"
+#include "HpItem.h"
 
 
 CMario::CMario()
@@ -57,6 +58,7 @@ OBJ_STATE CMario::Update()
 	if (!m_bActive)
 	{
 		GameManager->AddObject(CAbsFactory<CDoor>::CreateDoor(588.f, 172.f, SCENE_BOSS), OBJ_INTERECTION);
+		GameManager->AddObject(CAbsFactory<CHpItem>::CreateObject(565.f, 465.f), OBJ_INTERECTION);
 		return DESTROY;
 	}
 		
@@ -64,8 +66,6 @@ OBJ_STATE CMario::Update()
 		m_bInhail = false;
 	else if (m_bInhail)
 		m_eCurState = INHAIL;
-
-	std::cout << m_eCurState << std::endl;
 
 	switch (m_eCurState)
 	{
