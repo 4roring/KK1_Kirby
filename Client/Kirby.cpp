@@ -52,8 +52,6 @@ void CKirby::Initialize()
 	m_bAttack = false;
 	m_bInhail = false;
 
-	m_bFlySound = false;
-
 	m_iInputFrame = g_iFrame;
 	m_iAttSquence = 0;
 
@@ -163,6 +161,12 @@ void CKirby::ApplyDamage(int iDamage)
 		CActor::ApplyDamage(10);
 		if (m_eForm != NORMAL_FORM)
 			DisTransform();
+		SoundManager->StopSound(CSoundManager::PLAYER);
+		if (m_pTarget)
+		{
+			m_pTarget->SetActive(false);
+			m_pTarget = nullptr;
+		}
 
 		SoundManager->PlaySound(TEXT("Damage.wav"), CSoundManager::PLAYER);
 
@@ -200,7 +204,6 @@ void CKirby::FormChange(FORM eForm)
 
 void CKirby::Input()
 {
-#ifdef _DEBUG
 	if (InputManager->KeyDown('1'))
 		SceneManager->SceneChange(SCENE_STAGE1);
 	if (InputManager->KeyDown('2'))
@@ -209,7 +212,6 @@ void CKirby::Input()
 		SceneManager->SceneChange(SCENE_SPECIAL);
 	if (InputManager->KeyDown('4'))
 		SceneManager->SceneChange(SCENE_BOSS);
-#endif
 
 	if (InputManager->KeyDown('H'))
 		m_iHp = m_iMaxHp;
@@ -482,7 +484,6 @@ void CKirby::Attack()
 			}
 		}
 
-		// TODO: 먹었을 때 조건 추가
 		if (m_iAttSquence == 10)
 		{
 			if (m_pTarget)
@@ -515,7 +516,6 @@ void CKirby::Attack()
 }
 
 // 점프, 날기
-// FIXME: 땅에서만 다닐때 중력의 영향을 안받음
 void CKirby::Jump()
 {
 	if (InputManager->Key('Z') && m_bJump)
@@ -526,8 +526,9 @@ void CKirby::Jump()
 			m_bDash = false;
 			if (m_iInputFrame < g_iFrame)
 			{
+				SoundManager->PlaySound(TEXT("Fly.wav"), CSoundManager::PLAYER);
 				m_fGravity = 0.f;
-				m_iInputFrame = g_iFrame + 5;
+				m_iInputFrame = g_iFrame + 15;
 			}
 		}
 		else
@@ -547,17 +548,8 @@ void CKirby::Jump()
 		if (m_tFrame.iStart > 3)
 			m_tFrame.dwSpeed = 50;
 
-		if (!m_bFlySound)
-		{
-			SoundManager->PlaySound(TEXT("Fly.wav"), CSoundManager::PLAYER);
-			m_bFlySound = true;
-		}
-
 		if (m_tFrame.iStart == m_tFrame.iEnd)
-		{
 			m_tFrame.iStart = 4;
-			m_bFlySound = false;
-		}
 	}
 	else if (m_fVelocityY > 0 && m_bJump && !m_bAttack)
 	{
@@ -568,7 +560,6 @@ void CKirby::Jump()
 	else if (m_fVelocityY < 0 && m_bJump && !m_bInhail && !m_bAttack)
 	{
 		// 떨어질 때에는 특정 프레임 애니메이션만 재생
-
 		if (!m_bAttack)
 		{
 			m_eCurState = JUMP;
@@ -601,7 +592,6 @@ void CKirby::Jump()
 		m_fGravity = -0.2f;
 		m_fVelocityY = m_fGravity;
 		m_bJump = false;
-		m_bFlySound = false;
 	}
 	else
 	{
@@ -1072,6 +1062,7 @@ void CKirby::Eat()
 {
 	if (m_bEat)
 	{
+		m_iAttSquence = 11;
 		m_eCurState = EAT;
 
 		if (m_tFrame.iStart == m_tFrame.iEnd)
@@ -1142,7 +1133,7 @@ void CKirby::SwordAttack()
 	{
 		if (m_pTarget == nullptr)
 		{
-			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX, m_tInfo.fY - 15.f, 120, 120, 30, true, SLASH), PLAYER_ATT);
+			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX, m_tInfo.fY - 15.f, 120, 120, 50, true, SLASH), PLAYER_ATT);
 			m_pTarget = GameManager->GetObjList(PLAYER_ATT).back();
 			SoundManager->PlaySound(TEXT("SwordKirbyAttack.wav"), CSoundManager::PLAYER);
 		}
@@ -1188,7 +1179,7 @@ void CKirby::SwordAttack()
 		if (m_pTarget == nullptr && m_tFrame.iStart == 2)
 		{
 			float fX = m_bFlipX ? 30.f : -30.f;
-			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX + fX, m_tInfo.fY - 15.f, 200, 130, 50, true, SLASH), PLAYER_ATT);
+			GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX + fX, m_tInfo.fY - 15.f, 200, 130, 60, true, SLASH), PLAYER_ATT);
 			m_pTarget = GameManager->GetObjList(PLAYER_ATT).back();
 			SoundManager->PlaySound(TEXT("SwordKirbyAttack.wav"), CSoundManager::PLAYER);
 		}

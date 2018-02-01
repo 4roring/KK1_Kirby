@@ -4,9 +4,10 @@
 #include "Door.h"
 #include "UI_BossHp.h"
 #include "HpItem.h"
+#include "HitBox.h"
 
 CDDD::CDDD()
-	: m_dwIdleTime(2000)
+	: m_dwIdleTime(1000), m_pHitBox(nullptr)
 {
 }
 
@@ -59,6 +60,12 @@ OBJ_STATE CDDD::Update()
 	switch (m_eCurState)
 	{
 	case IDLE:
+		if (m_pHitBox)
+		{
+			m_pHitBox->SetActive(false);
+			m_pHitBox = false;
+		}
+
 		m_fVelocityX = 0.f;
 		m_iPatternCnt = 0;
 		if (m_dwStateTime < GetTickCount())
@@ -193,10 +200,7 @@ OBJ_STATE CDDD::Update()
 				m_fVelocityX = 0;
 				m_tFrame.dwSpeed = 5000;
 				if (m_dwStateTime < GetTickCount())
-				{
 					m_tFrame.dwSpeed = 100;
-					// TODO: HITBOX 생성
-				}
 			}
 			break;
 		case 1: // 점프 해머 공격
@@ -211,6 +215,12 @@ OBJ_STATE CDDD::Update()
 		}
 		if (m_tFrame.iStart == m_tFrame.iEnd) // 패턴 종료
 		{
+			if (m_pHitBox == nullptr)
+			{
+				float fX = m_bFlipX ? 100.f : -100.f;
+				GameManager->AddObject(CAbsFactory<CHitBox>::CreateHitBox(m_tInfo.fX + fX, m_tInfo.fY + 20.f, 100, 100, 10, true, HIT), ENEMY_ATT);
+				m_pHitBox = GameManager->GetObjList(ENEMY_ATT).back();
+			}
 			CreateInhailStar();
 			m_eCurState = IDLE;
 			m_dwStateTime = GetTickCount() + m_dwIdleTime;
@@ -284,9 +294,12 @@ void CDDD::ApplyDamage(int iDamage)
 	else if(!m_bIsDamage)
 	{
 		CActor::ApplyDamage(iDamage);
-		m_eCurState = DAMAGE;
-		m_dwStateTime = GetTickCount() + 300;
-		m_dwDamageTime = GetTickCount() + 3000;
+		if (m_eCurState == IDLE || m_eCurState == MOVE)
+		{
+			m_eCurState = DAMAGE;
+			m_dwStateTime = GetTickCount() + 300;
+		}
+		m_dwDamageTime = GetTickCount() + 2000;
 		m_bIsDamage = true;
 	}
 }

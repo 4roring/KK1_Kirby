@@ -65,7 +65,7 @@ void CCollision::Ground(OBJLIST & dstList, OBJLIST & srcList)
 {
 	for (auto& pDst : dstList)
 	{
-		if (!pDst->GetActive() || pDst->GetAtt() == 60)
+		if (!pDst->GetActive() || pDst->GetAtt() == 60 || pDst->GetInhail())
 			continue;
 
 		for (auto& pSrc : srcList)

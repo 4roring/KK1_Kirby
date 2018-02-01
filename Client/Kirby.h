@@ -70,8 +70,6 @@ private:
 	bool m_bNoDamage;
 	bool m_bEat;
 
-	bool m_bFlySound;
-
 	DWORD m_dwDamageTime;
 	int m_iInputFrame;
 	int m_iAttSquence;

@@ -40,5 +40,7 @@ private:
 	DWORD m_dwStateTime;
 	DWORD m_dwIdleTime;
 	DWORD m_dwDamageTime;
+
+	CGameObject* m_pHitBox;
 };
 
