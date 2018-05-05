@@ -93,7 +93,7 @@ OBJ_STATE CKirby::Update()
 
 	if (!m_bAttack)
 	{
-		Input();
+		MoveInput();
 		Slide();
 	}
 
@@ -202,8 +202,9 @@ void CKirby::FormChange(FORM eForm)
 }
 
 
-void CKirby::Input()
+void CKirby::MoveInput()
 {
+#ifdef _DEBUG
 	if (InputManager->KeyDown('1'))
 		SceneManager->SceneChange(SCENE_STAGE1);
 	if (InputManager->KeyDown('2'))
@@ -215,6 +216,7 @@ void CKirby::Input()
 
 	if (InputManager->KeyDown('H'))
 		m_iHp = m_iMaxHp;
+#endif
 
 	if (m_bSlide) return;
 
@@ -673,6 +675,15 @@ void CKirby::SceneChange()
 	}
 }
 
+void CKirby::SetAnimScene(int iStart, int iEnd, int iScene, DWORD dwSpeed)
+{
+	m_tFrame.iStart = iStart;
+	m_tFrame.iEnd = iEnd;
+	m_tFrame.iScene = iScene;
+	m_tFrame.dwTime = GetTickCount();
+	m_tFrame.dwSpeed = dwSpeed;
+}
+
 void CKirby::NormalScene()
 {
 	m_tInfo.fCX = 96;
@@ -685,143 +696,58 @@ void CKirby::NormalScene()
 	switch (m_eCurState)
 	{
 	case IDLE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 34;
-		m_tFrame.iScene = 0;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 34, 0, 100);
 		break;
 	case INHAILIDLE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 14;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 600;
+		SetAnimScene(0, 1, 14, 600);
 		break;
 	case DOWN:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 1;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 1000;
+		SetAnimScene(0, 1, 1, 1000);
 		break;
 	case SLIDE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 2;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 1, 2, 100);
 		break;
 	case MOVE:
 		if (m_bInhail)
-		{
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 12;
-			m_tFrame.iScene = 15;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 70;
-		}
+			SetAnimScene(0, 12, 15, 70);
 		else
-		{
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 9;
-			m_tFrame.iScene = 3;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 70;
-		}
-
+			SetAnimScene(0, 9, 3, 70);
 		break;
 	case DASH:
 		if (m_bInhail)
-		{
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 12;
-			m_tFrame.iScene = 15;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 40;
-		}
+			SetAnimScene(0, 12, 15, 40);
 		else
-		{
-			m_tFrame.iStart = 1;
-			m_tFrame.iEnd = 7;
-			m_tFrame.iScene = 5;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 40;
-		}
+			SetAnimScene(1, 7, 5, 40);
 		break;
 	case JUMP:
 		if (m_bInhail)
-		{
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 4;
-			m_tFrame.iScene = 22;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 100;
-		}
+			SetAnimScene(0, 4, 22, 100);
 		else
-		{
-			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 11;
-			m_tFrame.iScene = 6;
-			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 100;
-		}
+			SetAnimScene(0, 11, 6, 100);
 		break;
 	case FLY:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 8;
-		m_tFrame.iScene = 10;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 60;
+		SetAnimScene(0, 8, 10, 60);
 		break;
 	case FLYATTACK:
-		m_tFrame.iStart = 2;
-		m_tFrame.iEnd = 4;
-		m_tFrame.iScene = 11;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 130;
+		SetAnimScene(2, 4, 11, 130);
 		break;
 	case ATTACK:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 11;
-		m_tFrame.iScene = 12;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 11, 12, 100);
 		break;
 	case INHAIL:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 4;
-		m_tFrame.iScene = 13;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 80;
+		SetAnimScene(0, 4, 13, 80);
 		break;
 	case DAMAGE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 7;
-		m_tFrame.iScene = 18;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 50;
+		SetAnimScene(0, 7, 18, 50);
 		break;
 	case EAT:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 5;
-		m_tFrame.iScene = 16;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 60;
+		SetAnimScene(0, 5, 16, 60);
 		break;
 	case SHOOTSTAR:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 4;
-		m_tFrame.iScene = 17;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 40;
+		SetAnimScene(0, 4, 17, 40);
 		break;
 	case DEAD:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 15;
-		m_tFrame.iScene = 23;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 40;
+		SetAnimScene(0, 15, 23, 40);
 		break;
 	}
 }
@@ -837,39 +763,19 @@ void CKirby::SwordScene()
 	switch (m_eCurState)
 	{
 	case IDLE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 0;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 1, 0, 100);
 		break;
 	case DOWN:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 0;
-		m_tFrame.iScene = 1;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 1000;
+		SetAnimScene(0, 0, 1, 1000);
 		break;
 	case SLIDE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 2;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 1, 2, 100);
 		break;
 	case MOVE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 11;
-		m_tFrame.iScene = 3;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 60;
+		SetAnimScene(0, 11, 3, 60);
 		break;
 	case DASH:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 7;
-		m_tFrame.iScene = 4;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 40;
+		SetAnimScene(0, 7, 4, 40);
 		break;
 	case ATTACK:
 		m_pLeftKey = TEXT("Sword_LeftAttack");
@@ -877,46 +783,22 @@ void CKirby::SwordScene()
 		m_pFrameKey = m_bFlipX ? m_pRightKey : m_pLeftKey;
 		m_tInfo.fCX = 300;
 		m_tInfo.fCY = 180;
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 15;
-		m_tFrame.iScene = 0;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 15;
+		SetAnimScene(0, 15, 0, 15);
 		break;
 	case JUMP:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 11;
-		m_tFrame.iScene = 5;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 11, 5, 100);
 		break;
 	case FLY:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 8;
-		m_tFrame.iScene = 6;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 60;
+		SetAnimScene(0, 8, 6, 60);
 		break;
 	case FLYATTACK:
-		m_tFrame.iStart = 2;
-		m_tFrame.iEnd = 4;
-		m_tFrame.iScene = 7;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 130;
+		SetAnimScene(2, 4, 7, 130);
 		break;
 	case JUMPATTACK:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 11;
-		m_tFrame.iScene = 8;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 10;
+		SetAnimScene(0, 11, 8, 10);
 		break;
 	case TRANSFORM:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 0;
-		m_tFrame.iScene = 11;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 15;
+		SetAnimScene(0, 0, 11, 15);
 		break;
 	}
 
@@ -935,74 +817,34 @@ void CKirby::MarioScene()
 	switch (m_eCurState)
 	{
 	case IDLE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 0;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 1, 0, 100);
 		break;
 	case DOWN:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 1;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 1000;
+		SetAnimScene(0, 1, 1, 1000);
 		break;
 	case SLIDE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 2;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 1, 2, 100);
 		break;
 	case MOVE:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 9;
-		m_tFrame.iScene = 3;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 70;
+		SetAnimScene(0, 9, 3, 70);
 		break;
 	case DASH:
-		m_tFrame.iStart = 1;
-		m_tFrame.iEnd = 7;
-		m_tFrame.iScene = 5;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 40;
+		SetAnimScene(1, 7, 5, 40);
 		break;
 	case JUMP:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 11;
-		m_tFrame.iScene = 6;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		SetAnimScene(0, 11, 6, 100);
 		break;
 	case FLY:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 8;
-		m_tFrame.iScene = 10;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 60;
+		SetAnimScene(0, 8, 10, 60);
 		break;
 	case FLYATTACK:
-		m_tFrame.iStart = 2;
-		m_tFrame.iEnd = 4;
-		m_tFrame.iScene = 11;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 130;
+		SetAnimScene(2, 4, 11, 130);
 		break;
 	case ATTACK:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 1;
-		m_tFrame.iScene = 12;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 50;
+		SetAnimScene(0, 1, 12, 50);
 		break;
 	case TRANSFORM:
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 0;
-		m_tFrame.iScene = 13;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 15;
+		SetAnimScene(0, 0, 13, 15);
 		break;
 	}
 }

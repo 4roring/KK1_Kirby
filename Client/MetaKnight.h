@@ -26,8 +26,26 @@ public:
 	virtual void ApplyDamage(int iDamage);
 
 private:
+	void UpdateState();
 	void SceneChange();
 	void CreateInhailStar(int iCount);
+
+private:
+	void Idle();
+	void Move();
+	void Dash();
+	void DashAttack();
+	void Jump();
+	void JumpAttack();
+	void JumpDownAttack();
+	void AttackDown();
+	void AttackUp();
+	void Skill_1();
+	void Skill_2();
+	void Dead();
+
+private:
+	void SetAnimFrame(int iEnd, int iScene, DWORD dwSpeed);
 
 private:
 	STATE m_eCurState;
@@ -43,7 +61,6 @@ private:
 	DWORD m_dwDamageTime;
 
 	CGameObject* m_pTornado;
-
 	CGameObject* m_pHitBox;
 
 	bool m_bDashAttack;

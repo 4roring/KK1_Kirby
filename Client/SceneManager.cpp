@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "Stage1_1.h"
+#include "Stage.h"
 #include "MidBoss.h"
 #include "SpecialMap.h"
 #include "Boss.h"
@@ -35,7 +35,7 @@ void CSceneManager::SceneChange(SCENEID eID)
 			m_pScene = new CTitle;
 			break;
 		case SCENE_STAGE1:
-			m_pScene = new CStage1_1;
+			m_pScene = new CStage;
 			break;
 		case SCENE_MIDBOSS:
 			m_pScene = new CMidBoss;

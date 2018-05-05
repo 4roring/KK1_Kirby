@@ -55,9 +55,6 @@
     <Filter Include="05.Scene\01.Title">
       <UniqueIdentifier>{6d8fe8b6-76bd-485d-a57a-192dcdf89407}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05.Scene\02.Stage1-1">
-      <UniqueIdentifier>{ae9995b3-2def-4b19-955d-72c9e9b91351}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05.Scene\99.Boss">
       <UniqueIdentifier>{9793db2f-be2b-474d-b2a8-4fce7182b619}</UniqueIdentifier>
     </Filter>
@@ -72,9 +69,6 @@
     </Filter>
     <Filter Include="01.GameObject\03.MapObject">
       <UniqueIdentifier>{e3844d6d-275f-46d0-b3c8-fcd6e592edf2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Enemy\00.InhailStar">
-      <UniqueIdentifier>{116050ff-57e8-45a9-9feb-4dae768ad065}</UniqueIdentifier>
     </Filter>
     <Filter Include="04.Effect\00.KirbyEffect">
       <UniqueIdentifier>{9a61b3d6-4e40-49aa-b46d-0238f247c068}</UniqueIdentifier>
@@ -99,15 +93,6 @@
     </Filter>
     <Filter Include="04.Effect\00.KirbyEffect\06.Eff_Transform">
       <UniqueIdentifier>{15a0611c-7d87-4a15-a595-b7c368970b0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Enemy\01.Wadorudi">
-      <UniqueIdentifier>{e070ccb2-fd88-48d5-b9e3-fdeaf4a6d38e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Enemy\02.Scarfy">
-      <UniqueIdentifier>{160bb30c-1e8e-4da2-8986-05bc7cc3beff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Enemy\03.SwordKnight">
-      <UniqueIdentifier>{d68009b1-53d0-4967-8d73-2208b2cdac19}</UniqueIdentifier>
     </Filter>
     <Filter Include="03.Enemy\99.MetaKnight">
       <UniqueIdentifier>{c4657e0b-0c4c-450d-b453-6e9ed873ae34}</UniqueIdentifier>
@@ -156,6 +141,24 @@
     </Filter>
     <Filter Include="05.Scene\03.Ending">
       <UniqueIdentifier>{9d9f217e-544d-4da5-a4da-191d44a55e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\Enemy">
+      <UniqueIdentifier>{fa053ac8-556a-4ba2-b4c9-0507feaaa84d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\Enemy\00.InhailStar">
+      <UniqueIdentifier>{116050ff-57e8-45a9-9feb-4dae768ad065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\Enemy\01.Wadorudi">
+      <UniqueIdentifier>{e070ccb2-fd88-48d5-b9e3-fdeaf4a6d38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\Enemy\02.Scarfy">
+      <UniqueIdentifier>{160bb30c-1e8e-4da2-8986-05bc7cc3beff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Enemy\Enemy\03.SwordKnight">
+      <UniqueIdentifier>{d68009b1-53d0-4967-8d73-2208b2cdac19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\02.Stage">
+      <UniqueIdentifier>{ae9995b3-2def-4b19-955d-72c9e9b91351}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -247,14 +250,11 @@
     <ClInclude Include="Title.h">
       <Filter>05.Scene\01.Title</Filter>
     </ClInclude>
-    <ClInclude Include="Stage1_1.h">
-      <Filter>05.Scene\02.Stage1-1</Filter>
-    </ClInclude>
     <ClInclude Include="HitBox.h">
       <Filter>01.GameObject\02.HitBox</Filter>
     </ClInclude>
     <ClInclude Include="Wadorudi.h">
-      <Filter>03.Enemy\01.Wadorudi</Filter>
+      <Filter>03.Enemy\Enemy\01.Wadorudi</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>03.Enemy</Filter>
@@ -263,7 +263,7 @@
       <Filter>04.Effect\00.KirbyEffect\03.Eff_ShootingStar</Filter>
     </ClInclude>
     <ClInclude Include="Scarfy.h">
-      <Filter>03.Enemy\02.Scarfy</Filter>
+      <Filter>03.Enemy\Enemy\02.Scarfy</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>01.GameObject\03.MapObject</Filter>
@@ -275,10 +275,10 @@
       <Filter>03.Enemy\97.DDD</Filter>
     </ClInclude>
     <ClInclude Include="InhailStar.h">
-      <Filter>03.Enemy\00.InhailStar</Filter>
+      <Filter>03.Enemy\Enemy\00.InhailStar</Filter>
     </ClInclude>
     <ClInclude Include="SwordKnight.h">
-      <Filter>03.Enemy\03.SwordKnight</Filter>
+      <Filter>03.Enemy\Enemy\03.SwordKnight</Filter>
     </ClInclude>
     <ClInclude Include="Eff_MiniStar.h">
       <Filter>04.Effect\00.KirbyEffect\04.Eff_MiniStar</Filter>
@@ -324,6 +324,9 @@
     </ClInclude>
     <ClInclude Include="SwordItem.h">
       <Filter>01.GameObject\05.SwordItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>05.Scene\02.Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -388,14 +391,11 @@
     <ClCompile Include="Title.cpp">
       <Filter>05.Scene\01.Title</Filter>
     </ClCompile>
-    <ClCompile Include="Stage1_1.cpp">
-      <Filter>05.Scene\02.Stage1-1</Filter>
-    </ClCompile>
     <ClCompile Include="HitBox.cpp">
       <Filter>01.GameObject\02.HitBox</Filter>
     </ClCompile>
     <ClCompile Include="Wadorudi.cpp">
-      <Filter>03.Enemy\01.Wadorudi</Filter>
+      <Filter>03.Enemy\Enemy\01.Wadorudi</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>03.Enemy</Filter>
@@ -404,7 +404,7 @@
       <Filter>04.Effect\00.KirbyEffect\03.Eff_ShootingStar</Filter>
     </ClCompile>
     <ClCompile Include="Scarfy.cpp">
-      <Filter>03.Enemy\02.Scarfy</Filter>
+      <Filter>03.Enemy\Enemy\02.Scarfy</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>01.GameObject\03.MapObject</Filter>
@@ -416,10 +416,10 @@
       <Filter>03.Enemy\97.DDD</Filter>
     </ClCompile>
     <ClCompile Include="InhailStar.cpp">
-      <Filter>03.Enemy\00.InhailStar</Filter>
+      <Filter>03.Enemy\Enemy\00.InhailStar</Filter>
     </ClCompile>
     <ClCompile Include="SwordKnight.cpp">
-      <Filter>03.Enemy\03.SwordKnight</Filter>
+      <Filter>03.Enemy\Enemy\03.SwordKnight</Filter>
     </ClCompile>
     <ClCompile Include="Eff_MiniStar.cpp">
       <Filter>04.Effect\00.KirbyEffect\04.Eff_MiniStar</Filter>
@@ -465,6 +465,9 @@
     </ClCompile>
     <ClCompile Include="SwordItem.cpp">
       <Filter>01.GameObject\05.SwordItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>05.Scene\02.Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

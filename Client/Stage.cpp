@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Stage1_1.h"
+#include "Stage.h"
 #include "Kirby.h"
 #include "Ground.h"
 #include "Wadorudi.h"
@@ -7,17 +7,17 @@
 #include "Door.h"
 #include "SwordKnight.h"
 
-CStage1_1::CStage1_1()
+CStage::CStage()
 {
 }
 
 
-CStage1_1::~CStage1_1()
+CStage::~CStage()
 {
 	Release();
 }
 
-void CStage1_1::Initialize()
+void CStage::Initialize()
 {
 	if (GameManager->GetObjList(OBJ_PLAYER).empty())
 		GameManager->AddObject(CAbsFactory<CKirby>::CreateObject(100.f, 440.f), OBJ_PLAYER);
@@ -76,29 +76,29 @@ void CStage1_1::Initialize()
 	GameManager->SetMaxScrollY(0.f);
 }
 
-void CStage1_1::LateInit()
+void CStage::LateInit()
 {
 	GameManager->LateInit();
 }
 
-void CStage1_1::Update()
+void CStage::Update()
 {
 	GameManager->Update();
 }
 
-void CStage1_1::LateUpdate()
+void CStage::LateUpdate()
 {
 	GameManager->LateUpdate();
 }
 
-void CStage1_1::Render(HDC hDC)
+void CStage::Render(HDC hDC)
 {
 	DrawBackground(hDC, TEXT("Map_Stage1_Background"));
 	DrawGround(hDC, TEXT("Map_Stage1_1_Ground"));
 	GameManager->Render(hDC);
 }
 
-void CStage1_1::Release()
+void CStage::Release()
 {
 	SoundManager->StopSound(CSoundManager::BGM);
 	GameManager->ReleaseObj(OBJ_GROUND);

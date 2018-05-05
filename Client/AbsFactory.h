@@ -87,7 +87,7 @@ public:
 		pObj->SetPos(fX, fY);
 		pObj->SetStartPos(fX, fY);
 
-		return dynamic_cast<CGameObject*>(pObj);
+		return pObj;
 	}
 
 	static CGameObject* CreateInhailStar(float fX, float fY, ENEMYTYPE eType)

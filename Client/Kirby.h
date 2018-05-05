@@ -28,7 +28,7 @@ public:
 	void FormChange(FORM eForm);
 
 private:
-	void Input();
+	void MoveInput();
 	void Move();
 	void Attack();
 	void Jump();
@@ -42,6 +42,7 @@ private:
 private:
 	void KirbyUpdateRect();
 	void SceneChange();
+	void SetAnimScene(int iStart, int iEnd, int iScene, DWORD dwSpeed);
 	void NormalScene();
 	void SwordScene();
 	void MarioScene();

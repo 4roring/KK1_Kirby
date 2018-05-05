@@ -93,9 +93,10 @@ void CGameManager::Update()
 			CameraShakingEnd();
 	}
 
+#ifdef _DEBUG
 	if (InputManager->KeyDown('D'))
 		m_bDebugBox = !m_bDebugBox;
-
+#endif
 	if (m_fScrollX > 0.f)
 		m_fScrollX = 0.f;
 
