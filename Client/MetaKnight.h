@@ -6,8 +6,8 @@ class CMetaKnight :
 public:
 	enum STATE
 	{
-		APPEAR1, APPEAR2, IDLE, MOVE, DASH, DASHATTACK, ATTACK_DOWN, ATTACK_UP,
-		JUMP, JUMP_ATTACK, JUMPDOWN_ATTACK, SKILL1, SKILL2, DEAD, END
+		APPEAR1, APPEAR2, IDLE, MOVE, DASH, DASHATTACK, JUMP, JUMP_ATTACK,
+		JUMPDOWN_ATTACK, SKILL1_1, SKILL1_2, SKILL1_END, SKILL2, DEAD, END
 	};
 
 public:
@@ -38,9 +38,9 @@ private:
 	void Jump();
 	void JumpAttack();
 	void JumpDownAttack();
-	void AttackDown();
-	void AttackUp();
-	void Skill_1();
+	void Skill_1_1();
+	void Skill_1_2();
+	void Skill_1_END();
 	void Skill_2();
 	void Dead();
 

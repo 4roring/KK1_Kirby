@@ -164,11 +164,11 @@ void CMetaKnight::UpdateState()
 		break;
 	case STATE::JUMPDOWN_ATTACK: JumpDownAttack();
 		break;
-	case STATE::ATTACK_DOWN: AttackDown();
+	case STATE::SKILL1_1: Skill_1_1();
 		break;
-	case STATE::ATTACK_UP: AttackUp();
+	case STATE::SKILL1_2: Skill_1_2();
 		break;
-	case STATE::SKILL1: Skill_1(); // Slash Skill
+	case STATE::SKILL1_END: Skill_1_END(); // Slash Skill
 		break;
 	case STATE::SKILL2: Skill_2(); // Tornado Skill
 		break;
@@ -211,10 +211,10 @@ void CMetaKnight::SceneChange()
 		case STATE::DASHATTACK:
 			SetAnimFrame(5, 3, 50);
 			break;
-		case STATE::ATTACK_DOWN:
+		case STATE::SKILL1_1:
 			SetAnimFrame(7, 4, 30);
 			break;
-		case STATE::ATTACK_UP:
+		case STATE::SKILL1_2:
 			SetAnimFrame(7, 5, 30);
 			break;
 		case STATE::JUMP:
@@ -226,7 +226,7 @@ void CMetaKnight::SceneChange()
 		case STATE::JUMPDOWN_ATTACK:
 			SetAnimFrame(2, 8, 100);
 			break;
-		case STATE::SKILL1:
+		case STATE::SKILL1_END:
 			SetAnimFrame(7, 4, 30);
 			break;
 		case STATE::SKILL2:
@@ -291,7 +291,7 @@ void CMetaKnight::Idle()
 				m_iCondition = rand() % 6;
 			else
 			{
-				m_eCurState = ATTACK_DOWN;
+				m_eCurState = SKILL1_1;
 				m_bTornadoSkill = false;
 			}
 			break;
@@ -357,7 +357,7 @@ void CMetaKnight::Dash()
 
 	if (abs(m_tInfo.fX - m_pTarget->GetInfo().fX) < 100.f)
 	{
-		if (abs(m_tInfo.fY - m_pTarget->GetInfo().fX) > 200.f)
+		if (abs(m_tInfo.fY - m_pTarget->GetInfo().fY) > 200.f)
 		{
 			m_eCurState = JUMP;
 			m_iCondition = 1; // 대시 어택.
@@ -441,9 +441,8 @@ void CMetaKnight::Jump()
 		if (m_tFrame.iStart == 9 && m_fVelocityY == 0.f)
 		{
 			m_eCurState = IDLE;
-			// TODO: Condition 지정해서 스킬 사용하게 지정.
-			// 0: MOVE, 2: SKILL1, 3: SKILL2
 
+			// 0: MOVE, 2: SKILL1_END, 3: SKILL2
 			if (m_iHp < 1000)
 				while (m_iCondition == 1)
 					m_iCondition = rand() % 7;
@@ -556,7 +555,7 @@ void CMetaKnight::JumpDownAttack()
 	}
 }
 
-void CMetaKnight::AttackDown()
+void CMetaKnight::Skill_1_1()
 {
 	if (m_tFrame.iStart == 0)
 		SoundManager->PlaySound(TEXT("MetaKnight_Slash.wav"), CSoundManager::ENEMY);
@@ -565,11 +564,11 @@ void CMetaKnight::AttackDown()
 	{
 		float fX = m_bFlipX ? 100.f : -100.f;
 		GameManager->AddObject(CAbsFactory<CEff_SlashSkill>::CreateObject(m_tInfo.fX + fX, m_tInfo.fY, m_bFlipX), ENEMY_ATT);
-		m_eCurState = ATTACK_UP;
+		m_eCurState = SKILL1_2;
 	}
 }
 
-void CMetaKnight::AttackUp()
+void CMetaKnight::Skill_1_2()
 {
 	if (m_tFrame.iStart == 0)
 		SoundManager->PlaySound(TEXT("MetaKnight_Slash.wav"), CSoundManager::ENEMY);
@@ -578,12 +577,12 @@ void CMetaKnight::AttackUp()
 	{
 		float fX = m_bFlipX ? 100.f : -100.f;
 		GameManager->AddObject(CAbsFactory<CEff_SlashSkill>::CreateObject(m_tInfo.fX + fX, m_tInfo.fY, m_bFlipX), ENEMY_ATT);
-		m_eCurState = SKILL1;
+		m_eCurState = SKILL1_END;
 		m_dwStateTime = GetTickCount() + 200;
 	}
 }
 
-void CMetaKnight::Skill_1()
+void CMetaKnight::Skill_1_END()
 {
 	if (m_tFrame.iStart == 1)
 		SoundManager->PlaySound(TEXT("MetaKnight_Slash.wav"), CSoundManager::ENEMY);
@@ -604,8 +603,6 @@ void CMetaKnight::Skill_1()
 	else if (m_tFrame.iStart == 0 && m_tFrame.dwSpeed == 500)
 	{
 		m_eCurState = IDLE;
-		// TODO: Condition 지정해서 스킬 사용하게 지정.
-		// 0: MOVE, 1: 대시어택, 2: SKILL1, 3: SKILL2
 		m_iCondition = 0;
 		m_fVelocityX = 0;
 		m_iPatternCnt = 0;
@@ -648,7 +645,7 @@ void CMetaKnight::Skill_2()
 
 			m_eCurState = IDLE;
 			// TODO: Condition 지정해서 스킬 사용하게 지정.
-			// 0: MOVE, 1: 대시어택, 2: SKILL1, 3: SKILL2
+			// 0: MOVE, 1: 대시어택, 2: SKILL1_END, 3: SKILL2
 			m_iCondition = 0;
 			m_fVelocityX = 0;
 			m_iPatternCnt = 0;
